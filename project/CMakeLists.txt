@@ -79,7 +79,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         GL
         GLU
         glut
-        jpeg)
+        libjpeg.so.62)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #
     # Mac OS

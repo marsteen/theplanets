@@ -2661,5 +2661,9 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
                 gG3Dinterface->SendCommand(EG3DcomDraw);
             }
         }
+        else
+        {
+            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage);            
+        }
     }
 }

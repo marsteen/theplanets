@@ -41,6 +41,13 @@ void CGL_Circle::MakeObject()
 
     glPushMatrix();
     glRotatef(90.0, 1.0, 0.0, 0.0);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glLineWidth(2.5f);
+
 
     glBegin(GL_LINE_STRIP);
     for (int i = 0; i <= mSegments; i++)
