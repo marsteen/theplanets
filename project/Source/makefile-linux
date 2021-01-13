@@ -1,0 +1,114 @@
+#**********************************************************************
+#
+# DiePlaneten - makefile
+#
+# written 2007 by Martin Steen
+# dieplaneten@martin-steen.de
+#
+#**********************************************************************
+#
+# C++ : Name of C++ Compiler
+#
+C++       = g++
+#
+# INCGL   : where OpenGL include files are
+# INCGLUT : where GLUT include files are
+# LIBGLUT : where the GLUT library is
+#
+INCGL     = /usr/include/GL
+#
+# *** NO NEED TO CHANGE ANYTHING BEYOND THIS POINT ***
+#
+SRCPATH   = .
+INCPATH   = ./$(SRCPATH)/include
+LIBBASE   = ./$(SRCPATH)/lib
+SRCBASE   = ./$(SRCPATH)/src
+#
+#
+#
+.SUFFIXES : .cpp .o
+#
+#
+#
+CPPFILES = $(SRCBASE)/main.cpp \
+           $(SRCBASE)/CGLApplication.cpp \
+           $(SRCBASE)/COpenGLAction.cpp \
+           $(NULL)
+#
+#
+#             
+LIBFILES = $(LIBBASE)/CG3DReslistInterface.cpp \
+           $(LIBBASE)/CGL_Patch.cpp \
+           $(LIBBASE)/CGL_Ellipsoid.cpp \
+           $(LIBBASE)/CG3DResource.cpp \
+           $(LIBBASE)/CG3DResourceImgRef.cpp \
+           $(LIBBASE)/CG3DResourceButton.cpp \
+           $(LIBBASE)/CG3DResourceOButton.cpp \
+           $(LIBBASE)/CG3DResourceList.cpp \
+           $(LIBBASE)/CG3DResourceDialog.cpp \
+           $(LIBBASE)/CG3DResourceImage.cpp \
+           $(LIBBASE)/CG3DResourceString.cpp \
+	         $(LIBBASE)/CG3DResourceFont.cpp \
+           $(LIBBASE)/CG3DResourceLine.cpp \
+           $(LIBBASE)/CG3DResourceBox.cpp \
+           $(LIBBASE)/CG3DResourceRoot.cpp \
+           $(LIBBASE)/CG3DResourceTextfield.cpp \
+           $(LIBBASE)/CG3DResourceTooltipp.cpp \
+           $(LIBBASE)/CG3DResourceClipframe.cpp \
+           $(LIBBASE)/CG3DResChild.cpp \
+           $(LIBBASE)/CTagList.cpp \
+           $(LIBBASE)/CErrorMessage.cpp \
+           $(LIBBASE)/CPixel24.cpp \
+           $(LIBBASE)/CDatabase3.cpp \
+           $(LIBBASE)/CStringConverter.cpp \
+           $(LIBBASE)/CFileIO.cpp \
+           $(LIBBASE)/CGraflib.cpp \
+           $(LIBBASE)/CGraflibTga.cpp \
+           $(LIBBASE)/CGraflibJpeg.cpp \
+           $(LIBBASE)/CGraphicsJpeg.cpp \
+           $(LIBBASE)/CGL_MatObject.cpp \
+           $(LIBBASE)/CGL_Texture.cpp \
+           $(LIBBASE)/COpenGL.cpp \
+           $(LIBBASE)/CGL_Camera.cpp \
+           $(LIBBASE)/CGL_Object.cpp \
+           $(LIBBASE)/CGL_Disk.cpp \
+           $(LIBBASE)/CGL_Circle.cpp \
+           $(LIBBASE)/CGL_GLU_Object.cpp \
+           $(LIBBASE)/CGL_GLU_Sphere.cpp \
+           $(LIBBASE)/CGL_FontTableau.cpp \
+           $(NULL)
+           
+           
+#
+
+CCFLAGS = -I$(INCPATH) -I$(INCGL) -O2 -L$(LIBBASE)
+#
+TARGET   = ../dieplaneten
+SUPERLIB = $(LIBBASE)/libsuperlib-linux.a
+#
+default : $(SUPERLIB) $(TARGET)
+#
+#
+.cpp.o:
+	$(C++) -c $(CCFLAGS) -o$@ $<
+#
+clean:
+	rm -f ./$(SRCPATH)/src/*.o
+	rm -f ./$(SRCPATH)/lib/*.o
+	rm $(SUPERLIB)
+#
+OBJECTS1 = $(CPPFILES:.cpp=.o)
+OBJECTS2 = $(LIBFILES:.cpp=.o)
+#
+#
+#
+LDFLAGS =  -lm -lsuperlib-linux  -lGLU -lglut -lGL -ljpeg
+$(SUPERLIB) : $(OBJECTS2)
+	ar -r $(SUPERLIB) $(OBJECTS2)
+#
+#
+$(TARGET) : $(OBJECTS1) $(SUPERLIB) makefile-linux
+	$(C++) -o $(TARGET) $(OBJECTS1) $(LDFLAGS) $(CCFLAGS)
+#
+#
+

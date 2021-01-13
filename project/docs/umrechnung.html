@@ -1,0 +1,69 @@
+<html>
+<body>
+
+<script>
+function CalcLatiLong()
+{
+  var Latitude  = document.FormCalc.lati.value;
+	var Longitude = document.FormCalc.long.value;
+
+	document.FormCalc.latifaktor.value = 1.0 - (Latitude / 180.0 + 0.5);
+	document.FormCalc.longfaktor.value = (Longitude / 360.0) + 0.5;
+
+}
+</script>
+
+
+<form action="" name="FormCalc" method="get">
+
+<table>
+
+
+
+<!-- --------------------------------------------
+
+    Longitude 
+
+----------------------------------------------- -->
+
+<tr>
+  <td>Longitude</td>
+	<td><input type="text" name="long"></td>
+</tr>
+<tr>
+	<td>Faktor</td>
+	<td><input type="text" name="longfaktor"></td>  
+</tr>
+
+<!-- --------------------------------------------
+
+    Latitude 
+
+----------------------------------------------- -->
+
+<tr>
+  <td>Latitude</td>
+	<td><input type="text" name="lati"></td>
+</tr>
+<tr>
+	<td>Faktor</td>
+	<td><input type="text" name="latifaktor"></td>  
+</tr>
+
+</table>
+
+<!-- --------------------------------------------
+
+
+----------------------------------------------- -->
+
+<tr>
+  <td>&nbsp;</td>
+  <td><input type="button" onClick="CalcLatiLong();" value=" Convert"></td>
+</tr>
+
+
+</form>
+
+</body>
+</html>

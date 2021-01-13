@@ -1,0 +1,58 @@
+#------------------------------------------------------------------
+#
+#  Merkur
+#
+#------------------------------------------------------------------
+NAME	BOX	MerkurInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	MondeMerkurStr	5	20	LEFT_TOP
+CHILD	DurchmesserMerkurStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitMerkurStr	5	60	LEFT_TOP
+CHILD	FluchtMerkurStr	5	80	LEFT_TOP
+CHILD	MasseMerkurStr	5	100	LEFT_TOP
+CHILD	hoch23str	66	95	LEFT_TOP
+CHILD	FallMerkurStr	5	120	LEFT_TOP
+CHILD	hoch2str	50	115	LEFT_TOP
+CHILD	RotationMerkurStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+NAME	STRING	MondeMerkurStr
+REF	Verdana13
+TEXT	DE	-
+TEXT	EN	-
+#
+NAME	STRING	DurchmesserMerkurStr
+REF	Verdana13
+TEXT	DE	4.879 km
+TEXT	EN	4,879 km
+#
+NAME	STRING	UmlaufzeitMerkurStr
+REF	Verdana13
+TEXT	DE	87,969 Tage
+TEXT	EN	87.969 days
+#
+NAME	STRING	FluchtMerkurStr
+REF	Verdana13
+TEXT	DE	4,3 km/s
+TEXT	EN	4.3 km/s
+#
+NAME	STRING	MasseMerkurStr
+REF	Verdana13
+TEXT	DE	3,302 * 10    kg
+TEXT	EN	3.302 * 10    kg
+#
+NAME	STRING	RotationMerkurStr
+REF	Verdana13
+TEXT	DE	58 h 15 min 36 min
+TEXT	EN	58 h 15 min 36 min
+#
+NAME	STRING	FallMerkurStr
+REF	Verdana13
+TEXT	DE	3,7 m/s
+TEXT	EN	3.7 m/s
+#

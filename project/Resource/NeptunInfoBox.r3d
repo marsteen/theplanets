@@ -1,0 +1,58 @@
+#------------------------------------------------------------------
+#
+#  Neptun
+#
+#------------------------------------------------------------------
+NAME	BOX	NeptunInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	MondeNeptunStr	5	20	LEFT_TOP
+CHILD	DurchmesserNeptunStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitNeptunStr	5	60	LEFT_TOP
+CHILD	FluchtNeptunStr	5	80	LEFT_TOP
+CHILD	MasseNeptunStr	5	100	LEFT_TOP
+CHILD	hoch26str	66	95	LEFT_TOP
+CHILD	FallNeptunStr	5	120	LEFT_TOP
+CHILD	hoch2str	64	115	LEFT_TOP
+CHILD	RotationNeptunStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+NAME	STRING	MondeNeptunStr
+REF	Verdana13
+TEXT	DE	13
+TEXT	EN	13
+#
+NAME	STRING	DurchmesserNeptunStr
+REF	Verdana13
+TEXT	DE	48.528 km
+TEXT	EN	48,528 km
+#
+NAME	STRING	UmlaufzeitNeptunStr
+REF	Verdana13
+TEXT	DE	164,79 Jahre
+TEXT	EN	164.79 years
+#
+NAME	STRING	FluchtNeptunStr
+REF	Verdana13
+TEXT	DE	23,5 km/s
+TEXT	EN	23.5 km/s
+#
+NAME	STRING	MasseNeptunStr
+REF	Verdana13
+TEXT	DE	1,024 * 10    kg
+TEXT	EN	1.024 * 10    kg
+#
+NAME	STRING	RotationNeptunStr
+REF	Verdana13
+TEXT	DE	16 h 6 min 36 s
+TEXT	EN	16 h 6 min 36 s
+#
+NAME	STRING	FallNeptunStr
+REF	Verdana13
+TEXT	DE	11,15 m/s
+TEXT	EN	11.15 m/s
+#

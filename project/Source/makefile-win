@@ -1,0 +1,83 @@
+#**********************************************************************
+#
+# DiePlaneten - makefile
+#
+# written 2007 by Martin Steen
+# dieplaneten@martin-steen.de
+#
+#**********************************************************************
+#
+# C++ : Name of C++ Compiler
+#
+C++       = g++
+#
+# INCGL   : where OpenGL include files are
+# INCGLUT : where GLUT include files are
+# LIBGLUT : where the GLUT library is
+#
+INCGL     = /mingw/include/GL
+INCGLUT   = /mingw/include/GL
+LIBGLUT   = /mingw/lib
+#
+# *** NO NEED TO CHANGE ANYTHING BEYOND THIS POINT ***
+#
+SRCPATH   = .
+INCPATH   = ./$(SRCPATH)/include
+LIBBASE   = ./$(SRCPATH)/lib
+SRCBASE   = ./$(SRCPATH)/src
+#
+#
+#
+.SUFFIXES : .cpp .obj
+#
+#
+#
+CPPFILES = $(SRCBASE)/main.cpp \
+           $(SRCBASE)/CGLApplication.cpp \
+           $(SRCBASE)/COpenGLAction.cpp
+#
+#
+#             
+include libfiles.mk
+#
+#  Headers
+#
+HEADERS = $(SRCBASE)/CGLApplication.h $(SRCBASE)/SPlanetDesc.h $(SRCBASE)/Superlib.h           
+#
+CCFLAGS = -mwindows -mwin32 -I$(INCPATH) -I$(INCGL) -O2 -L$(LIBGLUT) -L$(LIBBASE)
+#
+TARGET   = ../dieplaneten.exe
+SUPERLIB = $(LIBBASE)/libsuperlib-win.a
+#
+default : $(SUPERLIB) $(TARGET)
+#
+#
+.cpp.obj:
+	$(C++) -c $(CCFLAGS) -o$@ $<
+#
+clean:
+	rm -vf ./$(SRCPATH)/src/*.obj
+	rm -vf $(TARGET)
+#
+OBJECTS1 = $(CPPFILES:.cpp=.obj)
+OBJECTS2 = $(LIBFILES:.cpp=.obj)
+#
+$(SRCBASE)/main.o : $(SRCBASE)/main.cpp $(HEADERS)
+#
+LDFLAGS = -lm -lsuperlib-win -lglu32  -lfreeglut -lglaux -lopengl32 -lgdi32 -lwinmm -ljpeg-win
+#
+#
+# Making the superlib-archive
+#
+$(SUPERLIB) : $(OBJECTS2)
+	ar -r $(SUPERLIB) $(OBJECTS2)
+#
+#
+# Making the target-exe
+#
+$(TARGET) : $(OBJECTS1) $(SUPERLIB)
+	$(C++) -o $(TARGET) $(OBJECTS1) $(LDFLAGS) $(CCFLAGS)
+	strip $(TARGET)
+#
+#
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+mkdir Installer/dieplaneten-sgi
+cp docs/sgi/liesmich.txt Installer/dieplaneten-sgi
+cp docs/sgi/readme.txt Installer/dieplaneten-sgi
+cp dieplaneten-sgi Installer/dieplaneten-sgi
+cp -r planeten Installer/dieplaneten-sgi
+cp -r sonne    Installer/dieplaneten-sgi
+cp -r Resource Installer/dieplaneten-sgi
+cd Installer
+tar cvf dieplaneten-sgi.tar dieplaneten-sgi
+gzip dieplaneten-sgi.tar
+cd ..
+
+

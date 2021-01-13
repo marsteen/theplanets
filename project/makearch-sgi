@@ -1,0 +1,4 @@
+#!/bin/sh
+tar cvf dieplaneten-sgi.tar dieplaneten-sgi planeten Resource
+gzip dieplaneten-sgi.tar
+

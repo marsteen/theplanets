@@ -1,0 +1,4 @@
+CMDLINE=CC -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -c -I././include -I/usr/include/GL -O2 -L/usr/nekoware/lib -L././lib -n32 lib/CDatabase3.cpp -o ././lib/CDatabase3.o
+PWD=/usr/people/martin/projekte/dieplaneten3/Source
+----
+__uninitialized_copy_aux__3stdGPCQ2_3std78basic_string__pt__58_cQ2_3std20char_traits__pt__2_cQ2_3std18allocator__pt__2_cT1PQ2_3std78basic_string__pt__58_cQ2_3std20char_traits__pt__2_cQ2_3std18allocator__pt__2_c12__false_type

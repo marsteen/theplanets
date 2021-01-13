@@ -1,0 +1,54 @@
+#------------------------------------------------------------------
+#
+#  Kallisto
+#
+#------------------------------------------------------------------
+#
+NAME	BOX	KallistoInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	DurchmesserKallistoStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitKallistoStr	5	60	LEFT_TOP
+CHILD	FluchtKallistoStr	5	80	LEFT_TOP
+CHILD	MasseKallistoStr	5	100	LEFT_TOP
+CHILD	hoch23str	66	95	LEFT_TOP
+CHILD	FallKallistoStr	5	120	LEFT_TOP
+CHILD	hoch2str	57	115	LEFT_TOP
+CHILD	RotationKallistoStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+#
+NAME	STRING	DurchmesserKallistoStr
+REF	Verdana13
+TEXT	DE	4.820 km
+TEXT	EN	4,820 km
+#
+NAME	STRING	UmlaufzeitKallistoStr
+REF	Verdana13
+TEXT	DE	16,689 Tage
+TEXT	EN	16.689 days
+#
+NAME	STRING	FluchtKallistoStr
+REF	Verdana13
+TEXT	DE	2,4 km/s
+TEXT	EN	2.4 km/s
+#
+NAME	STRING	MasseKallistoStr
+REF	Verdana13
+TEXT	DE	1,076 * 10    kg
+TEXT	EN	1.076 * 10    kg
+#
+NAME	STRING	RotationKallistoStr
+REF	Verdana13
+TEXT	DE	16 d 16 h 32 m
+TEXT	EN	16 d 16 h 32 m
+#
+NAME	STRING	FallKallistoStr
+REF	Verdana13
+TEXT	DE	1,32 m/s
+TEXT	EN	1.32 m/s
+#

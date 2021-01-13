@@ -1,0 +1,13 @@
+#!/bin/sh
+mkdir Installer/dieplaneten-linux
+cp docs/linux/liesmich.txt Installer/dieplaneten-linux
+cp docs/linux/readme.txt Installer/dieplaneten-linux
+cp dieplaneten Installer/dieplaneten-linux
+cp -r planeten Installer/dieplaneten-linux
+cp -r sonne    Installer/dieplaneten-linux
+cp -r Resource Installer/dieplaneten-linux
+cd Installer
+tar cvfz dieplaneten-linux.tar.gz dieplaneten-linux
+cd ..
+
+

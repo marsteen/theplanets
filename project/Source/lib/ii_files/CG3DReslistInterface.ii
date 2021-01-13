@@ -1,0 +1,5 @@
+CMDLINE=CC -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -c -I././include -I/usr/include/GL -O2 -L/usr/nekoware/lib -L././lib -n32 lib/CG3DReslistInterface.cpp -o ././lib/CG3DReslistInterface.o
+PWD=/usr/people/martin/projekte/dieplaneten3/Source
+----
+__as__17CVector2__pt__2_fG17CVector2__pt__2_f
+__pl__17CVector2__pt__2_fG17CVector2__pt__2_f

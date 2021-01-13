@@ -1,0 +1,58 @@
+#------------------------------------------------------------------
+#
+#  Saturn
+#
+#------------------------------------------------------------------
+NAME	BOX	SaturnInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	MondeSaturnStr	5	20	LEFT_TOP
+CHILD	DurchmesserSaturnStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitSaturnStr	5	60	LEFT_TOP
+CHILD	FluchtSaturnStr	5	80	LEFT_TOP
+CHILD	MasseSaturnStr	5	100	LEFT_TOP
+CHILD	hoch26str	66	95	LEFT_TOP
+CHILD	FallSaturnStr	5	120	LEFT_TOP
+CHILD	hoch2str	64	115	LEFT_TOP
+CHILD	RotationSaturnStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+NAME	STRING	MondeSaturnStr
+REF	Verdana13
+TEXT	DE	60
+TEXT	EN	60
+#
+NAME	STRING	DurchmesserSaturnStr
+REF	Verdana13
+TEXT	DE	120.536 km
+TEXT	EN	120,536 km
+#
+NAME	STRING	UmlaufzeitSaturnStr
+REF	Verdana13
+TEXT	DE	29,457 Jahre
+TEXT	EN	29.457 days
+#
+NAME	STRING	FluchtSaturnStr
+REF	Verdana13
+TEXT	DE	35,5 km/s
+TEXT	EN	35.5 km/s
+#
+NAME	STRING	MasseSaturnStr
+REF	Verdana13
+TEXT	DE	5,685 * 10    kg
+TEXT	EN	5.685 * 10    kg
+#
+NAME	STRING	RotationSaturnStr
+REF	Verdana13
+TEXT	DE	10 h 47 min
+TEXT	EN	10 h 47 min
+#
+NAME	STRING	FallSaturnStr
+REF	Verdana13
+TEXT	DE	10,44 m/s
+TEXT	EN	10.44 m/s
+#

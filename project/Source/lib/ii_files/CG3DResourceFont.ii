@@ -1,0 +1,3 @@
+CMDLINE=CC -DEFAULT:abi=n32:isa=mips4:proc=r10k -c -I././include -I/usr/include/GL -O2 -L/usr/nekoware/lib -L././lib -n32 lib/CG3DResourceFont.cpp -o ././lib/CG3DResourceFont.o
+PWD=/usr/people/martin/projekte/dieplaneten3/Source
+----

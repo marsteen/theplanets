@@ -1,0 +1,37 @@
+// kate: tab-width 16;
+#
+NAME	BOX	AppInfoBox
+FRECT	0	0	320	240	VOID
+COLORREF	BOXCOLOR	CGREY10	0
+COLORREF	FRAMECOLOR	CGREY80	0
+CHILD	DiePlanetenStr	0	20	CENTER_TOP
+CHILD	VersionString	0	40	CENTER_TOP
+CHILD	AutorString	0	100	CENTER_TOP
+CHILD	EmailString	0	120	CENTER_TOP
+CHILD	OkButton	0	200	CENTER_TOP
+#
+NAME	STRING	DiePlanetenStr
+REF	Verdana13
+TEXT	DE	DIE PLANETEN
+TEXT	EN	DIE PLANETEN
+#
+NAME	STRING	VersionString
+REF	Verdana12
+TEXT	DE	Version 1.4.1 / 03.10.2009
+TEXT	EN	Version 1.4.1 / 10-03-2009
+#
+NAME	STRING	AutorString
+REF	Verdana13
+TEXT	DE	Autor: Martin Steen
+TEXT	EN	Author: Martin Steen
+#
+NAME	STRING	EmailString
+REF	Verdana13
+TEXT	DE	E-Mail: martin@martin-steen.de
+TEXT	EN	E-Mail: martin@martin-steen.de
+#
+NAME	BUTTON	OkButton
+BTPROP	NOACTIVE
+REF	PlanetBox
+CHILD	OkStr	0	0	CENTER_CENTER
+#
