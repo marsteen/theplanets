@@ -1,4 +1,0 @@
-#!/bin/sh
-tar cvf dieplaneten-source.tar Source planeten sonne Resource makearch-*
-gzip dieplaneten-source.tar
-

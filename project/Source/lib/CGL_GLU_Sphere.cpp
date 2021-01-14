@@ -1,25 +1,28 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CGL_GLU_Sphere.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
 #include <iostream>
-using namespace std;
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <CGL_GLU_Sphere.h>
+
+using namespace std;
 
 //---------------------------------------------------------------------------
 //
@@ -34,18 +37,18 @@ using namespace std;
 
 void CGL_GLU_Sphere::CreateSphere(float Radius, int Slices, int Stacks, float* DiffuseMaterial)
 {
-	SetParams(GLU_OUTSIDE, GLU_FILL, GLU_SMOOTH, GL_FALSE);
+    SetParams(GLU_OUTSIDE, GLU_FILL, GLU_SMOOTH, GL_FALSE);
 
-	mRadius = Radius;
-	mSlices = Slices;
-	mStacks = Stacks;
+    mRadius = Radius;
+    mSlices = Slices;
+    mStacks = Stacks;
 
-	for (int i = 0; i < 4; i++)
-	{
-		mDiffuseMaterial[i] = DiffuseMaterial[i];
-		mAmbientMaterial[i] = DiffuseMaterial[i];
-	}
-	mUseTexture = false;
+    for (int i = 0; i < 4; i++)
+    {
+        mDiffuseMaterial[i] = DiffuseMaterial[i];
+        mAmbientMaterial[i] = DiffuseMaterial[i];
+    }
+    mUseTexture = false;
 }
 
 
@@ -62,35 +65,35 @@ void CGL_GLU_Sphere::CreateSphere(float Radius, int Slices, int Stacks, float* D
 
 void CGL_GLU_Sphere::CreateTexturedSphere(float Radius, int Slices, int Stacks, const char* TextureFile, const char* AlphaFile)
 {
-	//SetParams(GLU_INSIDE, GLU_FILL, GLU_SMOOTH, GL_TRUE);
-	SetParams(GLU_OUTSIDE, GLU_FILL, GLU_SMOOTH, GL_TRUE);
-	LoadTextureTga(TextureFile, false);
+    //SetParams(GLU_INSIDE, GLU_FILL, GLU_SMOOTH, GL_TRUE);
+    SetParams(GLU_OUTSIDE, GLU_FILL, GLU_SMOOTH, GL_TRUE);
+    LoadTextureTga(TextureFile, false);
 
-  /*
-	if (AlphaFile == NULL)
-	{
-		LoadTexture(TextureFile, false);
-	}
-	else
-	if (TextureFile == NULL)
-	{
-		LoadShadowMap(AlphaFile, false);
-		mStatus |= CGL_STATUS_ALPHA;
-	}
-	else
-	{
-		LoadTransparentTexture(TextureFile, AlphaFile);
-		mStatus |= CGL_STATUS_ALPHA;
-	}
-	*/
+    /*
+     * if (AlphaFile == NULL)
+     * {
+     *    LoadTexture(TextureFile, false);
+     * }
+     * else
+     * if (TextureFile == NULL)
+     * {
+     *    LoadShadowMap(AlphaFile, false);
+     *    mStatus |= CGL_STATUS_ALPHA;
+     * }
+     * else
+     * {
+     *    LoadTransparentTexture(TextureFile, AlphaFile);
+     *    mStatus |= CGL_STATUS_ALPHA;
+     * }
+     */
 
-	mRadius = Radius;
-	mSlices = Slices;
-	mStacks = Stacks;
+    mRadius = Radius;
+    mSlices = Slices;
+    mStacks = Stacks;
 
-	mUseTexture = true;
-
+    mUseTexture = true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -105,29 +108,29 @@ void CGL_GLU_Sphere::CreateTexturedSphere(float Radius, int Slices, int Stacks, 
 
 void CGL_GLU_Sphere::MakeObject()
 {
-	if (mUseTexture)
-	{
-		glEnable(GL_TEXTURE_2D);
+    if (mUseTexture)
+    {
+        glEnable(GL_TEXTURE_2D);
 
-		if (mStatus & CGL_STATUS_ALPHA)
-		{
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		}
+        if (mStatus & CGL_STATUS_ALPHA)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
 
-		glBindTexture(GL_TEXTURE_2D, mTexHandle);
-		gluSphere(mQuadObj, mRadius, mSlices, mStacks);
-		glDisable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, mTexHandle);
+        gluSphere(mQuadObj, mRadius, mSlices, mStacks);
+        glDisable(GL_TEXTURE_2D);
 
-		if (mStatus & CGL_STATUS_ALPHA)
-		{
-			glDisable(GL_BLEND);
-		}
-	}
-	else
-	{
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, mDiffuseMaterial);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, mAmbientMaterial);
-		gluSphere(mQuadObj, mRadius, mSlices, mStacks);
-	}
+        if (mStatus & CGL_STATUS_ALPHA)
+        {
+            glDisable(GL_BLEND);
+        }
+    }
+    else
+    {
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, mDiffuseMaterial);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, mAmbientMaterial);
+        gluSphere(mQuadObj, mRadius, mSlices, mStacks);
+    }
 }

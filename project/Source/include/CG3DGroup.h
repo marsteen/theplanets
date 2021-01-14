@@ -1,28 +1,27 @@
 class CG3DGroup
 {
-	public:
+    public:
 
-		CG3DGroup()
-		{
-			mGroup = -1;
-			mProperties = EBTPROP_AUTOGROUP;
-		}
-
-		void SetProperty(int f, bool v)
-		{
-			mProperties.Set(f, v);
-		}
+        CG3DGroup()
+        {
+            mGroup = -1;
+            mProperties = EBTPROP_AUTOGROUP;
+        }
 
 
-		void SetGroup(int g) { mGroup = g; }
-		int  Group() { return mGroup; }
-		void SetGroupParent(CG3DResource* gp) { mGroupParent = gp; }
+        void SetProperty(int f, bool v)
+        {
+            mProperties.Set(f, v);
+        }
 
-	protected:
 
-		int                  mGroup;      // Gruppe
-		CG3DResource*        mGroupParent;
-		CG3DStatus           mProperties; // Button properties
+        void SetGroup(int g) { mGroup = g; }
+        int Group() { return mGroup; }
+        void SetGroupParent(CG3DResource* gp) { mGroupParent = gp; }
+
+    protected:
+
+        int mGroup;                         // Gruppe
+        CG3DResource* mGroupParent;
+        CG3DStatus mProperties;             // Button properties
 };
-
-

@@ -1,3 +1,16 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CGraphicsJpeg.h
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
 
 #ifndef CGRAPHICSJPEG_H
 #define CGRAPHICSJPEG_H
@@ -6,68 +19,66 @@
 
 class CGraphicsJpeg
 {
-  public:
+    public:
 
-		void* ReadJpeg(const char* fname, int* Width, int* Height, int* ByteProPixel);
-    void* ReadJpeg(const char* fname, short* xko, short* yko, int TargetBitPerPixel);
-    void* ReadJpeg(const char* Filename, int* Width, int* Height, int TargetBitPerPixel);
-    bool  ReadJpegHeap(char *fname, short* xko, short* yko, int TargetBitPerPixel, void* Heap);
+        void* ReadJpeg(const char* fname, int* Width, int* Height, int* ByteProPixel);
+        void* ReadJpeg(const char* fname, short* xko, short* yko, int TargetBitPerPixel);
+        void* ReadJpeg(const char* Filename, int* Width, int* Height, int TargetBitPerPixel);
+        bool ReadJpegHeap(char* fname, short* xko, short* yko, int TargetBitPerPixel, void* Heap);
 
-    int   WriteJpeg(const char *fname,short xw, short yw,unsigned char *buffer, int jq);
-    int   WriteJpeg(FILE* fp, short xw, short yw, unsigned char *buffer, int jq);
-
-
-
-    bool OpenJpegRead(const char* filename, int* Width, int* Height, int* ByteProPixel);
-
-    bool ReadJpegLine(void);
-    void CloseJpeg(void);
-    bool GetJpegSize(const char* fname, int* xsize, int* ysize, int* channels=NULL);
-
-    void* OpenJpegFile(const char* filename);
-
-    bool OpenJpegLines(char* Filename);
-    bool ReadJpegLine(void* LineBuffer);
-    void CloseJpegLines(void);
-
-    bool OpenJpegWrite(const char* Filename, int Width, int Height, int JpegQuality);
-		void WriteJpegLine(void* LineBuffer);
-		void CloseJpegWrite(void);
-    void SetAppendMode(bool b) { mAppendMode = b; }
-
-	  void SetFileOffset(unsigned int fo, int fs)
-    {
-			mFileOffset = fo;
-			mFileSize   = fs;
-		}
+        int WriteJpeg(const char* fname, short xw, short yw, unsigned char* buffer, int jq);
+        int WriteJpeg(FILE* fp, short xw, short yw, unsigned char* buffer, int jq);
 
 
-    CGraphicsJpeg(void);
-    ~CGraphicsJpeg(void);
 
-  protected:
+        bool OpenJpegRead(const char* filename, int* Width, int* Height, int* ByteProPixel);
+
+        bool ReadJpegLine(void);
+        void CloseJpeg(void);
+        bool GetJpegSize(const char* fname, int* xsize, int* ysize, int* channels = NULL);
+
+        void* OpenJpegFile(const char* filename);
+
+        bool OpenJpegLines(char* Filename);
+        bool ReadJpegLine(void* LineBuffer);
+        void CloseJpegLines(void);
+
+        bool OpenJpegWrite(const char* Filename, int Width, int Height, int JpegQuality);
+        void WriteJpegLine(void* LineBuffer);
+        void CloseJpegWrite(void);
+
+        void SetAppendMode(bool b) { mAppendMode = b; }
+
+        void SetFileOffset(unsigned int fo, int fs)
+        {
+            mFileOffset = fo;
+            mFileSize = fs;
+        }
 
 
-  	bool InitJpegRead(int* Width, int* Height, int* ByteProPixel);
+        CGraphicsJpeg(void);
+        ~CGraphicsJpeg(void);
+
+    protected:
 
 
-    int  read_JPEG_file(const char * filename);
-    int  write_JPEG_file(const char * filename, int quality);
-    int  write_JPEG_file(FILE* outfile, int quality);
+        bool InitJpegRead(int* Width, int* Height, int* ByteProPixel);
 
-    void  put_scanline(unsigned char *line_buffer, int line_size);
 
-    int   mByteProPixel;
-    bool  mAppendMode;
-    char* mJparams;
+        int read_JPEG_file(const char* filename);
+        int write_JPEG_file(const char* filename, int quality);
+        int write_JPEG_file(FILE* outfile, int quality);
 
-    unsigned int mFileOffset;
-		unsigned int mFileSize;
+        void put_scanline(unsigned char* line_buffer, int line_size);
 
-    //unsigned char* mLinePointer;
+        int mByteProPixel;
+        bool mAppendMode;
+        char* mJparams;
 
+        unsigned int mFileOffset;
+        unsigned int mFileSize;
+
+        //unsigned char* mLinePointer;
 };
 
 #endif
-
-

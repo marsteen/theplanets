@@ -1,50 +1,71 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResourceRoot.h
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
+
 #ifndef CG3DRESOURCEROOT_H
 #define CG3DRESOURCEROOT_H
 
 
 class CG3DResourceRoot : public CG3DResource
 {
-	public:
+    public:
 
-		void Rollover(CVector2<int>* Mouse)
-		{
-			CG3DResource::Rollover(&mDrawParams, Mouse, false);
-		}
-
-		void DrawRoot(void)
-		{
-			CG3DResource::Draw(&mDrawParams);
-		}
-
-		void BackDraw(void)
-		{
-			CG3DResource::BackDraw(&mDrawParams);
-		}
-
-		void FrontDraw(void)
-		{
-			CG3DResource::FrontDraw(&mDrawParams);
-		}
+        void Rollover(CVector2<int>* Mouse)
+        {
+            CG3DResource::Rollover(&mDrawParams, Mouse, false);
+        }
 
 
-		void AdjustRoot()
-		{
-			CG3DResource::Adjust(&mDrawParams);
-		}
-		void CalcAlignPosition(void);
-		int  UnscaledWidth()  { return mBrect.Width(); }
-		int  UnscaledHeight() { return mBrect.Height(); }
-		void InitRoot(int w, int h)
-		{
-			mBrect.Set(0,0, w, h);
-			mDrawParams.mParentWidth  = UnscaledWidth();
-			mDrawParams.mParentHeight = UnscaledHeight();
-		}
+        void DrawRoot(void)
+        {
+            CG3DResource::Draw(&mDrawParams);
+        }
 
-	protected:
 
-		SG3DDrawParams   mDrawParams;
-		CRectT<int> 	   mBrect;
+        void BackDraw(void)
+        {
+            CG3DResource::BackDraw(&mDrawParams);
+        }
+
+
+        void FrontDraw(void)
+        {
+            CG3DResource::FrontDraw(&mDrawParams);
+        }
+
+
+        void AdjustRoot()
+        {
+            CG3DResource::Adjust(&mDrawParams);
+        }
+
+
+        void CalcAlignPosition(void);
+
+        int UnscaledWidth()  { return mBrect.Width(); }
+        int UnscaledHeight() { return mBrect.Height(); }
+        void InitRoot(int w, int h)
+        {
+            mBrect.Set(0, 0, w, h);
+            mDrawParams.mParentWidth = UnscaledWidth();
+            mDrawParams.mParentHeight = UnscaledHeight();
+        }
+
+
+    protected:
+
+        SG3DDrawParams mDrawParams;
+        CRectT<int> mBrect;
 };
 
 #endif

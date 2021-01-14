@@ -1,8 +1,19 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResourceList.h
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
 
-
-#ifndef CG3DRESOURCELIST
-#define CG3DRESOURCELIST
-
+#ifndef CG3DRESOURCELIST_H
+#define CG3DRESOURCELIST_H
 
 #ifdef _WIN32
 #include <windows.h>
@@ -40,17 +51,17 @@ using namespace std;
 
 enum EG3DChildStatus
 {
-	ERSTAT_HALIGN_NONE         = 0,
-	ERSTAT_HALIGN_CENTER       = 1,
-	ERSTAT_HALIGN_RIGHT        = 4,
-	ERSTAT_VALIGN_CENTER       = 8,
-	ERSTAT_VALIGN_BOTTOM       = 16,
-	ERSTAT_HALIGN_RIGHTOBJECT  = 32,
-	ERSTAT_VALIGN_BOTTOMOBJECT = 64,
-	ERSTAT_VALIGN_BOTTOM2      = 128
+    ERSTAT_HALIGN_NONE			= 0,
+    ERSTAT_HALIGN_CENTER		= 1,
+    ERSTAT_HALIGN_RIGHT			= 4,
+    ERSTAT_VALIGN_CENTER		= 8,
+    ERSTAT_VALIGN_BOTTOM		= 16,
+    ERSTAT_HALIGN_RIGHTOBJECT	= 32,
+    ERSTAT_VALIGN_BOTTOMOBJECT	= 64,
+    ERSTAT_VALIGN_BOTTOM2		= 128
 };
 
-#define ERSTAT_HALIGN_LEFT ERSTAT_HALIGN_NONE
+#define ERSTAT_HALIGN_LEFT    ERSTAT_HALIGN_NONE
 
 //---------------------------------------------------------------------------
 //
@@ -60,19 +71,19 @@ enum EG3DChildStatus
 
 enum EG3DStatus
 {
-	ESTAT_TESTINSIDE        = 1,
-	ESTAT_ACTIVE            = 2,
-	ESTAT_ACTIVATE_CHILDREN = 4,
-	ESTAT_DEBUG             = 8,
-	ESTAT_DISABLED          = 16,
-	ESTAT_BACKDRAW          = 32,   // als letztes zeichnen
-	ESTAT_DRAWNOW           = 64,   //
-	ESTAT_DRAW              = 128,  //
-	ESTAT_INHERITSCALE      = 256,  // Skalierung vom Eltern-Object übernehmen
-	ESTAT_TESTROLLOVER      = 512,
-	ESTAT_FRONTDRAW         = 1024, // als erstes zeichnen
-	ESTAT_REFERENCE         = 2048, // Alignment-Referenz
-	ESTAT_TOOLTIPP          = 2048, // Child ist Tooltip
+    ESTAT_TESTINSIDE		= 1,
+    ESTAT_ACTIVE			= 2,
+    ESTAT_ACTIVATE_CHILDREN = 4,
+    ESTAT_DEBUG				= 8,
+    ESTAT_DISABLED			= 16,
+    ESTAT_BACKDRAW			= 32,   // als letztes zeichnen
+    ESTAT_DRAWNOW			= 64,   //
+    ESTAT_DRAW				= 128,  //
+    ESTAT_INHERITSCALE		= 256,  // Skalierung vom Eltern-Object Ã¼bernehmen
+    ESTAT_TESTROLLOVER		= 512,
+    ESTAT_FRONTDRAW			= 1024, // als erstes zeichnen
+    ESTAT_REFERENCE			= 2048, // Alignment-Referenz
+    ESTAT_TOOLTIPP			= 2048, // Child ist Tooltip
 };
 
 //---------------------------------------------------------------------------
@@ -83,9 +94,9 @@ enum EG3DStatus
 
 enum EG3DButtonStatus
 {
-	EBTSTAT_NORMAL,
-	EBTSTAT_ROLLOVER,
-	EBTSTAT_ACTIVE
+    EBTSTAT_NORMAL,
+    EBTSTAT_ROLLOVER,
+    EBTSTAT_ACTIVE
 };
 
 //---------------------------------------------------------------------------
@@ -96,9 +107,9 @@ enum EG3DButtonStatus
 
 enum EG3DResetMode
 {
-	ERESET_ROLLOVER,
-	ERESET_DEACTIVATE,
-	ERESET_INIT
+    ERESET_ROLLOVER,
+    ERESET_DEACTIVATE,
+    ERESET_INIT
 };
 
 //---------------------------------------------------------------------------
@@ -109,13 +120,13 @@ enum EG3DResetMode
 
 enum EG3DButtonProp
 {
-	EBTPROP_TEXTROLLOVER = 1,
-	EBTPROP_ROLLOVER     = 2,
-	EBTPROP_ACTIVE       = 4,
-	EBTPROP_KEEPTXTROLL  = 8,
-	EBTPROP_AUTOGROUP    = 16,
-	EBTPROP_KLAPPBT      = 32,
-	EBTPROP_NOACTIVE     = 64    // Button wird nicht "aktiv"
+    EBTPROP_TEXTROLLOVER	= 1,
+    EBTPROP_ROLLOVER		= 2,
+    EBTPROP_ACTIVE			= 4,
+    EBTPROP_KEEPTXTROLL		= 8,
+    EBTPROP_AUTOGROUP		= 16,
+    EBTPROP_KLAPPBT			= 32,
+    EBTPROP_NOACTIVE		= 64 // Button wird nicht "aktiv"
 };
 
 
@@ -127,15 +138,15 @@ enum EG3DButtonProp
 
 enum EG3DStretchMode
 {
-	ESTRMODE_NONE = 0,
-	ESTRMODE_X    = 1,
-	ESTRMODE_Y    = 2
+    ESTRMODE_NONE	= 0,
+    ESTRMODE_X		= 1,
+    ESTRMODE_Y		= 2
 };
 
 enum EG3DSliderType
 {
-	ESLIDER_HORIZONTAL,
-	ESLIDER_VERTIKAL,
+    ESLIDER_HORIZONTAL,
+    ESLIDER_VERTIKAL,
 };
 
 //---------------------------------------------------------------------------
@@ -146,37 +157,37 @@ enum EG3DSliderType
 
 enum EResourceTag
 {
-	ERTAG_VOID,   	// nichts
-	ERTAG_NAME,   	// Name
-	ERTAG_TYPE,   	// Typ
-	ERTAG_POS,    	// XY-Position
-	ERTAG_OPOS,    	// XY-Position, optionsfeld
-	ERTAG_REF,    	// Referenz
-	ERTAG_PARENT, 	// Mutterobjekt
-	ERTAG_CHILD,  	// Kindobjekt
-	ERTAG_IRECT,  	// Image-Rechteck
-	ERTAG_FRECT,  	// Frame-Rechteck
-	ERTAG_TABL,   	// Tableau
-	ERTAG_TEXT,   	// Text
-	ERTAG_FILES,		// Grafikdatei- und Alphamaskendatei-namen
-	ERTAG_SCALE,  	// XY-Skalierung
-	ERTAG_FREF,   	// Frame-Referenz,
-	ERTAG_STATUS,   // Status,
-	ERTAG_COLOR,    // Farbe
-	ERTAG_COLORREF, // Farb-Verweis
-	ERTAG_GROUP,    // Gruppe (für Radio-Buttons)
-	ERTAG_LINE,     // Linie,
-	ERTAG_HALIGN,   // horiz. Schrift-Ausrichtung) für Button-Schrift
-	ERTAG_PBUTT,
-	ERTAG_STRETCH,  // Stretchmodus
-	ERTAG_TPARAMS,  // Texteingabefeld-Parameter
-	ERTAG_JOIN,     // Verknüpfung mit anderem Objekt
-	ERTAG_BTPROP,   // Button eigenschaft
-	ERTAG_CONTENT,  // Button Content
-	ERTAG_GPARENT,   // Group Parent (für Buttons);
-	ERTAG_SLIDERLIMIT, // Slider Limit
-	ERTAG_TOOLTIPP,    // Tooltipp
-	ERTAG_TOOLTIPPTIME // Tooltipp-Zeit
+    ERTAG_VOID,         // nichts
+    ERTAG_NAME,         // Name
+    ERTAG_TYPE,         // Typ
+    ERTAG_POS,          // XY-Position
+    ERTAG_OPOS,         // XY-Position, optionsfeld
+    ERTAG_REF,          // Referenz
+    ERTAG_PARENT,       // Mutterobjekt
+    ERTAG_CHILD,        // Kindobjekt
+    ERTAG_IRECT,        // Image-Rechteck
+    ERTAG_FRECT,        // Frame-Rechteck
+    ERTAG_TABL,         // Tableau
+    ERTAG_TEXT,         // Text
+    ERTAG_FILES,        // Grafikdatei- und Alphamaskendatei-namen
+    ERTAG_SCALE,        // XY-Skalierung
+    ERTAG_FREF,         // Frame-Referenz,
+    ERTAG_STATUS,       // Status,
+    ERTAG_COLOR,        // Farbe
+    ERTAG_COLORREF,     // Farb-Verweis
+    ERTAG_GROUP,        // Gruppe (fÃ¼r Radio-Buttons)
+    ERTAG_LINE,         // Linie,
+    ERTAG_HALIGN,       // horiz. Schrift-Ausrichtung) fÃ¼r Button-Schrift
+    ERTAG_PBUTT,
+    ERTAG_STRETCH,      // Stretchmodus
+    ERTAG_TPARAMS,      // Texteingabefeld-Parameter
+    ERTAG_JOIN,         // VerknÃ¼pfung mit anderem Objekt
+    ERTAG_BTPROP,       // Button eigenschaft
+    ERTAG_CONTENT,      // Button Content
+    ERTAG_GPARENT,      // Group Parent (fÃ¼r Buttons);
+    ERTAG_SLIDERLIMIT,  // Slider Limit
+    ERTAG_TOOLTIPP,     // Tooltipp
+    ERTAG_TOOLTIPPTIME  // Tooltipp-Zeit
 };
 
 //---------------------------------------------------------------------------
@@ -187,25 +198,24 @@ enum EResourceTag
 
 enum EResourceType
 {
-	ERTYPE_ANY,          // Beliebig
-	ERTYPE_VOID,         // Ungültig (nicht gesetzt)
-	ERTYPE_KNOT,         // Knoten
-	ERTYPE_STRING,       // String
-	ERTYPE_BUTTON,       // Button
-	ERTYPE_DIALOG,       // Dialog
-	ERTYPE_IMAGE,        // Image
-	ERTYPE_TABLEAU,      // Grafik-Tableau
-	ERTYPE_FONT,         // Zeichensatz
-	ERTYPE_FRAME,        // Rahmen
-	ERTYPE_BOX,          // Kasten
-	ERTYPE_OBUTTON,      // Option-Button
-	ERTYPE_ROOT,         // Wurzel
-	ERTYPE_LINE,         // Linie
-	ERTYPE_TEXTFIELD,    // Texteingabe-Feld
-	ERTYPE_SLIDER,       // Schieberegler
-	ERTYPE_TOOLTIPP,     // Tooltipp
-	ERTYPE_CLIPFRAME     // Clipping Rechteck
-
+    ERTYPE_ANY,             // Beliebig
+    ERTYPE_VOID,            // UngÃ¼ltig (nicht gesetzt)
+    ERTYPE_KNOT,            // Knoten
+    ERTYPE_STRING,          // String
+    ERTYPE_BUTTON,          // Button
+    ERTYPE_DIALOG,          // Dialog
+    ERTYPE_IMAGE,           // Image
+    ERTYPE_TABLEAU,         // Grafik-Tableau
+    ERTYPE_FONT,            // Zeichensatz
+    ERTYPE_FRAME,           // Rahmen
+    ERTYPE_BOX,             // Kasten
+    ERTYPE_OBUTTON,         // Option-Button
+    ERTYPE_ROOT,            // Wurzel
+    ERTYPE_LINE,            // Linie
+    ERTYPE_TEXTFIELD,       // Texteingabe-Feld
+    ERTYPE_SLIDER,          // Schieberegler
+    ERTYPE_TOOLTIPP,        // Tooltipp
+    ERTYPE_CLIPFRAME        // Clipping Rechteck
 };
 
 //---------------------------------------------------------------------------
@@ -216,15 +226,15 @@ enum EResourceType
 
 enum EParseError
 {
-	EPERR_NOERROR,
-	EPERR_UNKNOWN_KEYWORD,
-	EPERR_UNKNOWN_TYPE,
-	EPERR_NOTDEFINED,
-	EPERR_FINDERROR,
-	EPERR_WRONG_PARAMETERCOUNT,
-	EPERR_LANG_UNSUPPORTED,
-	EPERR_COLORUNKNOWN,
-	EPERR_DOUBLE_NAME
+    EPERR_NOERROR,
+    EPERR_UNKNOWN_KEYWORD,
+    EPERR_UNKNOWN_TYPE,
+    EPERR_NOTDEFINED,
+    EPERR_FINDERROR,
+    EPERR_WRONG_PARAMETERCOUNT,
+    EPERR_LANG_UNSUPPORTED,
+    EPERR_COLORUNKNOWN,
+    EPERR_DOUBLE_NAME
 };
 
 
@@ -268,19 +278,19 @@ class CG3DResourceFrame;
 
 class CInsideObject
 {
-	public:
+    public:
 
-		CInsideObject(CG3DResource* res) : mInsideObject(res) { }
-		CG3DResource* mInsideObject;
+        CInsideObject(CG3DResource* res) : mInsideObject(res) { }
+        CG3DResource* mInsideObject;
 };
 
 
 class CSearchChild
 {
-	public:
+    public:
 
-		CSearchChild(CG3DResChild* cld) : mSearchChild(cld) { }
-		CG3DResChild* mSearchChild;
+        CSearchChild(CG3DResChild* cld) : mSearchChild(cld) { }
+        CG3DResChild* mSearchChild;
 };
 
 
@@ -293,59 +303,54 @@ class CSearchChild
 
 class CG3DResourceList : public list<CG3DResource*>
 {
-	public:
+    public:
 
-		CG3DResourceList()
-		{
-			mErrCode          = EPERR_NOERROR;
-			mTextField        = NULL;
-			mTooltippTime     = 0;
-			mLastInsideObject = NULL;
-			mInsideObject     = NULL;
-			mRoot             = NULL;
-		}
-
-		~CG3DResourceList();
-
-		bool Read(string& Filename);
-		void Reload(void);
-		void Show(void);
-		CG3DResource* Find(CG3DResource* Ref, string& Name, EResourceType rtype=ERTYPE_ANY);
-		void DrawList(void);
-		void Adjust(void);
-		bool Rollover(CVector2<int>* Mouse);
-		int  ClickAction(string* clo, CG3DResChild** ccld);
-		CG3DResChild* SearchChild(string& Name);
-
-		EParseError            mErrCode;
-		CG3DResourceTextfield* mTextField;
-
-	protected:
+        CG3DResourceList()
+        {
+            mErrCode = EPERR_NOERROR;
+            mTextField = NULL;
+            mTooltippTime = 0;
+            mLastInsideObject = NULL;
+            mInsideObject = NULL;
+            mRoot = NULL;
+        }
 
 
+        ~CG3DResourceList();
 
-		CG3DResource*     mInsideObject;
-		CG3DResource*     mLastInsideObject;
-		CG3DColorList     mColorList;
-		CG3DResourceRoot* mRoot;
-		int               mTooltippTime;
-		string            mFilename;
-		string            mBasePath;
+        bool Read(string& Filename);
+        void Reload(void);
+        void Show(void);
+        CG3DResource* Find(CG3DResource* Ref, string& Name, EResourceType rtype = ERTYPE_ANY);
+        void DrawList(void);
+        void Adjust(void);
+        bool Rollover(CVector2<int>* Mouse);
+        int ClickAction(string* clo, CG3DResChild** ccld);
+        CG3DResChild* SearchChild(string& Name);
 
-		bool CheckParamCount(CRecord& dr, int ExpectedParams);
-		void ResolveChilds(void);
-		void ResolveRefs(void);
-		int  GetAlignStatus(string& AlignString, CRecord* dr);
-		int  GetStretchMode(string& tag, CRecord* dr);
-		void TestDoubleEntry(string& Name, CRecord* dr);
-		void ExtractBasePath(string& FilePath);
-		void AdjustFonts(void);
+        EParseError mErrCode;
+        CG3DResourceTextfield* mTextField;
+
+    protected:
 
 
 
+        CG3DResource* mInsideObject;
+        CG3DResource* mLastInsideObject;
+        CG3DColorList mColorList;
+        CG3DResourceRoot* mRoot;
+        int mTooltippTime;
+        string mFilename;
+        string mBasePath;
 
+        bool CheckParamCount(CRecord& dr, int ExpectedParams);
+        void ResolveChilds(void);
+        void ResolveRefs(void);
+        int GetAlignStatus(string& AlignString, CRecord* dr);
+        int GetStretchMode(string& tag, CRecord* dr);
+        void TestDoubleEntry(string& Name, CRecord* dr);
+        void ExtractBasePath(string& FilePath);
+        void AdjustFonts(void);
 };
 
 #endif // CG3DRESOURCELIST
-
-

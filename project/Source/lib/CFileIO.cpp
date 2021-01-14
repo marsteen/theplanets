@@ -1,13 +1,16 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CFileIO.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
 #include <iostream>
 #include <fstream>
@@ -16,12 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-using namespace std;
-
 #include <CFileIO.h>
 #include <CList.h>
 #include <CList.hpp>
 
+using namespace std;
 
 //---------------------------------------------------------------------------
 //
@@ -36,10 +38,12 @@ using namespace std;
 
 int CFileIO::GetChar()
 {
-  char ch;
-  mFs->get(ch);
-  return ch;
+    char ch;
+
+    mFs->get(ch);
+    return ch;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -51,9 +55,13 @@ int CFileIO::GetChar()
 
 bool CFileIO::IsEof()
 {
-	if (mFs == NULL) return true;
-  return mFs->eof();
+    if (mFs == NULL)
+    {
+        return true;
+    }
+    return mFs->eof();
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -67,11 +75,12 @@ bool CFileIO::IsEof()
 
 void CFileIO::Clear()
 {
-	if (mFs != NULL)
-	{
-		mFs->clear();
-	}
+    if (mFs != NULL)
+    {
+        mFs->clear();
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -85,8 +94,9 @@ void CFileIO::Clear()
 
 void CFileIO::SkipBytes(int nBytes)
 {
-	mFs->seekg(nBytes, ios_base::cur);
+    mFs->seekg(nBytes, ios_base::cur);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -101,13 +111,15 @@ void CFileIO::SkipBytes(int nBytes)
 
 int CFileIO::GetFileSize(const char* Filename)
 {
-  long FileSize;
-  ifstream fin(Filename, ios::in | ios::binary);
-  fin.seekg(0, ios::end);
-  FileSize = fin.tellg();
-  fin.close();
-  return FileSize;
+    long FileSize;
+    ifstream fin(Filename, ios::in | ios::binary);
+
+    fin.seekg(0, ios::end);
+    FileSize = fin.tellg();
+    fin.close();
+    return FileSize;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -125,11 +137,15 @@ int CFileIO::GetFileSize(const char* Filename)
 
 bool CFileIO::OpenFileRead(const char* Filename, int OpenMode)
 {
-  if (mFs != NULL) delete mFs;
-  mFs = new fstream(Filename, std::_Ios_Openmode::in | std::_Ios_Openmode::binary);
-  mOpenRead = mFs->good();
-  return mOpenRead;
+    if (mFs != NULL)
+    {
+        delete mFs;
+    }
+    mFs = new fstream(Filename, std::_Ios_Openmode::in | std::_Ios_Openmode::binary);
+    mOpenRead = mFs->good();
+    return mOpenRead;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -147,11 +163,15 @@ bool CFileIO::OpenFileRead(const char* Filename, int OpenMode)
 
 bool CFileIO::OpenFileWrite(const char* Filename, int OpenMode)
 {
-  if (mFs != NULL) delete mFs;
-  mFs = new fstream(Filename, std::_Ios_Openmode::out | std::_Ios_Openmode::binary);
-  mOpenWrite = mFs->good();
-  return mOpenWrite;
+    if (mFs != NULL)
+    {
+        delete mFs;
+    }
+    mFs = new fstream(Filename, std::_Ios_Openmode::out | std::_Ios_Openmode::binary);
+    mOpenWrite = mFs->good();
+    return mOpenWrite;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -169,10 +189,13 @@ bool CFileIO::OpenFileWrite(const char* Filename, int OpenMode)
 
 bool CFileIO::OpenFileAppend(const char* Filename, int OpenMode)
 {
-  if (mFs != NULL) delete mFs;
-  mFs = new fstream(Filename, std::_Ios_Openmode::app | std::_Ios_Openmode::binary);
-  mOpenWrite = mFs->good();
-  return mOpenWrite;
+    if (mFs != NULL)
+    {
+        delete mFs;
+    }
+    mFs = new fstream(Filename, std::_Ios_Openmode::app | std::_Ios_Openmode::binary);
+    mOpenWrite = mFs->good();
+    return mOpenWrite;
 }
 
 
@@ -199,22 +222,23 @@ bool CFileIO::OpenFileAppend(const char* Filename, int OpenMode)
 
 void* CFileIO::ReadFile(const char* Filename, int* nBytes)
 {
-  char* buffer = NULL;
-  *nBytes = CFileIO::GetFileSize(Filename);
-  if (nBytes > 0)
-  {
-    if (OpenFileRead(Filename, ios::binary))
+    char* buffer = NULL;
+
+    *nBytes = CFileIO::GetFileSize(Filename);
+    if (nBytes > 0)
     {
-      buffer = new char[*nBytes+1];
-      if (buffer != NULL)
-      {
-        ReadBytes(buffer, *nBytes);
-        buffer[*nBytes] = 0;
-      }
+        if (OpenFileRead(Filename, ios::binary))
+        {
+            buffer = new char[*nBytes+1];
+            if (buffer != NULL)
+            {
+                ReadBytes(buffer, *nBytes);
+                buffer[*nBytes] = 0;
+            }
+        }
+        CloseFile();
     }
-    CloseFile();
-  }
-  return buffer;
+    return buffer;
 }
 
 
@@ -227,22 +251,26 @@ void* CFileIO::ReadFile(const char* Filename, int* nBytes)
 
 char* CFileIO::ReplaceApp(const char* Filename, const char* neuApp)
 {
-  char  NameBuffer[512];
-  char* NeuFilename;
+    char NameBuffer[512];
+    char* NeuFilename;
 
-  strcpy(NameBuffer, Filename);
-  char* Punkt = strrchr(NameBuffer, '.');
+    strcpy(NameBuffer, Filename);
+    char* Punkt = strrchr(NameBuffer, '.');
 
-  if (Punkt != NULL) *Punkt = 0;
+    if (Punkt != NULL)
+    {
+        *Punkt = 0;
+    }
 
-  strcat(NameBuffer, neuApp);
+    strcat(NameBuffer, neuApp);
 
-  NeuFilename = new char[strlen(NameBuffer) + 1];
+    NeuFilename = new char[strlen(NameBuffer) + 1];
 
-  strcpy(NeuFilename, NameBuffer);
+    strcpy(NeuFilename, NameBuffer);
 
-  return NeuFilename;
+    return NeuFilename;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -257,12 +285,13 @@ char* CFileIO::ReplaceApp(const char* Filename, const char* neuApp)
 
 bool CFileIO::WriteBytes(void* buffer, int nBytes)
 {
-  if (mOpenWrite)
-  {
-    mFs->write((char*) buffer, nBytes);
-  }
-  return mOpenWrite;
+    if (mOpenWrite)
+    {
+        mFs->write((char*)buffer, nBytes);
+    }
+    return mOpenWrite;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -274,8 +303,9 @@ bool CFileIO::WriteBytes(void* buffer, int nBytes)
 
 bool CFileIO::WriteString(char* str)
 {
- 	return WriteBytes(str, strlen(str));
+    return WriteBytes(str, strlen(str));
 }
+
 
 #if 0
 //---------------------------------------------------------------------------
@@ -288,9 +318,9 @@ bool CFileIO::WriteString(char* str)
 
 class CStrpos : public CListElem<CStrpos>
 {
-	public:
+    public:
 
-		char* mPos;
+        char* mPos;
 };
 
 class CStrposList : public CList<CStrpos>
@@ -300,72 +330,74 @@ class CStrposList : public CList<CStrpos>
 
 static void CopyStringBytes(char* dst, char* src, int num)
 {
-	int i;
-	for (i = 0; (i < num) && (*src != 0); i++)
-	{
-		*(dst++) = *(src++);
-	}
-	*dst = 0;
+    int i;
+
+    for (i = 0; (i < num) && (*src != 0); i++)
+    {
+        *(dst++) = *(src++);
+    }
+    *dst = 0;
 }
+
 
 char* CFileIO::ReplaceAllStrings(char* SrcString, char* SearchString, char* SubString, int* Count)
 {
-	CStrposList slist;
-	int   cnt = 0;
-	char* pos;
-	char* StartPos  = SrcString;
-	int   LenSearch = strlen(SearchString);
-	int   LenSub    = strlen(SubString);
-	int   LenNew;
-	char* NewString = NULL;
+    CStrposList slist;
+    int cnt = 0;
+    char* pos;
+    char* StartPos = SrcString;
+    int LenSearch = strlen(SearchString);
+    int LenSub = strlen(SubString);
+    int LenNew;
+    char* NewString = NULL;
 
-	do
-	{
-		pos = strstr(StartPos, SearchString);
-		if (pos != NULL)
-		{
-			CStrpos* se = slist.NewListElem();
-			se->mPos = pos;
-			StartPos = pos + LenSearch;
-			cnt++;
-		}
-	}
-	while (pos != NULL);
+    do
+    {
+        pos = strstr(StartPos, SearchString);
+        if (pos != NULL)
+        {
+            CStrpos* se = slist.NewListElem();
+            se->mPos = pos;
+            StartPos = pos + LenSearch;
+            cnt++;
+        }
+    } while (pos != NULL);
 
-	*Count = cnt;
+    *Count = cnt;
 
-	if (cnt > 0)
-	{
-		LenNew = strlen(SrcString) + (cnt * (LenSub - LenSearch));
+    if (cnt > 0)
+    {
+        LenNew = strlen(SrcString) + (cnt * (LenSub - LenSearch));
 
-		NewString = new char[LenNew+1];
-		char* NewStringPos = NewString;
+        NewString = new char[LenNew+1];
+        char* NewStringPos = NewString;
 
-		StartPos = SrcString;
-		for (CStrpos* se = slist.GetFirst();
-									se != NULL;
-									se = slist.GetNext())
-		{
+        StartPos = SrcString;
+        for (CStrpos* se = slist.GetFirst();
+            se != NULL;
+            se = slist.GetNext())
+        {
+            int len = se->mPos - StartPos;
+            CopyStringBytes(NewStringPos, StartPos, len);
+            NewStringPos += len;
+            CopyStringBytes(NewStringPos, SubString, LenSub);
+            NewStringPos += LenSub;
 
-			int len = se->mPos - StartPos;
-			CopyStringBytes(NewStringPos, StartPos, len);
-			NewStringPos += len;
-			CopyStringBytes(NewStringPos, SubString, LenSub);
-			NewStringPos += LenSub;
+            StartPos = se->mPos + LenSearch;
+        }
+        CopyStringBytes(NewStringPos, StartPos, strlen(StartPos));
+        slist.ClearList();
+    }
+    else
+    {
+        NewString = new char[strlen(SrcString) + 1];
+        strcpy(NewString, SrcString);
+    }
 
-			StartPos = se->mPos + LenSearch;
-		}
-		CopyStringBytes(NewStringPos, StartPos, strlen(StartPos));
-		slist.ClearList();
-	}
-	else
-	{
-		NewString = new char[strlen(SrcString) + 1];
-		strcpy(NewString, SrcString);
-	}
-
-	return NewString;
+    return NewString;
 }
+
+
 #endif
 
 //---------------------------------------------------------------------------
@@ -389,12 +421,13 @@ char* CFileIO::ReplaceAllStrings(char* SrcString, char* SearchString, char* SubS
 
 bool CFileIO::ReadBytes(void* buffer, int nBytes)
 {
-  if (mOpenRead)
-  {
-    mFs->read((char*) buffer, nBytes);
-  }
-  return mOpenRead;
+    if (mOpenRead)
+    {
+        mFs->read((char*)buffer, nBytes);
+    }
+    return mOpenRead;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -405,10 +438,12 @@ bool CFileIO::ReadBytes(void* buffer, int nBytes)
 
 char* CFileIO::NewString(const char* SrcString)
 {
-	char* ns = new char[strlen(SrcString) + 1];
-	strcpy(ns, SrcString);	
-	return ns;
+    char* ns = new char[strlen(SrcString) + 1];
+
+    strcpy(ns, SrcString);
+    return ns;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -426,13 +461,14 @@ char* CFileIO::NewString(const char* SrcString)
 
 void* CFileIO::ReadBytes(int nBytes)
 {
-	char* buffer = NULL;
-  if (mOpenRead)
-  {
-		buffer = new char[nBytes];
-    mFs->read(buffer, nBytes);
-  }
-  return buffer;
+    char* buffer = NULL;
+
+    if (mOpenRead)
+    {
+        buffer = new char[nBytes];
+        mFs->read(buffer, nBytes);
+    }
+    return buffer;
 }
 
 
@@ -452,15 +488,16 @@ void* CFileIO::ReadBytes(int nBytes)
 
 void CFileIO::CloseFile()
 {
-  if (mOpenWrite || mOpenRead)
-  {
-    mFs->close();
-    mOpenRead = false;
-    mOpenWrite = false;
-    delete mFs;
- 	  mFs = NULL;
-  }
+    if (mOpenWrite || mOpenRead)
+    {
+        mFs->close();
+        mOpenRead = false;
+        mOpenWrite = false;
+        delete mFs;
+        mFs = NULL;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -474,9 +511,10 @@ void CFileIO::CloseFile()
 
 bool CFileIO::SetReadPos(int pos)
 {
-	mFs->seekg(pos, ios::beg);
-	return (int) mFs->tellg() == pos;
+    mFs->seekg(pos, ios::beg);
+    return (int)mFs->tellg() == pos;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -490,5 +528,5 @@ bool CFileIO::SetReadPos(int pos)
 
 int CFileIO::GetReadPos()
 {
-	return mFs->tellg();
+    return mFs->tellg();
 }

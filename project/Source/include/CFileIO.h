@@ -1,10 +1,9 @@
-
 #ifndef NULL
-#define NULL ((void*) 0L)
+#define NULL    ((void*)0L)
 #endif
 
 #ifndef _Ios_Openmode
-#define _Ios_Openmode ios
+#define _Ios_Openmode    ios
 #endif
 
 
@@ -15,42 +14,43 @@
 
 class CFileIO
 {
-	public:
+    public:
 
-		CFileIO()
-		{
-			mOpenRead = false;
-			mOpenWrite = false;
-			mFs = NULL;
-		}
+        CFileIO()
+        {
+            mOpenRead = false;
+            mOpenWrite = false;
+            mFs = NULL;
+        }
 
-		void* ReadFile(const char* Filename, int* nBytes);
-		bool  OpenFileRead(const char* Filename, int type);
-		bool  OpenFileWrite(const char* Filename, int type);
-		bool  OpenFileAppend(const char* Filename, int type);
-		bool 	ReadBytes(void* buffer, int nBytes);
-		void*	ReadBytes(int nBytes);
-		bool  WriteBytes(void* buffer, int nBytes);
-		bool  WriteString(char* str);
-		char* ReplaceAllStrings(char* SrcString, char* SearchString, char* SubString, int* Count);
-		int 	GetChar(void);
-		bool  IsEof(void);
-		void  Clear(void);
-		void  SkipBytes(int nBytes);
-		char* ReplaceApp(const char* Filename, const char* neuApp);
-		char* NewString(const char* SrcString);
 
-		void  CloseFile(void);
-		bool 	SetReadPos(int pos);
-		int  	GetReadPos(void);
+        void* ReadFile(const char* Filename, int* nBytes);
+        bool OpenFileRead(const char* Filename, int type);
+        bool OpenFileWrite(const char* Filename, int type);
+        bool OpenFileAppend(const char* Filename, int type);
+        bool ReadBytes(void* buffer, int nBytes);
+        void*   ReadBytes(int nBytes);
+        bool WriteBytes(void* buffer, int nBytes);
+        bool WriteString(char* str);
+        char* ReplaceAllStrings(char* SrcString, char* SearchString, char* SubString, int* Count);
+        int GetChar(void);
+        bool IsEof(void);
+        void Clear(void);
+        void SkipBytes(int nBytes);
+        char* ReplaceApp(const char* Filename, const char* neuApp);
+        char* NewString(const char* SrcString);
 
-		int GetFileSize(const char* Filename);
+        void CloseFile(void);
+        bool SetReadPos(int pos);
+        int GetReadPos(void);
 
-	protected:
+        int GetFileSize(const char* Filename);
 
-		std::fstream* mFs;
-		bool     mOpenWrite;
-		bool     mOpenRead;
+    protected:
+
+        std::fstream* mFs;
+        bool mOpenWrite;
+        bool mOpenRead;
 };
 
 #endif

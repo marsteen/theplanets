@@ -1,4 +1,3 @@
-
 #ifndef CDATABASE2
 #define CDATABASE2
 
@@ -7,52 +6,52 @@
 
 enum ERecType
 {
-	ERT_INT,
-	ERT_FLOAT,
-	ERT_DOUBLE,
-	ERT_STRING
+    ERT_INT,
+    ERT_FLOAT,
+    ERT_DOUBLE,
+    ERT_STRING
 };
 
 struct CRecField
 {
-	char* mTag;
-	int   mTagType;
-	void* mVar;
-	bool  mFound;
+    char*	mTag;
+    int		mTagType;
+    void*	mVar;
+    bool	mFound;
 };
 
 class CRecord : public CListElem<CRecord>
 {
-	public:
+    public:
 
-		CRecord(void);
-		~CRecord(void);
+        CRecord(void);
+        ~CRecord(void);
 
 
-		char** mText;
-		int    mFields;
+        char** mText;
+        int mFields;
 };
 
 class CDatabase2 : public CList<CRecord>
 {
-	public:
+    public:
 
-		int Read(char* Filename, char SplitChar);
-		bool ParseConfigFile(char* Filename, CRecField* rf, char Separator, bool TagTest=false);
-
-
-		int mRecordCount;
-
-	protected:
-
-		bool IsValid(int c);
-
-		int GetLineSize(int* SkipLineEnd);
-		char* ReadLine(int* LineSize);
+        int Read(char* Filename, char SplitChar);
+        bool ParseConfigFile(char* Filename, CRecField* rf, char Separator, bool TagTest = false);
 
 
-		CFileIO mFio;
-		bool    mEndOfFile;
+        int mRecordCount;
+
+    protected:
+
+        bool IsValid(int c);
+
+        int GetLineSize(int* SkipLineEnd);
+        char* ReadLine(int* LineSize);
+
+
+        CFileIO mFio;
+        bool mEndOfFile;
 };
 
 

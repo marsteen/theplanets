@@ -1,19 +1,22 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CParser.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
-
-using namespace std;
+//***************************************************************************
 
 #include <fstream>
 #include <string>
 #include <CParser.h>
+
+using namespace std;
 
 // ---------------------------------------------------------------------------
 //
@@ -25,7 +28,7 @@ using namespace std;
 //
 // PARAMETER     : char* line - Zeile mit Strings
 //                 char  t    - Trenn-Charakter
-//                 int*  AnzahlParams - Anzahl der Strings (Rückgabe)
+//                 int*  AnzahlParams - Anzahl der Strings (RÃ¼ckgabe)
 //
 // BESCHREIBUNG  :
 //
@@ -37,44 +40,47 @@ using namespace std;
 
 char** CParser::SplitLine(char* line, char t, int* AnzahlParams)
 {
-	char** ParamList = NULL;
+    char** ParamList = NULL;
 
-	if (strlen(line) > 0)
-	{
-		*AnzahlParams = 1;
+    if (strlen(line) > 0)
+    {
+        *AnzahlParams = 1;
 
-		for (char* l = line; *l != 0; l++)
-		{
-			if (*l == t) (*AnzahlParams)++;
-		}
+        for (char* l = line; *l != 0; l++)
+        {
+            if (*l == t)
+            {
+                (*AnzahlParams)++;
+            }
+        }
 
-    char* ParamStr = new char[strlen(line) + 1];
+        char* ParamStr = new char[strlen(line) + 1];
 
-		ParamList = new char*[*AnzahlParams+1];
+        ParamList = new char*[*AnzahlParams+1];
 
-		strcpy(ParamStr, line);
+        strcpy(ParamStr, line);
 
-		ParamList[0] = ParamStr;
+        ParamList[0] = ParamStr;
 
-    int i = 0;
+        int i = 0;
 
-		for (char* l = ParamStr; *l != 0; l++)
-		{
-			if (*l == t)
-			{
-				*l = 0;
-				ParamList[++i] = l + 1;
-			}
-		}
-		ParamList[*AnzahlParams] = NULL;
-
-	}
-	else
-	{
-		*AnzahlParams = 0;
-	}
-	return ParamList;
+        for (char* l = ParamStr; *l != 0; l++)
+        {
+            if (*l == t)
+            {
+                *l = 0;
+                ParamList[++i] = l + 1;
+            }
+        }
+        ParamList[*AnzahlParams] = NULL;
+    }
+    else
+    {
+        *AnzahlParams = 0;
+    }
+    return ParamList;
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -96,6 +102,6 @@ char** CParser::SplitLine(char* line, char t, int* AnzahlParams)
 
 void CParser::DeleteSplitLine(char** sline)
 {
-	delete sline[0];
-	delete sline;
+    delete sline[0];
+    delete sline;
 }

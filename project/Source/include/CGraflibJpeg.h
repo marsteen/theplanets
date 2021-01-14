@@ -1,6 +1,19 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CGraflibJpeg.h
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
 
-#ifndef CGRAFLIBJPEG
-#define CGRAFLIBJPEG
+#ifndef CGRAFLIBJPEG_H
+#define CGRAFLIBJPEG_H
 
 #include <CFileIO.h>
 #include <SFileReadInfo.h>
@@ -9,35 +22,34 @@
 
 class CGraflibJpeg : public CGraflib
 {
-	public:
+    public:
 
-		CGraflibJpeg()
-		{
-			mJpegInterface = NULL;
-			mJpegQuality   = 80;
-		}
+        CGraflibJpeg()
+        {
+            mJpegInterface = NULL;
+            mJpegQuality = 80;
+        }
 
-		bool Read(const char* Filename, SFileReadInfo* fri = NULL);
-		int  Write(const char* Filename, bool bCompFlag, CFileIO* fio = NULL);
 
-		bool OpenReadLine(const char* Filename);
-		void ReadLine(void* LineBuffer);
-		void CloseReadLine(void);
+        bool Read(const char* Filename, SFileReadInfo* fri = NULL);
+        int Write(const char* Filename, bool bCompFlag, CFileIO* fio = NULL);
 
-		bool OpenWriteLine(const char* Filename);
-		void WriteLine(void* LineBuffer);
-		void CloseWriteLine(void);
+        bool OpenReadLine(const char* Filename);
+        void ReadLine(void* LineBuffer);
+        void CloseReadLine(void);
 
-		void SetAppendMode(bool b);
-		bool GetJpegSize(const char* fname);
+        bool OpenWriteLine(const char* Filename);
+        void WriteLine(void* LineBuffer);
+        void CloseWriteLine(void);
 
-		int  mJpegQuality;
+        void SetAppendMode(bool b);
+        bool GetJpegSize(const char* fname);
 
-	protected:
+        int mJpegQuality;
 
-		void* mJpegInterface;
+    protected:
+
+        void* mJpegInterface;
 };
 
 #endif
-
-

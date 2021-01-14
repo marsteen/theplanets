@@ -1,19 +1,16 @@
-//------------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
-//
-// FILE    : COpenGL.cpp
-//
-// VERSION : 1.0
-//
-// AUTHOR  : Martin Steen
+//***************************************************************************
 //
 //
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	COpenGLAction.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//
-//---------------------------------------------------------------------------
-
+//***************************************************************************
 
 #ifdef _WIN32
 #include <windows.h>
@@ -23,8 +20,6 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-
-using namespace std;
 
 #include <GLinclude.h>
 #include <COpenGL.h>
@@ -36,6 +31,8 @@ using namespace std;
 #include "CG3DReslistInterface.h"
 
 #include "CGLApplication.h"
+
+using namespace std;
 
 extern CGLApplication gApp;
 
@@ -50,10 +47,11 @@ extern CGLApplication gApp;
 
 void COpenGL::ViewportAction(int w, int h)
 {
-	//cout << "ViewportAction w=" << w << " h=" << h << endl;
+    //cout << "ViewportAction w=" << w << " h=" << h << endl;
 
-	gApp.SetResolution(w, h);
+    gApp.SetResolution(w, h);
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -66,83 +64,83 @@ void COpenGL::ViewportAction(int w, int h)
 
 void COpenGL::Action()
 {
+    GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
 
-	GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
+    glClearColor(0, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glClearColor(0, 0, 0, 0);
-  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-  glClear(GL_COLOR_BUFFER_BIT);
-
-	//StartProjectionView();
-	//gApp.Draw2DObjects();
-
-
-	StartModelView(0.1 / gApp.mScale, 30.0 / gApp.mScale);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, weiss);
+    //StartProjectionView();
+    //gApp.Draw2DObjects();
 
 
-	if (mAnaglyph)
-	{
-		#define S_XV 2
-		#define V_XV 0.3
+    StartModelView(0.1 / gApp.mScale, 30.0 / gApp.mScale);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, weiss);
 
 
-		float StandOrtX = mCamera.mStandort.x;
-		float VispointX = mCamera.mVispoint.x;
-
-		mCamera.mStandort.x -= S_XV;
-		mCamera.mVispoint.x -= V_XV;
-
-		for (int v = 0; v < 2; v++)
-		{
-			glLoadIdentity();
-			glClear(GL_DEPTH_BUFFER_BIT);
-
-			mCamera.LookAt();
-			mCamera.mStandort.x += S_XV*2;
-			mCamera.mVispoint.x += V_XV*2;
-
-			glDisable(GL_BLEND);
-
-			if (v == 1)
-			{
-				float rot[] = { 1.0, 0.0, 0.0, 1.0 };
-
-				glColor3f(1.0, 0.0, 0.0);
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, rot);
-				glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
-			}
-			else
-			{
-				float cyan[] = { 0.0, 1.0, 1.0, 1.0 };
-				glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, cyan);
-				glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_FALSE);
-			}
-			gApp.Draw3DObjects();
-		}
-		mCamera.mStandort.x = StandOrtX;
-		mCamera.mVispoint.x = VispointX;
-	}
-	else
-	{
-		glLoadIdentity();
-		glClear(GL_DEPTH_BUFFER_BIT);
-		mCamera.LookAt();
-		glDisable(GL_BLEND);
-		gApp.Draw3DObjects();
-	}
-	gApp.Animate();
+    if (mAnaglyph)
+    {
+#define S_XV	2
+#define V_XV	0.3
 
 
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-  StartProjectionView();
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
+        float StandOrtX = mCamera.mStandort.x;
+        float VispointX = mCamera.mVispoint.x;
 
-	gApp.ManageInterface(&mMouse);
+        mCamera.mStandort.x -= S_XV;
+        mCamera.mVispoint.x -= V_XV;
 
-  glutSwapBuffers();
+        for (int v = 0; v < 2; v++)
+        {
+            glLoadIdentity();
+            glClear(GL_DEPTH_BUFFER_BIT);
+
+            mCamera.LookAt();
+            mCamera.mStandort.x += S_XV*2;
+            mCamera.mVispoint.x += V_XV*2;
+
+            glDisable(GL_BLEND);
+
+            if (v == 1)
+            {
+                float rot[] = { 1.0, 0.0, 0.0, 1.0 };
+
+                glColor3f(1.0, 0.0, 0.0);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, rot);
+                glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+            }
+            else
+            {
+                float cyan[] = { 0.0, 1.0, 1.0, 1.0 };
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, cyan);
+                glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_FALSE);
+            }
+            gApp.Draw3DObjects();
+        }
+        mCamera.mStandort.x = StandOrtX;
+        mCamera.mVispoint.x = VispointX;
+    }
+    else
+    {
+        glLoadIdentity();
+        glClear(GL_DEPTH_BUFFER_BIT);
+        mCamera.LookAt();
+        glDisable(GL_BLEND);
+        gApp.Draw3DObjects();
+    }
+    gApp.Animate();
+
+
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    StartProjectionView();
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
+
+    gApp.ManageInterface(&mMouse);
+
+    glutSwapBuffers();
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -155,50 +153,50 @@ void COpenGL::Action()
 
 void COpenGL::MouseButtonAction()
 {
-	string ClickedName;
+    string ClickedName;
 
-	//cout << "mMouse.mButton=" << mMouse.mButton << endl;
+    //cout << "mMouse.mButton=" << mMouse.mButton << endl;
 
-	switch (mMouse.mButton)
-	{
-		case GLUT_LEFT_BUTTON:
+    switch (mMouse.mButton)
+    {
+        case GLUT_LEFT_BUTTON:
 
-			if (mMouse.mState[GLUT_LEFT_BUTTON] == GLUT_DOWN)
-			{
-				gApp.LeftMouseButtonDown();
-			}
-			else
-			{
-				//gSlider.mObject = NULL;
-			}
-			break;
+            if (mMouse.mState[GLUT_LEFT_BUTTON] == GLUT_DOWN)
+            {
+                gApp.LeftMouseButtonDown();
+            }
+            else
+            {
+                //gSlider.mObject = NULL;
+            }
+            break;
 
-		case GLUT_RIGHT_BUTTON:
+        case GLUT_RIGHT_BUTTON:
 
-			if (mMouse.mState[GLUT_RIGHT_BUTTON] == GLUT_DOWN)
-			{
-				gApp.RightMouseButtonDown();
-			}
-			break;
+            if (mMouse.mState[GLUT_RIGHT_BUTTON] == GLUT_DOWN)
+            {
+                gApp.RightMouseButtonDown();
+            }
+            break;
 
-		case 3: // Mousewheel up
+        case 3: // Mousewheel up
 
-			if (mMouse.mState[3] == GLUT_DOWN)
-			{
-				gApp.MouseWheel(0);
-			}
-			break;
+            if (mMouse.mState[3] == GLUT_DOWN)
+            {
+                gApp.MouseWheel(0);
+            }
+            break;
 
-		case 4: // Mousewheel down
+        case 4: // Mousewheel down
 
-			if (mMouse.mState[4] == GLUT_DOWN)
-			{
-				gApp.MouseWheel(1);
-			}
-			break;
-
-	}
+            if (mMouse.mState[4] == GLUT_DOWN)
+            {
+                gApp.MouseWheel(1);
+            }
+            break;
+    }
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -211,38 +209,37 @@ void COpenGL::MouseButtonAction()
 
 void COpenGL::MouseMotionAction()
 {
-	//gSlider.mPos.x = mMouse.x;
-	//gSlider.mPos.y = mMouse.y;
-	static CVector2<int> MousePos;
+    //gSlider.mPos.x = mMouse.x;
+    //gSlider.mPos.y = mMouse.y;
+    static CVector2<int> MousePos;
 
-	int dx = MousePos.x - mMouse.x;
-	int dy = MousePos.y - mMouse.y;
+    int dx = MousePos.x - mMouse.x;
+    int dy = MousePos.y - mMouse.y;
 
-	MousePos.x = mMouse.x;
-	MousePos.y = mMouse.y;
+    MousePos.x = mMouse.x;
+    MousePos.y = mMouse.y;
 
-	if (mMouse.mState[GLUT_LEFT_BUTTON] == GLUT_DOWN)
-	{
-
-
-		gApp.MouseMotionLeft(dx, dy);
+    if (mMouse.mState[GLUT_LEFT_BUTTON] == GLUT_DOWN)
+    {
+        gApp.MouseMotionLeft(dx, dy);
 
 /*
-		if (gSlider.mObject != NULL)
-		{
-			gG3Dinterface->SendCommand(EG3DcomSetChildPos, &gSlider);
-		}
-*/
-	}
-	else
-	if (mMouse.mState[GLUT_RIGHT_BUTTON] == GLUT_DOWN)
-	{
-		gApp.MouseMotionRight(dx, dy);
-	}
+ *      if (gSlider.mObject != NULL)
+ *      {
+ *          gG3Dinterface->SendCommand(EG3DcomSetChildPos, &gSlider);
+ *      }
+ */
+    }
+    else
+    if (mMouse.mState[GLUT_RIGHT_BUTTON] == GLUT_DOWN)
+    {
+        gApp.MouseMotionRight(dx, dy);
+    }
 
 
-  //cout << "MouseMotionAction X=" << mMouse.x << " Y=" << mMouse.y << endl;
+    //cout << "MouseMotionAction X=" << mMouse.x << " Y=" << mMouse.y << endl;
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -255,5 +252,5 @@ void COpenGL::MouseMotionAction()
 
 void COpenGL::KeyboardAction(unsigned char key)
 {
-	gApp.KeyboardAction(key);
+    gApp.KeyboardAction(key);
 }

@@ -3,24 +3,24 @@
 
 class CFilemapping
 {
-	public:
+    public:
 
-		CFileMapping()
-		{
-			mMapHandle = NULL;
-			mMapPointer = NULL;
-		}
+        CFileMapping()
+        {
+            mMapHandle = NULL;
+            mMapPointer = NULL;
+        }
 
-		void* OpenRead(char* Filename);
-		void  Close(void);
+        void* OpenRead(char* Filename);
+        void Close(void);
 
-		int  mFilesize;
+        int mFilesize;
 
-	protected:
+    protected:
 
-		HANDLE mMapHandle;
-		HANDLE mFileHandle;
-		LPVOID mMapPointer;
+        HANDLE mMapHandle;
+        HANDLE mFileHandle;
+        LPVOID mMapPointer;
 };
 
 #endif

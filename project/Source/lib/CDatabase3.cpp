@@ -1,25 +1,25 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CDatabase3.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <list>
 #include <string>
-
-using namespace std;
-
 #include <CDatabase3.h>
 
-
+using namespace std;
 
 //---------------------------------------------------------------------------
 //
@@ -34,11 +34,15 @@ using namespace std;
 
 inline bool CDatabase3::IsValid(int c)
 {
-  if ((c == 0x0A) ||
-      (c == 0x0D) ||
-      (c == 0)) return false;
-  return true; 
+    if ((c == 0x0A) ||
+        (c == 0x0D) ||
+        (c == 0))
+    {
+        return false;
+    }
+    return true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -49,17 +53,17 @@ inline bool CDatabase3::IsValid(int c)
 //---------------------------------------------------------------------------
 
 void CRecord::Show()
-{ 
-	#if 0
-	cout << (int) size() << " ";
-	for (vector<string>::iterator dr  = begin();
-														    dr != end();
-															  dr++)
-	{
-		cout << *dr << ' ';
-	}
-	cout << "-" << endl;
-	#endif
+{
+#if 0
+    cout << (int)size() << " ";
+    for (vector<string>::iterator dr = begin();
+        dr != end();
+        dr++)
+    {
+        cout << *dr << ' ';
+    }
+    cout << "-" << endl;
+#endif
 }
 
 
@@ -73,8 +77,9 @@ void CRecord::Show()
 
 static inline bool LineEnd(char c)
 {
-	return (c == 0x0A) || (c == 0x0D);
+    return (c == 0x0A) || (c == 0x0D);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -90,117 +95,116 @@ static inline bool LineEnd(char c)
 
 int CDatabase3::Read(list<CRecord>* db, string& BasePath, string& Filename, char SplitChar)
 {
-	if (db == NULL)
-	{
-		db = this;
-	}
+    if (db == NULL)
+    {
+        db = this;
+    }
 
-	ifstream infile((BasePath + Filename).c_str(), ios::in | ios::binary);
+    ifstream infile((BasePath + Filename).c_str(), ios::in | ios::binary);
 
-	if (infile.good())
-	{
-		string  Linebuffer;
-		CRecord rc;
-		int LineNumber = 1;
-		bool CommentMode = false;
-		char cLast = 0;
+    if (infile.good())
+    {
+        string Linebuffer;
+        CRecord rc;
+        int LineNumber = 1;
+        bool CommentMode = false;
+        char cLast = 0;
 
-		while (!infile.eof())
-		{
-			char c;
-			infile.get(c);
+        while (!infile.eof())
+        {
+            char c;
+            infile.get(c);
 
-			if (infile.eof())
-			{
-				c = 0x0D;
-			}
-			
-			if ((c == '#') || ((c == '/') && (cLast == '/')))
-			{
-				do
-				{
-					infile.get(c);
-				}
-				while (!LineEnd(c) && !infile.eof());
-				LineNumber++;
-				Linebuffer.clear();
-			}
-			else
-			if (IsValid(c))
-			{
-				if (c != '\t')
-				{
-					cLast = c;
-					Linebuffer.push_back(c);
-				}
-				else
-				{					
-					rc.push_back(Linebuffer);
-					Linebuffer.clear();
-				}
-			}
-			else
-			{
-				if ((c != 0x0A) || (c != 0x0D))
-				{
-					if (!Linebuffer.empty())
-					{
-						rc.push_back(Linebuffer);
-						Linebuffer.clear();
-					}
-					if (!rc.empty())
-					{
-						if (CommentMode)
-						{
-							if (rc.front() == "*/")
-							{
-								CommentMode = false;
-							}
-						}
-						else
-						{
-							if (rc.front() == "/*")
-							{
-								CommentMode = true;
-							}
-							else
-							{
-								if (rc[0] == "$INCLUDE")
-								{
-									if (rc.size() == 2)
-									{
-										CDatabase3 DbInclude;
-										DbInclude.Read(this, BasePath, rc[1], SplitChar);
-									}
-									else
-									{
-										//cout << "****** wrong include parameter count " << LineNumber << endl;
-										exit(0);
-									}
-								}
-								else
-								{
-									rc.mLineNumber = LineNumber;
-									rc.mFilename = Filename;
-									db->push_back(rc);
-									//rc.Show();
-								}
-							}
-						}
-						rc.clear();
-					}
-					LineNumber++;
-				}
-			}
-		}
-	}
-	else
-	{
-		cout << "***** cannot open " << BasePath <<  Filename << endl;		
-	}
-	infile.close();
+            if (infile.eof())
+            {
+                c = 0x0D;
+            }
 
-	//cout << "Size=" << size() << endl;
+            if ((c == '#') || ((c == '/') && (cLast == '/')))
+            {
+                do
+                {
+                    infile.get(c);
+                } while (!LineEnd(c) && !infile.eof());
+                LineNumber++;
+                Linebuffer.clear();
+            }
+            else
+            if (IsValid(c))
+            {
+                if (c != '\t')
+                {
+                    cLast = c;
+                    Linebuffer.push_back(c);
+                }
+                else
+                {
+                    rc.push_back(Linebuffer);
+                    Linebuffer.clear();
+                }
+            }
+            else
+            {
+                if ((c != 0x0A) || (c != 0x0D))
+                {
+                    if (!Linebuffer.empty())
+                    {
+                        rc.push_back(Linebuffer);
+                        Linebuffer.clear();
+                    }
+                    if (!rc.empty())
+                    {
+                        if (CommentMode)
+                        {
+                            if (rc.front() == "*/")
+                            {
+                                CommentMode = false;
+                            }
+                        }
+                        else
+                        {
+                            if (rc.front() == "/*")
+                            {
+                                CommentMode = true;
+                            }
+                            else
+                            {
+                                if (rc[0] == "$INCLUDE")
+                                {
+                                    if (rc.size() == 2)
+                                    {
+                                        CDatabase3 DbInclude;
+                                        DbInclude.Read(this, BasePath, rc[1], SplitChar);
+                                    }
+                                    else
+                                    {
+                                        //cout << "****** wrong include parameter count " << LineNumber << endl;
+                                        exit(0);
+                                    }
+                                }
+                                else
+                                {
+                                    rc.mLineNumber = LineNumber;
+                                    rc.mFilename = Filename;
+                                    db->push_back(rc);
+                                    //rc.Show();
+                                }
+                            }
+                        }
+                        rc.clear();
+                    }
+                    LineNumber++;
+                }
+            }
+        }
+    }
+    else
+    {
+        cout << "***** cannot open " << BasePath <<  Filename << endl;
+    }
+    infile.close();
 
-	return db->size();
+    //cout << "Size=" << size() << endl;
+
+    return db->size();
 }

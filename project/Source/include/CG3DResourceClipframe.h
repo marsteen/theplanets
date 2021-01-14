@@ -1,10 +1,6 @@
 class CG3DResourceClipframe : public CG3DResourceFrame
 {
-	public:
+    public:
 
-		void Draw(SG3DDrawParams* dp);
-
+        void Draw(SG3DDrawParams* dp);
 };
-
-
-

@@ -1,15 +1,18 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResourceDialog.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
-#include "CG3DResourceList.h"
+#include <CG3DResourceList.h>
 
 //---------------------------------------------------------------------------
 //
@@ -24,16 +27,17 @@
 
 void CG3DResourceDialog::Draw(SG3DDrawParams* dp)
 {
-	if (mImgRef != NULL)
-	{
-		mImgRef->DrawImage(0, dp);
-	}
-	if (mBoxRef != NULL)
-	{
-		mBoxRef->Draw(dp);
-	}
-	CG3DResource::Draw(dp);
+    if (mImgRef != NULL)
+    {
+        mImgRef->DrawImage(0, dp);
+    }
+    if (mBoxRef != NULL)
+    {
+        mBoxRef->Draw(dp);
+    }
+    CG3DResource::Draw(dp);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -48,20 +52,20 @@ void CG3DResourceDialog::Draw(SG3DDrawParams* dp)
 
 void CG3DResourceDialog::AddResRef(CG3DResource* res)
 {
-	switch (res->mType)
-	{
-		case ERTYPE_IMAGE:
+    switch (res->mType)
+    {
+        case ERTYPE_IMAGE:
 
-		  mImgRef = dynamic_cast<CG3DResourceImage*>(res);
-			break;
+            mImgRef = dynamic_cast<CG3DResourceImage*>(res);
+            break;
 
-		case ERTYPE_BOX:
+        case ERTYPE_BOX:
 
-			mBoxRef = dynamic_cast<CG3DResourceBox*>(res);
-			break;
-
-	}
+            mBoxRef = dynamic_cast<CG3DResourceBox*>(res);
+            break;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -77,16 +81,17 @@ void CG3DResourceDialog::AddResRef(CG3DResource* res)
 
 int CG3DResourceDialog::UnscaledWidth()
 {
-	if (mImgRef != NULL)
-	{
-		return mImgRef->Width(mStdImage);
-	}
-	if (mBoxRef != NULL)
-	{
-		return mBoxRef->UnscaledWidth();
-	}
-	return 0;
+    if (mImgRef != NULL)
+    {
+        return mImgRef->Width(mStdImage);
+    }
+    if (mBoxRef != NULL)
+    {
+        return mBoxRef->UnscaledWidth();
+    }
+    return 0;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -101,13 +106,13 @@ int CG3DResourceDialog::UnscaledWidth()
 
 int CG3DResourceDialog::UnscaledHeight()
 {
-	if (mImgRef != NULL)
-	{
-		return mImgRef->Height(mStdImage);
-	}
-	if (mBoxRef != NULL)
-	{
-		return mBoxRef->UnscaledHeight();
-	}
-	return 0;
+    if (mImgRef != NULL)
+    {
+        return mImgRef->Height(mStdImage);
+    }
+    if (mBoxRef != NULL)
+    {
+        return mBoxRef->UnscaledHeight();
+    }
+    return 0;
 }

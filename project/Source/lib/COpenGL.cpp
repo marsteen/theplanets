@@ -1,14 +1,16 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	COpenGL.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
-
+//***************************************************************************
 
 #ifdef _WIN32
 #include <windows.h>
@@ -17,17 +19,17 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
-
 extern "C"
 {
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-	#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 };
 
 #include <COpenGL.h>
 #include <CFileIO.h>
+
+using namespace std;
 
 COpenGL* sOpenGL;
 
@@ -42,8 +44,9 @@ COpenGL* sOpenGL;
 
 static void sReshapeWindow(int w, int h)
 {
-	sOpenGL->SetViewport(w, h);
+    sOpenGL->SetViewport(w, h);
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -56,8 +59,9 @@ static void sReshapeWindow(int w, int h)
 
 static void sDisplayWindow()
 {
-	sOpenGL->Action();
+    sOpenGL->Action();
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -76,15 +80,16 @@ static void sDisplayWindow()
 
 static void sMouseButton(int Button, int State, int x, int y)
 {
-	//cout << "Mouse Bt=" << Button << " State=" << State << " x=" << x << " y=" << y << endl;
+    //cout << "Mouse Bt=" << Button << " State=" << State << " x=" << x << " y=" << y << endl;
 
-	sOpenGL->mMouse.mButton = Button;
-	sOpenGL->mMouse.mState[Button] = State;
-	sOpenGL->mMouse.x = x;
-	sOpenGL->mMouse.y = y;
+    sOpenGL->mMouse.mButton = Button;
+    sOpenGL->mMouse.mState[Button] = State;
+    sOpenGL->mMouse.x = x;
+    sOpenGL->mMouse.y = y;
 
-	sOpenGL->MouseButtonAction();
+    sOpenGL->MouseButtonAction();
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -97,11 +102,11 @@ static void sMouseButton(int Button, int State, int x, int y)
 
 static void sMouseMotion(int x, int y)
 {
-	sOpenGL->mMouse.x = x;
-	sOpenGL->mMouse.y = y;
+    sOpenGL->mMouse.x = x;
+    sOpenGL->mMouse.y = y;
 
 
-	sOpenGL->MouseMotionAction();
+    sOpenGL->MouseMotionAction();
 }
 
 
@@ -116,9 +121,10 @@ static void sMouseMotion(int x, int y)
 
 static void sTimefunc(int value)
 {
-	sOpenGL->Action();
-	glutTimerFunc(sOpenGL->mActionFrequency, sTimefunc, 1);
+    sOpenGL->Action();
+    glutTimerFunc(sOpenGL->mActionFrequency, sTimefunc, 1);
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -131,8 +137,9 @@ static void sTimefunc(int value)
 
 static void sKeyboard(unsigned char key, int x, int y)
 {
-	sOpenGL->KeyboardAction(key);
+    sOpenGL->KeyboardAction(key);
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -146,17 +153,17 @@ static void sKeyboard(unsigned char key, int x, int y)
 
 void COpenGL::InitGLUTCallback(int Frequency)
 {
-	mActionFrequency = Frequency;
+    mActionFrequency = Frequency;
 
-	sOpenGL = this;
-	glutReshapeFunc(sReshapeWindow);
-	glutDisplayFunc(sDisplayWindow);
-	glutTimerFunc(Frequency, sTimefunc, 10);
-	glutMouseFunc(sMouseButton);
-	glutMotionFunc(sMouseMotion);
-	glutPassiveMotionFunc(sMouseMotion);
-	glutKeyboardFunc(sKeyboard);
-	glutMainLoop();
+    sOpenGL = this;
+    glutReshapeFunc(sReshapeWindow);
+    glutDisplayFunc(sDisplayWindow);
+    glutTimerFunc(Frequency, sTimefunc, 10);
+    glutMouseFunc(sMouseButton);
+    glutMotionFunc(sMouseMotion);
+    glutPassiveMotionFunc(sMouseMotion);
+    glutKeyboardFunc(sKeyboard);
+    glutMainLoop();
 }
 
 
@@ -172,18 +179,18 @@ void COpenGL::InitGLUTCallback(int Frequency)
 
 void COpenGL::SaveGLStrings(char* filename)
 {
-	int MaxTextureSize;
+    int MaxTextureSize;
 
-	ofstream fp(filename);
+    ofstream fp(filename);
 
-	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &MaxTextureSize);
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &MaxTextureSize);
 
-	fp << "VENDOR:     " << glGetString(GL_VENDOR) << endl;
-	fp << "RENDERER:   " << glGetString(GL_RENDERER) << endl;
-	fp << "VERSION:    " << glGetString(GL_VERSION) << endl;
-	fp << "MAXTEXTURE: " << MaxTextureSize << endl;
+    fp << "VENDOR:     " << glGetString(GL_VENDOR) << endl;
+    fp << "RENDERER:   " << glGetString(GL_RENDERER) << endl;
+    fp << "VERSION:    " << glGetString(GL_VERSION) << endl;
+    fp << "MAXTEXTURE: " << MaxTextureSize << endl;
 
-	fp.close();
+    fp.close();
 }
 
 
@@ -209,29 +216,30 @@ void COpenGL::SaveGLStrings(char* filename)
 
 bool COpenGL::InitWindowGLUT(int argc, char** argv, const char* WindowName, int Width, int Height, bool Fullscreen)
 {
- 	glutInit(&argc, argv);
-  glutInitWindowSize(Width, Height);
-	glutInitWindowPosition(0,0);
-  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	//cout << "glutInitDisplayMode OK" << endl;
-  //
-  //glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInit(&argc, argv);
+    glutInitWindowSize(Width, Height);
+    glutInitWindowPosition(0, 0);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    //cout << "glutInitDisplayMode OK" << endl;
+    //
+    //glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 
-  mWindowHandle = glutCreateWindow(WindowName);
-  mAnaglyph = false;
+    mWindowHandle = glutCreateWindow(WindowName);
+    mAnaglyph = false;
 
-  if (Fullscreen)
-  {
-		glutFullScreen();
-	}
+    if (Fullscreen)
+    {
+        glutFullScreen();
+    }
 
-  //cout << "InitWindowGLUT SetViewport" << endl;
+    //cout << "InitWindowGLUT SetViewport" << endl;
 
-  //SetViewport(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-  //cout << "InitWindowGLUT OK" << endl;
+    //SetViewport(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+    //cout << "InitWindowGLUT OK" << endl;
 
-	return true;
+    return true;
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -255,30 +263,28 @@ bool COpenGL::InitWindowGLUT(int argc, char** argv, const char* WindowName, int 
 
 void COpenGL::SetViewport(int w, int h)
 {
+    mWidth = w;
+    mHeight = h;
 
-	mWidth = w;
-	mHeight = h;
+    //glEnable(GL_CULL_FACE);
+    //glDepthFunc(GL_LESS);		           // The Type Of Depth Test To Do
+    //glDisable(GL_DEPTH_TEST);
 
-	//glEnable(GL_CULL_FACE);
-	//glDepthFunc(GL_LESS);		           // The Type Of Depth Test To Do
-	//glDisable(GL_DEPTH_TEST);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    SetupLighting();
 
-	SetupLighting();
+    glViewport(0, 0, mWidth, mHeight);
+    mAspect = (float)mWidth / (mHeight);
+    StartModelView();
 
-	glViewport(0, 0, mWidth, mHeight);
-	mAspect = (float) mWidth / (mHeight);
-	StartModelView();
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-	glCullFace(GL_BACK);
-	ViewportAction(w, h);
-
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glCullFace(GL_BACK);
+    ViewportAction(w, h);
 }
 
 
@@ -292,34 +298,33 @@ void COpenGL::SetViewport(int w, int h)
 
 void COpenGL::StartModelView()
 {
-	mAspect = (float) mWidth / (mHeight);
-	glViewport(0, 0, mWidth, mHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0, mAspect, 0.1, 2000.0);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    mAspect = (float)mWidth / (mHeight);
+    glViewport(0, 0, mWidth, mHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, mAspect, 0.1, 2000.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
 
 
 void COpenGL::StartModelView(float near, float far)
 {
-	mAspect = (float) mWidth / (mHeight);
-	glViewport(0, 0, mWidth, mHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.0, mAspect, 0.1, 2000.0);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    mAspect = (float)mWidth / (mHeight);
+    glViewport(0, 0, mWidth, mHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, mAspect, 0.1, 2000.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -331,18 +336,16 @@ void COpenGL::StartModelView(float near, float far)
 
 void COpenGL::StartProjectionView()
 {
-	glViewport(0, 0, mWidth, mHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0.0, mWidth, 0.0, mHeight);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glViewport(0, 0, mWidth, mHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, mWidth, 0.0, mHeight);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_LIGHTING);
-
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
 }
-
 
 
 // ---------------------------------------------------------------------------
@@ -367,51 +370,46 @@ void COpenGL::StartProjectionView()
 
 void COpenGL::SetupLighting()
 {
-	GLfloat Position1[]    = { -3000.0,  0.0,  6000.0, 0,0};
+    GLfloat Position1[] = { -3000.0, 0.0, 6000.0, 0, 0 };
 
-	GLfloat matSpecular[]  = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat matShininess[] = { 30.0 };
+    GLfloat matSpecular[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat matShininess[] = { 30.0 };
 
 /*
+ *
+ *  GLfloat BlueLight[]    = {0.0, 0.0, 1.0, 1.0};
+ *  GLfloat OrangeLight[]  = {1.0, 0.5, 0.0, 1.0};
+ *  GLfloat BlackLight[]   = {0,0,0, 1.0};
+ *  GLfloat DarkLight[]    = { 0.5, 0.5, 0.5, 1.0 };
+ */
+    GLfloat WhiteLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat LightAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
 
-	GLfloat BlueLight[]    = {0.0, 0.0, 1.0, 1.0};
-	GLfloat OrangeLight[]  = {1.0, 0.5, 0.0, 1.0};
-	GLfloat BlackLight[]   = {0,0,0, 1.0};
-	GLfloat DarkLight[]    = { 0.5, 0.5, 0.5, 1.0 };
-*/
-  GLfloat WhiteLight[]   = {1.0, 1.0, 1.0, 1.0};
-	GLfloat LightAmbient[] = {0.2, 0.2, 0.2, 1.0};
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glShadeModel(GL_SMOOTH);
 
-  glClearColor(0.0, 0.0, 0.0, 0.0);
-  glShadeModel(GL_SMOOTH);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, matShininess);
 
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,  matSpecular);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, matShininess);
+    mLightPosition.Set(Position1[0], Position1[1], Position1[2]);
 
-	mLightPosition.Set(Position1[0], Position1[1], Position1[2]);
+    glLightfv(GL_LIGHT0, GL_POSITION, Position1);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, WhiteLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, WhiteLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+    glEnable(GL_NORMALIZE);
 
-  glLightfv(GL_LIGHT0, GL_POSITION, Position1);
-  glLightfv(GL_LIGHT0, GL_DIFFUSE,  WhiteLight);
-  glLightfv(GL_LIGHT0, GL_SPECULAR, WhiteLight);
-  glLightfv(GL_LIGHT0, GL_AMBIENT,  LightAmbient);
-  glEnable(GL_NORMALIZE);
-
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightAmbient);
-
- 	
- 	//glEnable(GL_DEPTH_TEST);
-
-	// Rueckseiten der Polygone nicht zeichnen
-	glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightAmbient);
 
 
-  //glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+    //glEnable(GL_DEPTH_TEST);
+
+    // Rueckseiten der Polygone nicht zeichnen
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+
+    //glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 }
-
-
-
-
-

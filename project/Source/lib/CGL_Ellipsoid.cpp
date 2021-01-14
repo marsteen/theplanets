@@ -1,13 +1,16 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CGL_Ellipsoid.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
 #ifdef _WIN32
 #include <windows.h>
@@ -16,10 +19,9 @@
 #include <iostream>
 #include <GLinclude.h>
 #include <math.h>
+#include <CGL_Ellipsoid.h>
 
 using namespace std;
-
-#include "CGL_Ellipsoid.h"
 
 //---------------------------------------------------------------------------
 //
@@ -34,18 +36,19 @@ using namespace std;
 
 void CGL_Ellipsoid::CreateEllipsoid(int Sseg, float Srad, int Tseg, float Trad, float* DiffuseMaterial)
 {
-	mTCircleSegs = Tseg;
-	mTCircleRad  = Trad;
-	mSCircleSegs = Sseg;
-	mSCircleRad  = Srad;
+    mTCircleSegs = Tseg;
+    mTCircleRad = Trad;
+    mSCircleSegs = Sseg;
+    mSCircleRad = Srad;
 
-	for (int i = 0; i < 4; i++)
-	{
-		mDiffuseMaterial[i] = DiffuseMaterial[i];
-		mAmbientMaterial[i] = DiffuseMaterial[i];
-	}
-	mUseTexture = false;
+    for (int i = 0; i < 4; i++)
+    {
+        mDiffuseMaterial[i] = DiffuseMaterial[i];
+        mAmbientMaterial[i] = DiffuseMaterial[i];
+    }
+    mUseTexture = false;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -60,7 +63,6 @@ CGL_Ellipsoid::CGL_Ellipsoid()
 }
 
 
-
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGL_Ellipsoid
@@ -71,54 +73,55 @@ CGL_Ellipsoid::CGL_Ellipsoid()
 
 void CGL_Ellipsoid::DrawWireFrame()
 {
-	glPushMatrix();
+    glPushMatrix();
 
-	glRotatef(180, 1.0,0.0,0.0);
+    glRotatef(180, 1.0, 0.0, 0.0);
 
-	float AngleStepS = (M_PI * 2) / mSCircleSegs;
-	float AngleStepT = (M_PI) / mTCircleSegs;
+    float AngleStepS = (M_PI * 2) / mSCircleSegs;
+    float AngleStepT = (M_PI) / mTCircleSegs;
 
-	float AngleS1    = 0.0;
+    float AngleS1 = 0.0;
 
-	CVector3<float> Origin(0,0,0);
+    CVector3<float> Origin(0, 0, 0);
 
-	for (int s = 0; s < mSCircleSegs; s++)
-	{
-		glBegin(GL_LINE_STRIP);
+    for (int s = 0; s < mSCircleSegs; s++)
+    {
+        glBegin(GL_LINE_STRIP);
 
-		float AngleT = (M_PI / 2);
-		float AngleS2 = AngleS1 + AngleStepS;
+        float AngleT = (M_PI / 2);
+        float AngleS2 = AngleS1 + AngleStepS;
 
-		for (int t = 0; t < mTCircleSegs+1; t++)
-		{
-			CVector3<float> vert;
+        for (int t = 0; t < mTCircleSegs+1; t++)
+        {
+            CVector3<float> vert;
 
-			vert.x = cos(AngleT) * mSCircleRad;
-			vert.y = sin(AngleT) * mTCircleRad;
-			vert.z = 0;
+            vert.x = cos(AngleT) * mSCircleRad;
+            vert.y = sin(AngleT) * mTCircleRad;
+            vert.z = 0;
 
-			vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
+            vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
 
-			SetSphereVertex(&Origin, &vert);
+            SetSphereVertex(&Origin, &vert);
 
-			vert.x = cos(AngleT) * mSCircleRad;
-			vert.y = sin(AngleT) * mTCircleRad;
-			vert.z = 0;
+            vert.x = cos(AngleT) * mSCircleRad;
+            vert.y = sin(AngleT) * mTCircleRad;
+            vert.z = 0;
 
-			vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
+            vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
 
-			SetSphereVertex(&Origin, &vert);
+            SetSphereVertex(&Origin, &vert);
 
-			AngleT -= AngleStepT;
-		}
+            AngleT -= AngleStepT;
+        }
 
-		AngleS1 += AngleStepS;
+        AngleS1 += AngleStepS;
 
-		glEnd();
-	}
+        glEnd();
+    }
 
-	glPopMatrix();
+    glPopMatrix();
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -130,65 +133,67 @@ void CGL_Ellipsoid::DrawWireFrame()
 
 void CGL_Ellipsoid::MakeObject()
 {
-	glBindTexture(GL_TEXTURE_2D, mTexHandle);
-	float AngleStepS = (M_PI * 2) / mSCircleSegs;
-	float AngleStepT = (M_PI) / mTCircleSegs;
-	float TexCoordStepS = 1.0 / mSCircleSegs;
-	float TexCoordStepT = 1.0 / mTCircleSegs;
+    glBindTexture(GL_TEXTURE_2D, mTexHandle);
+    float AngleStepS = (M_PI * 2) / mSCircleSegs;
+    float AngleStepT = (M_PI) / mTCircleSegs;
+    float TexCoordStepS = 1.0 / mSCircleSegs;
+    float TexCoordStepT = 1.0 / mTCircleSegs;
 
-	float AngleS1 = 0.0;
-	float TexCoordS1 = 0.0;
+    float AngleS1 = 0.0;
+    float TexCoordS1 = 0.0;
 
-	glPushMatrix();
-	glRotatef(180, 1.0,0.0,0.0);
-	CVector3<float> Origin(0,0,0);
+    glPushMatrix();
+    glRotatef(180, 1.0, 0.0, 0.0);
+    CVector3<float> Origin(0, 0, 0);
 
-	for (int s = 0; s < mSCircleSegs; s++)
-	{
-		glBegin(GL_TRIANGLE_STRIP);
+    for (int s = 0; s < mSCircleSegs; s++)
+    {
+        glBegin(GL_TRIANGLE_STRIP);
 
-		float AngleT = (M_PI / 2);
-		float TexCoordT = 0;
+        float AngleT = (M_PI / 2);
+        float TexCoordT = 0;
 
-		float AngleS2    = AngleS1 + AngleStepS;
-		float TexCoordS2 = TexCoordS1 + TexCoordStepS;
+        float AngleS2 = AngleS1 + AngleStepS;
+        float TexCoordS2 = TexCoordS1 + TexCoordStepS;
 
-		for (int t = 0; t < mTCircleSegs+1; t++)
-		{
-			CVector3<float> vert;
+        for (int t = 0; t < mTCircleSegs+1; t++)
+        {
+            CVector3<float> vert;
 
-			vert.x = cos(AngleT) * mSCircleRad;
-			vert.y = sin(AngleT) * mTCircleRad;
-			vert.z = 0;
+            vert.x = cos(AngleT) * mSCircleRad;
+            vert.y = sin(AngleT) * mTCircleRad;
+            vert.z = 0;
 
-			vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
+            vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
 
-			glTexCoord2f(TexCoordS1, TexCoordT);
+            glTexCoord2f(TexCoordS1, TexCoordT);
 
-			SetSphereVertex(&Origin, &vert);
+            SetSphereVertex(&Origin, &vert);
 
-			vert.x = cos(AngleT) * mSCircleRad;
-			vert.y = sin(AngleT) * mTCircleRad;
-			vert.z = 0;
+            vert.x = cos(AngleT) * mSCircleRad;
+            vert.y = sin(AngleT) * mTCircleRad;
+            vert.z = 0;
 
-			vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
+            vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
 
-			glTexCoord2f(TexCoordS2, TexCoordT);
+            glTexCoord2f(TexCoordS2, TexCoordT);
 
-			SetSphereVertex(&Origin, &vert);
+            SetSphereVertex(&Origin, &vert);
 
-			AngleT -= AngleStepT;
-			TexCoordT += TexCoordStepT;
-		}
+            AngleT -= AngleStepT;
+            TexCoordT += TexCoordStepT;
+        }
 
-		AngleS1 += AngleStepS;
-		TexCoordS1 += TexCoordStepS;
+        AngleS1 += AngleStepS;
+        TexCoordS1 += TexCoordStepS;
 
-		glEnd();
-	}
+        glEnd();
+    }
 
-	glPopMatrix();
+    glPopMatrix();
 }
+
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGL_EllipsoidPatched
@@ -200,24 +205,24 @@ void CGL_Ellipsoid::MakeObject()
 
 void CGL_EllipsoidPatched::Init()
 {
+    MatInit();
 
-	MatInit();
-
-	mRotY = 180.0 / mPatchesY;
-	MatRotateY(mRotY);
+    mRotY = 180.0 / mPatchesY;
+    MatRotateY(mRotY);
 
 /*
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	MakeObject();
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-*/
+ *  glEnableClientState(GL_VERTEX_ARRAY);
+ *  glEnableClientState(GL_NORMAL_ARRAY);
+ *  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+ *
+ *  MakeObject();
+ *
+ *  glDisableClientState(GL_VERTEX_ARRAY);
+ *  glDisableClientState(GL_NORMAL_ARRAY);
+ *  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+ */
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -230,16 +235,16 @@ void CGL_EllipsoidPatched::Init()
 
 void CGL_EllipsoidPatched::InitDisplayList()
 {
-	MatInit();
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    MatInit();
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	MakeObject();
+    MakeObject();
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 
@@ -253,64 +258,61 @@ void CGL_EllipsoidPatched::InitDisplayList()
 
 void CGL_EllipsoidPatched::MakeObject()
 {
-	//cout << "CGL_EllipsoidPatched::MakeObject start" << endl;
+    //cout << "CGL_EllipsoidPatched::MakeObject start" << endl;
 
-	int PsegS = mSCircleSegs / mPatchesX;
-	int PsegT = mTCircleSegs / mPatchesY;
+    int PsegS = mSCircleSegs / mPatchesX;
+    int PsegT = mTCircleSegs / mPatchesY;
 
-	//Debug2 << "  PsegS=" << PsegS << DBLF;
-	//Debug2 << "  PsegT=" << PsegT << DBLF;
+    //Debug2 << "  PsegS=" << PsegS << DBLF;
+    //Debug2 << "  PsegT=" << PsegT << DBLF;
 
-	float AngleStepS = (M_PI * 2) / mSCircleSegs;
-	float AngleStepT = (M_PI) / mTCircleSegs;
+    float AngleStepS = (M_PI * 2) / mSCircleSegs;
+    float AngleStepT = (M_PI) / mTCircleSegs;
 
-	int ti = 0; // Texture-Index
-	int n  = 0;
+    int ti = 0; // Texture-Index
+    int n = 0;
 
-	float StartT = 0; // AngleStepT * PsegT;
+    float StartT = 0; // AngleStepT * PsegT;
 
-	mDisplayListHandle = glGenLists(mPatchesX * mPatchesY);
+    mDisplayListHandle = glGenLists(mPatchesX * mPatchesY);
 
-	//mAngleList = new SAngleList[mPatchesX * mPatchesY];
+    //mAngleList = new SAngleList[mPatchesX * mPatchesY];
 
-	mRotY = 180.0 / mPatchesY;
+    mRotY = 180.0 / mPatchesY;
 
-	MatRotateY(mRotY);
+    MatRotateY(mRotY);
 
-	mWidthS  = AngleStepS * PsegS;
-	mHeightT = AngleStepT * PsegT;
+    mWidthS = AngleStepS * PsegS;
+    mHeightT = AngleStepT * PsegT;
 
-	for (int y = 0; y < mPatchesY; y++)
-	{
-		float StartS = M_PI * 2;
+    for (int y = 0; y < mPatchesY; y++)
+    {
+        float StartS = M_PI * 2;
 
-		for (int x = 0; x < mPatchesX; x++)
-		{
-			glNewList(mDisplayListHandle + n, GL_COMPILE);
+        for (int x = 0; x < mPatchesX; x++)
+        {
+            glNewList(mDisplayListHandle + n, GL_COMPILE);
 
-			if (mPhaseCount > 0)
-			{
-				MakePatchDrawElementsST(StartS, StartT, AngleStepS, AngleStepT, PsegS, PsegT);
-			}
-			else
-			{
-				MakePatchDrawElements(StartS, StartT, AngleStepS, AngleStepT, PsegS, PsegT);
-			}
-			glEndList();
+            if (mPhaseCount > 0)
+            {
+                MakePatchDrawElementsST(StartS, StartT, AngleStepS, AngleStepT, PsegS, PsegT);
+            }
+            else
+            {
+                MakePatchDrawElements(StartS, StartT, AngleStepS, AngleStepT, PsegS, PsegT);
+            }
+            glEndList();
 
-			StartS -= mWidthS;
+            StartS -= mWidthS;
 
-			n++;
-			ti++;
-		}
-		StartT -= mHeightT;
-	}
+            n++;
+            ti++;
+        }
+        StartT -= mHeightT;
+    }
 
-	//cout << "CGL_EllipsoidPatched::MakeObject ok" << endl;
+    //cout << "CGL_EllipsoidPatched::MakeObject ok" << endl;
 }
-
-
-
 
 
 //---------------------------------------------------------------------------
@@ -324,27 +326,28 @@ void CGL_EllipsoidPatched::MakeObject()
 
 void CGL_EllipsoidPatched::NextNumXY(int n, int* nx, int* ny)
 {
-	int pktT = (n - 400000) % 1000;
-	int pktS = (n - 400000) / 1000;
+    int pktT = (n - 400000) % 1000;
+    int pktS = (n - 400000) / 1000;
 
-	if (pktS > 0)
-	{
-		*nx = n - 1000;
-	}
-	else
-	{
-		*nx = n + 1000;
-	}
+    if (pktS > 0)
+    {
+        *nx = n - 1000;
+    }
+    else
+    {
+        *nx = n + 1000;
+    }
 
-	if (pktT > 0)
-	{
-		*ny = n - 1;
-	}
-	else
-	{
-		*ny = n + 1;
-	}
+    if (pktT > 0)
+    {
+        *ny = n - 1;
+    }
+    else
+    {
+        *ny = n + 1;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -357,13 +360,13 @@ void CGL_EllipsoidPatched::NextNumXY(int n, int* nx, int* ny)
 
 void CGL_EllipsoidPatched::GetLongLati(int Name, float* Long, float* Lati)
 {
-	int pktT = (Name-400000) % 1000;
-	int pktS = (Name-400000) / 1000;
-	float AddLong = mPointsRS * mStepRS;
+    int pktT = (Name-400000) % 1000;
+    int pktS = (Name-400000) / 1000;
+    float AddLong = mPointsRS * mStepRS;
 
 
-	*Lati = 90.0 + RAD_TO_DEG(mStartT - (mStepRT * pktT));
-	*Long = 180.0 - RAD_TO_DEG(mStartS + (mStepRS * pktS) - AddLong);
+    *Lati = 90.0 + RAD_TO_DEG(mStartT - (mStepRT * pktT));
+    *Long = 180.0 - RAD_TO_DEG(mStartS + (mStepRS * pktS) - AddLong);
 }
 
 
@@ -378,18 +381,19 @@ void CGL_EllipsoidPatched::GetLongLati(int Name, float* Long, float* Lati)
 
 void CGL_EllipsoidPatched::GetSegmentLongLati(int SegmentNr, float* Long, float* Lati, float* ns, float* nt)
 {
-	float StartT = 0;
-	float StartS = 360.0;
+    float StartT = 0;
+    float StartS = 360.0;
 
-	int SegT = SegmentNr / mPatchesX;
-	int SegS = SegmentNr % mPatchesX;
+    int SegT = SegmentNr / mPatchesX;
+    int SegS = SegmentNr % mPatchesX;
 
-	*ns = 360.0 / mPatchesX;
-	*nt = 180.0 / mPatchesY;
+    *ns = 360.0 / mPatchesX;
+    *nt = 180.0 / mPatchesY;
 
-	*Lati = 90.0 + (StartT - (SegT * (*nt)));
-	*Long = 180.0 - (StartS - (SegS * (*ns)));
+    *Lati = 90.0 + (StartT - (SegT * (*nt)));
+    *Long = 180.0 - (StartS - (SegS * (*ns)));
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -404,27 +408,28 @@ void CGL_EllipsoidPatched::GetSegmentLongLati(int SegmentNr, float* Long, float*
 
 void CGL_EllipsoidPatched::DrawSingleSegment(int PatchNr, float Anisotropic)
 {
-	int yseg = PatchNr / mPatchesX;
-	int xseg = PatchNr % mPatchesX;
+    int yseg = PatchNr / mPatchesX;
+    int xseg = PatchNr % mPatchesX;
 
-	int PsegS = mSCircleSegs / mPatchesX;
-	int PsegT = mTCircleSegs / mPatchesY;
+    int PsegS = mSCircleSegs / mPatchesX;
+    int PsegT = mTCircleSegs / mPatchesY;
 
-	float AngleStepS = (M_PI * 2) / mSCircleSegs;
-	float AngleStepT = (M_PI) / mTCircleSegs;
+    float AngleStepS = (M_PI * 2) / mSCircleSegs;
+    float AngleStepT = (M_PI) / mTCircleSegs;
 
-	mStartT = -(AngleStepT * PsegT * yseg);
-	mStartS =  (M_PI * 2) - (AngleStepS * PsegS * xseg);
+    mStartT = -(AngleStepT * PsegT * yseg);
+    mStartS = (M_PI * 2) - (AngleStepS * PsegS * xseg);
 
-  /*
-	if (Anisotropic > 0)
-	{
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, &Anisotropic);
-	}
-	*/
+    /*
+     * if (Anisotropic > 0)
+     * {
+     *    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, &Anisotropic);
+     * }
+     */
 
-	MakePatchDrawElements(mStartS, mStartT, AngleStepS, AngleStepT, PsegS, PsegT);
+    MakePatchDrawElements(mStartS, mStartT, AngleStepS, AngleStepT, PsegS, PsegT);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -439,11 +444,12 @@ void CGL_EllipsoidPatched::DrawSingleSegment(int PatchNr, float Anisotropic)
 
 void CGL_EllipsoidPatched::SetPatches(int PatchesX, int PatchesY)
 {
-	mPatchesX = PatchesX;
-	mPatchesY = PatchesY;
+    mPatchesX = PatchesX;
+    mPatchesY = PatchesY;
 
-	mNumPatches = mPatchesX * mPatchesY;
+    mNumPatches = mPatchesX * mPatchesY;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -458,9 +464,9 @@ void CGL_EllipsoidPatched::SetPatches(int PatchesX, int PatchesY)
 
 void CGL_EllipsoidPatched::SetMotionTextures(unsigned int* TexHandles, int PatchesX, int PatchesY)
 {
-	SetPatches(PatchesX, PatchesY);
-	mTexHandleList = TexHandles;
-	mTexBitDepth = 8;
+    SetPatches(PatchesX, PatchesY);
+    mTexHandleList = TexHandles;
+    mTexBitDepth = 8;
 }
 
 
@@ -477,9 +483,9 @@ void CGL_EllipsoidPatched::SetMotionTextures(unsigned int* TexHandles, int Patch
 
 void CGL_EllipsoidPatched::SetMultiTextures(unsigned int* TexHandles, int PatchesX, int PatchesY)
 {
-	SetPatches(PatchesX, PatchesY);
-	mTexHandleList = TexHandles;
-	mTexBitDepth = 24;
+    SetPatches(PatchesX, PatchesY);
+    mTexHandleList = TexHandles;
+    mTexBitDepth = 24;
 }
 
 
@@ -496,22 +502,23 @@ void CGL_EllipsoidPatched::SetMultiTextures(unsigned int* TexHandles, int Patche
 
 void CGL_EllipsoidPatched::Draw()
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glEnable(GL_TEXTURE_2D);
-	for (int i = 0; i < mNumPatches; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, mTexHandleList[i]);
-		DrawSingleSegment(i, 0);
-	}
-	glDisable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
+    for (int i = 0; i < mNumPatches; i++)
+    {
+        glBindTexture(GL_TEXTURE_2D, mTexHandleList[i]);
+        DrawSingleSegment(i, 0);
+    }
+    glDisable(GL_TEXTURE_2D);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -526,12 +533,13 @@ void CGL_EllipsoidPatched::Draw()
 
 void CGL_EllipsoidPatched::Delete()
 {
-	if (mTexHandleList != NULL)
-	{
-		glDeleteTextures(mNumPatches, mTexHandleList);
-		glDeleteLists(mDisplayListHandle, 1);
-	}
+    if (mTexHandleList != NULL)
+    {
+        glDeleteTextures(mNumPatches, mTexHandleList);
+        glDeleteLists(mDisplayListHandle, 1);
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -546,19 +554,19 @@ void CGL_EllipsoidPatched::Delete()
 
 void CGL_EllipsoidPatched::DrawDisplayList()
 {
-	if (mPhaseCount > 0)
-	{
-		DrawDisplayListMotion();
-	}	
-	else
-	{
-		glEnable(GL_TEXTURE_2D);
-		for (int i = 0; i < mNumPatches; i++)
-		{
-			DrawPatch(i, mTexHandleList[i], 0);
-		}
-		glDisable(GL_TEXTURE_2D);
-	}
+    if (mPhaseCount > 0)
+    {
+        DrawDisplayListMotion();
+    }
+    else
+    {
+        glEnable(GL_TEXTURE_2D);
+        for (int i = 0; i < mNumPatches; i++)
+        {
+            DrawPatch(i, mTexHandleList[i], 0);
+        }
+        glDisable(GL_TEXTURE_2D);
+    }
 }
 
 
@@ -575,16 +583,17 @@ void CGL_EllipsoidPatched::DrawDisplayList()
 
 void CGL_EllipsoidPatched::DrawDisplayListMotion()
 {
-	glEnable(GL_TEXTURE_2D);
-	
-	glBindTexture(GL_TEXTURE_2D, mTexHandleList[mPhase]);
-	for (int i = 0; i < mNumPatches; i++)
-	{
-		DrawPatch(i);
-	}
+    glEnable(GL_TEXTURE_2D);
 
-	glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, mTexHandleList[mPhase]);
+    for (int i = 0; i < mNumPatches; i++)
+    {
+        DrawPatch(i);
+    }
+
+    glDisable(GL_TEXTURE_2D);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -599,14 +608,14 @@ void CGL_EllipsoidPatched::DrawDisplayListMotion()
 
 void CGL_EllipsoidPatched::Animate()
 {
-	if (++mSpeed == mSpeedCount)
-	{
-    mSpeed = 0;
-		if (++mPhase == mPhaseCount)
-		{
-			mPhase = 0;
-		}
-	}
+    if (++mSpeed == mSpeedCount)
+    {
+        mSpeed = 0;
+        if (++mPhase == mPhaseCount)
+        {
+            mPhase = 0;
+        }
+    }
 }
 
 
@@ -623,34 +632,34 @@ void CGL_EllipsoidPatched::Animate()
 
 void CGL_EllipsoidPatched::DrawWithoutTexture(int Mode)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
-	if (Mode == GL_FEEDBACK)
-	{
-		//Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture=" << mNumPatches << DBLF;
+    if (Mode == GL_FEEDBACK)
+    {
+        //Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture=" << mNumPatches << DBLF;
 
-		glDisable(GL_TEXTURE_2D);
-		for (int i = 0; i < mNumPatches; i++)
-		{
-			glPassThrough(i);
-			DrawSingleSegment(i, 0);
-		}
-	}
-	else
-	if (Mode == GL_SELECT)
-	{
-		glDisable(GL_TEXTURE_2D);
-		for (int i = 0; i < mNumPatches; i++)
-		{
-			glLoadName(i);
-			DrawSingleSegment(i, 0);
-		}
-	}
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-
+        glDisable(GL_TEXTURE_2D);
+        for (int i = 0; i < mNumPatches; i++)
+        {
+            glPassThrough(i);
+            DrawSingleSegment(i, 0);
+        }
+    }
+    else
+    if (Mode == GL_SELECT)
+    {
+        glDisable(GL_TEXTURE_2D);
+        for (int i = 0; i < mNumPatches; i++)
+        {
+            glLoadName(i);
+            DrawSingleSegment(i, 0);
+        }
+    }
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -665,41 +674,41 @@ void CGL_EllipsoidPatched::DrawWithoutTexture(int Mode)
 
 void CGL_EllipsoidPatched::DrawWithoutTexture(int Mode, int* SegList)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
-	if (Mode == GL_FEEDBACK)
-	{
-		//Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture Mode=GL_FEEDBACK" << DBLF;
+    if (Mode == GL_FEEDBACK)
+    {
+        //Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture Mode=GL_FEEDBACK" << DBLF;
 
-		//Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture=" << mNumPatches << DBLF;
+        //Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture=" << mNumPatches << DBLF;
 
-		glDisable(GL_TEXTURE_2D);
-		for (int i = 0; SegList[i] >= 0; i++)
-		{
-			//Debug2 << SegList[i] << DBLF;
-			glPassThrough(SegList[i]);
-			DrawSingleSegment(SegList[i], 0);
-		}
-	}
-	else
-	if (Mode == GL_SELECT)
-	{
-		//Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture Mode=GL_SELECT" << DBLF;
+        glDisable(GL_TEXTURE_2D);
+        for (int i = 0; SegList[i] >= 0; i++)
+        {
+            //Debug2 << SegList[i] << DBLF;
+            glPassThrough(SegList[i]);
+            DrawSingleSegment(SegList[i], 0);
+        }
+    }
+    else
+    if (Mode == GL_SELECT)
+    {
+        //Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture Mode=GL_SELECT" << DBLF;
 
-		glDisable(GL_TEXTURE_2D);
-		for (int i = 0; SegList[i] >= 0; i++)
-		{
-			//Debug2 << SegList[i] << DBLF;
-			glLoadName(SegList[i]);
-			DrawSingleSegment(SegList[i], 0);
-		}
-	}
+        glDisable(GL_TEXTURE_2D);
+        for (int i = 0; SegList[i] >= 0; i++)
+        {
+            //Debug2 << SegList[i] << DBLF;
+            glLoadName(SegList[i]);
+            DrawSingleSegment(SegList[i], 0);
+        }
+    }
 
 //	Debug2 << "CGL_EllipsoidPatched::DrawWithoutTexture OK" << DBLF;
 
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 
@@ -716,17 +725,18 @@ void CGL_EllipsoidPatched::DrawWithoutTexture(int Mode, int* SegList)
 
 void CGL_EllipsoidPatched::DrawPatch(int n, unsigned int TexHandle, GLfloat Anisotropic)
 {
-	if (TexHandle != 0)
-	{
-		glBindTexture(GL_TEXTURE_2D, TexHandle);
+    if (TexHandle != 0)
+    {
+        glBindTexture(GL_TEXTURE_2D, TexHandle);
 
-		if (Anisotropic > 0)
-		{
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, &Anisotropic);
-		}
-		glCallList(mDisplayListHandle + n);
-	}
+        if (Anisotropic > 0)
+        {
+            glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, &Anisotropic);
+        }
+        glCallList(mDisplayListHandle + n);
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -741,7 +751,5 @@ void CGL_EllipsoidPatched::DrawPatch(int n, unsigned int TexHandle, GLfloat Anis
 
 void CGL_EllipsoidPatched::DrawPatch(int n)
 {
-	glCallList(mDisplayListHandle + n);
+    glCallList(mDisplayListHandle + n);
 }
-
-

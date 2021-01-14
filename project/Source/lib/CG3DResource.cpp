@@ -1,18 +1,21 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResource.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
-#include "CG3DResourceList.h"
+#include <CG3DResourceList.h>
 #include <CHexConv.h>
 
-extern CG3DGlobals*      gGlobals;
+extern CG3DGlobals* gGlobals;
 extern CG3DResourceList* gResourceList;
 
 
@@ -20,13 +23,14 @@ static float sWhiteColor[] = { 1.0, 1.0, 1.0, 1.0 };
 
 CG3DResource::~CG3DResource()
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		delete cld->mRef;
-	}
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        delete cld->mRef;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -41,20 +45,21 @@ CG3DResource::~CG3DResource()
 
 void CG3DResource::ActivateTooltipp(bool On)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		//cout << "Check Tooltip: " << cld->mRef->mName << endl;
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        //cout << "Check Tooltip: " << cld->mRef->mName << endl;
 
-		if (cld->mRef->mType == ERTYPE_TOOLTIPP)
-		{
-			//cout << " set ACTIVE on: " << On << endl;
+        if (cld->mRef->mType == ERTYPE_TOOLTIPP)
+        {
+            //cout << " set ACTIVE on: " << On << endl;
 
-			cld->mStatus.Set(ESTAT_ACTIVE, On);
-		}
-	}
+            cld->mStatus.Set(ESTAT_ACTIVE, On);
+        }
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -69,9 +74,10 @@ void CG3DResource::ActivateTooltipp(bool On)
 
 void CG3DResource::ShowColor(char* s, float* f)
 {
-	// cout << s;
-	// cout << " R=" << f[0] << " G=" << f[1] << " B=" << f[2] << " A=" << f[3] << endl;
+    // cout << s;
+    // cout << " R=" << f[0] << " G=" << f[1] << " B=" << f[2] << " A=" << f[3] << endl;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -86,8 +92,9 @@ void CG3DResource::ShowColor(char* s, float* f)
 
 float CG3DResource::AdjustY(float y)
 {
-	return gGlobals->mWindowHeight - y;
+    return gGlobals->mWindowHeight - y;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -102,20 +109,22 @@ float CG3DResource::AdjustY(float y)
 
 bool CG3DResource::ParseColor(string& ColorString, float* Color)
 {
-	CHexConv HexConv;
+    CHexConv HexConv;
 
-	const char* col = ColorString.c_str();
-	if (strlen(col) == 8)
-	{
-		Color[0] = HexConv.ByteToFloat(col[0], col[1]);
-		Color[1] = HexConv.ByteToFloat(col[2], col[3]);
-		Color[2] = HexConv.ByteToFloat(col[4], col[5]);
-		Color[3] = HexConv.ByteToFloat(col[6], col[7]);
-		return true;
-	}
-	cout << "***** Colorlen must be 8 digits: "<< ColorString << endl;
-	return false;
+    const char* col = ColorString.c_str();
+
+    if (strlen(col) == 8)
+    {
+        Color[0] = HexConv.ByteToFloat(col[0], col[1]);
+        Color[1] = HexConv.ByteToFloat(col[2], col[3]);
+        Color[2] = HexConv.ByteToFloat(col[4], col[5]);
+        Color[3] = HexConv.ByteToFloat(col[6], col[7]);
+        return true;
+    }
+    cout << "***** Colorlen must be 8 digits: "<< ColorString << endl;
+    return false;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -130,8 +139,9 @@ bool CG3DResource::ParseColor(string& ColorString, float* Color)
 
 float CG3DResource::Width(SG3DDrawParams* dp)
 {
-	return UnscaledWidth() * dp->mScale.x;
+    return UnscaledWidth() * dp->mScale.x;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -146,33 +156,33 @@ float CG3DResource::Width(SG3DDrawParams* dp)
 
 float CG3DResource::Height(SG3DDrawParams* dp)
 {
-	return UnscaledHeight() * dp->mScale.y;
+    return UnscaledHeight() * dp->mScale.y;
 }
 
 
 int CG3DResource::UnscaledWidth()
 {
-	cout << "***** Error no implementation of CG3DResource::UnscaledWidth() for resources of type " << GetTypeName() << endl;
-	cout << "***** Resource name=" << mName << endl;
-	//cout << "Childs=" << mChilds.size() << endl;
-	//cout << "Refs=" << mRefs.size() << endl;
-	return 0;
+    cout << "***** Error no implementation of CG3DResource::UnscaledWidth() for resources of type " << GetTypeName() << endl;
+    cout << "***** Resource name=" << mName << endl;
+    //cout << "Childs=" << mChilds.size() << endl;
+    //cout << "Refs=" << mRefs.size() << endl;
+    return 0;
 }
+
 
 int CG3DResource::UnscaledHeight()
 {
-	cout << "***** Error no implementation of CG3DResource::UnscaledHeight() for resources of type " << GetTypeName() << endl;
-	cout << "***** Resource name=" << mName << endl;
+    cout << "***** Error no implementation of CG3DResource::UnscaledHeight() for resources of type " << GetTypeName() << endl;
+    cout << "***** Resource name=" << mName << endl;
 
-	return 0;
+    return 0;
 }
+
 
 bool CG3DResource::Check(void)
 {
-	return true;
+    return true;
 }
-
-
 
 
 //---------------------------------------------------------------------------
@@ -188,37 +198,36 @@ bool CG3DResource::Check(void)
 
 const char* CG3DResource::GetTypeName()
 {
-	static char errtxt[64];
+    static char errtxt[64];
 
-	static const char* TypeNames[] =
-	{
-		/* 00 */ "ANY",
-		/* 01 */ "VOID",
-		/* 02 */ "KNOT",
-		/* 03 */ "STRING",
- 		/* 04 */ "BUTTON",
-	  /* 05 */ "DIALOG",
-		/* 06 */ "IMAGE",
-		/* 07 */ "TABLEAU",
-		/* 08 */ "FONT",
-		/* 09 */ "FRAME",
-		/* 10 */ "BOX",
-		/* 11 */ "OPTIONBUTTON",
-		/* 12 */ "ROOT",
-		/* 13 */ "LINE",
-		/* 14 */ "TEXTFIELD",
-		/* 15 */ "SLIDER"
-	};
+    static const char* TypeNames[] =
+    {
+        /* 00 */ "ANY",
+        /* 01 */ "VOID",
+        /* 02 */ "KNOT",
+        /* 03 */ "STRING",
+        /* 04 */ "BUTTON",
+        /* 05 */ "DIALOG",
+        /* 06 */ "IMAGE",
+        /* 07 */ "TABLEAU",
+        /* 08 */ "FONT",
+        /* 09 */ "FRAME",
+        /* 10 */ "BOX",
+        /* 11 */ "OPTIONBUTTON",
+        /* 12 */ "ROOT",
+        /* 13 */ "LINE",
+        /* 14 */ "TEXTFIELD",
+        /* 15 */ "SLIDER"
+    };
 
-	if ((mType > 15) || (mType < 0))
-	{
-		sprintf(errtxt, "?=%d", mType);
-		return errtxt;
-	}
+    if ((mType > 15) || (mType < 0))
+    {
+        sprintf(errtxt, "?=%d", mType);
+        return errtxt;
+    }
 
-	return TypeNames[mType];
+    return TypeNames[mType];
 }
-
 
 
 //---------------------------------------------------------------------------
@@ -234,18 +243,19 @@ const char* CG3DResource::GetTypeName()
 
 CG3DResChild* CG3DResource::FindChild(EResourceType type)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mRef->mType == type)
-		{
-			//cout << "+++++ FOUND! " << cld->mRef->mName << endl;
-			return &(*cld);
-		}
-	}
-	return NULL;
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mRef->mType == type)
+        {
+            //cout << "+++++ FOUND! " << cld->mRef->mName << endl;
+            return &(*cld);
+        }
+    }
+    return NULL;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -260,8 +270,9 @@ CG3DResChild* CG3DResource::FindChild(EResourceType type)
 
 void CG3DResource::SetColorWhite()
 {
-	glColor4fv(sWhiteColor);
+    glColor4fv(sWhiteColor);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -276,8 +287,9 @@ void CG3DResource::SetColorWhite()
 
 void CG3DResource::SetColorWhite(float** ColPtr)
 {
-	*ColPtr = sWhiteColor;
+    *ColPtr = sWhiteColor;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -292,26 +304,27 @@ void CG3DResource::SetColorWhite(float** ColPtr)
 
 CG3DResRef* CG3DResource::FindRef(EResourceType type)
 {
-	if (!mRefs.empty())
-	{
-		for (list<CG3DResRef>::iterator ref  = mRefs.begin();
-																		ref != mRefs.end();
-																		ref++)
-		{
-			if (ref->mRef != NULL)
-			{
-				//cout << "Test " << ref->mRef->mName << endl;
+    if (!mRefs.empty())
+    {
+        for (list<CG3DResRef>::iterator ref = mRefs.begin();
+            ref != mRefs.end();
+            ref++)
+        {
+            if (ref->mRef != NULL)
+            {
+                //cout << "Test " << ref->mRef->mName << endl;
 
-				if (ref->mRef->mType == type)
-				{
-					//cout << "+++++ FOUND! " << cld->mRef->mName << endl;
-					return &(*ref);
-				}
-			}
-		}
-	}
-	return NULL;
+                if (ref->mRef->mType == type)
+                {
+                    //cout << "+++++ FOUND! " << cld->mRef->mName << endl;
+                    return &(*ref);
+                }
+            }
+        }
+    }
+    return NULL;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -326,12 +339,12 @@ CG3DResRef* CG3DResource::FindRef(EResourceType type)
 
 static void intent(int ir)
 {
-	for (int i = 0; i < ir; i++)
-	{
-		cout << ' ';
-	}
-
+    for (int i = 0; i < ir; i++)
+    {
+        cout << ' ';
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -346,30 +359,27 @@ static void intent(int ir)
 
 void CG3DResource::Adjust(SG3DDrawParams* pa)
 {
-	//static int iv;
-  //iv++;
-	//intent(iv);
-	//cout << "Adjust " << mName << endl;
+    //static int iv;
+    //iv++;
+    //intent(iv);
+    //cout << "Adjust " << mName << endl;
 
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		//intent(iv+1);
-		//cout << "Adjust:" << cld->mRef->mName << endl;
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        //intent(iv+1);
+        //cout << "Adjust:" << cld->mRef->mName << endl;
 
-		cld->CalcAlignPosition(pa);
-		cld->mRef->Adjust(&cld->mDrawParams);
+        cld->CalcAlignPosition(pa);
+        cld->mRef->Adjust(&cld->mDrawParams);
 
-		//cout << "ok " << cld->mRef->mName << endl;
-	}
-	//intent(iv);
-	//cout << "Adjust OK " << mName << endl;
-	//iv--;
+        //cout << "ok " << cld->mRef->mName << endl;
+    }
+    //intent(iv);
+    //cout << "Adjust OK " << mName << endl;
+    //iv--;
 }
-
-
-
 
 
 //---------------------------------------------------------------------------
@@ -387,6 +397,7 @@ void CG3DResource::AddResRef(CG3DResource* res)
 {
 }
 
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CG3DResource
@@ -400,40 +411,61 @@ void CG3DResource::AddResRef(CG3DResource* res)
 
 void CG3DResource::Show()
 {
-	cout << "Name=" << mName << endl;
-	cout << "  Type=";
+    cout << "Name=" << mName << endl;
+    cout << "  Type=";
 
-	switch (mType)
-	{
-		case ERTYPE_VOID:	   cout << "void";	break;
-		case ERTYPE_STRING:  cout << "string"; break;
-		case ERTYPE_BUTTON:  cout << "button"; break;
-		case ERTYPE_OBUTTON: cout << "option button"; break;
-		case ERTYPE_DIALOG:  cout << "dialog"; break;
-		case ERTYPE_IMAGE:   cout << "image"; break;
-		case ERTYPE_TABLEAU: cout << "tableau"; break;
-	}
-	cout << endl;
-	if (!mChilds.empty())
-	{
-		for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		 cld != mChilds.end();
-																		 cld++)
-		{
-				cout << "  Child=" << cld->mName << endl;
-		}
-	}
-	if (!mRefs.empty())
-	{
-		for (list<CG3DResRef>::iterator ref  = mRefs.begin();
-																	 ref != mRefs.end();
-																	 ref++)
-		{
-				cout << "  Ref=" << ref->mName << endl;
-		}
-	}
-	cout << "Show ok" << endl;
+    switch (mType)
+    {
+        case ERTYPE_VOID:
+            cout << "void";
+            break;
+
+        case ERTYPE_STRING:
+            cout << "string";
+            break;
+
+        case ERTYPE_BUTTON:
+            cout << "button";
+            break;
+
+        case ERTYPE_OBUTTON:
+            cout << "option button";
+            break;
+
+        case ERTYPE_DIALOG:
+            cout << "dialog";
+            break;
+
+        case ERTYPE_IMAGE:
+            cout << "image";
+            break;
+
+        case ERTYPE_TABLEAU:
+            cout << "tableau";
+            break;
+    }
+    cout << endl;
+    if (!mChilds.empty())
+    {
+        for (list<CG3DResChild>::iterator cld = mChilds.begin();
+            cld != mChilds.end();
+            cld++)
+        {
+            cout << "  Child=" << cld->mName << endl;
+        }
+    }
+    if (!mRefs.empty())
+    {
+        for (list<CG3DResRef>::iterator ref = mRefs.begin();
+            ref != mRefs.end();
+            ref++)
+        {
+            cout << "  Ref=" << ref->mName << endl;
+        }
+    }
+    cout << "Show ok" << endl;
 }
+
 
 #if 1
 //---------------------------------------------------------------------------
@@ -449,24 +481,25 @@ void CG3DResource::Show()
 
 void CG3DResource::FrontDraw(SG3DDrawParams* pa)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mStatus.Get(ESTAT_ACTIVE))
-		{
-			cld->CalcAlignPosition(pa);
-			cld->mRef->FrontDraw(&(cld->mDrawParams));
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mStatus.Get(ESTAT_ACTIVE))
+        {
+            cld->CalcAlignPosition(pa);
+            cld->mRef->FrontDraw(&(cld->mDrawParams));
 
-			if (cld->mStatus.Get(ESTAT_FRONTDRAW))
-			{
-				cld->mStatus.Clr(ESTAT_FRONTDRAW);
-				cld->mRef->Draw(&(cld->mDrawParams));
-				cld->mStatus.Set(ESTAT_FRONTDRAW);
-			}
-		}
-	}
+            if (cld->mStatus.Get(ESTAT_FRONTDRAW))
+            {
+                cld->mStatus.Clr(ESTAT_FRONTDRAW);
+                cld->mRef->Draw(&(cld->mDrawParams));
+                cld->mStatus.Set(ESTAT_FRONTDRAW);
+            }
+        }
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -481,24 +514,26 @@ void CG3DResource::FrontDraw(SG3DDrawParams* pa)
 
 void CG3DResource::BackDraw(SG3DDrawParams* pa)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mStatus.Get(ESTAT_ACTIVE))
-		{
-			cld->CalcAlignPosition(pa);
-			cld->mRef->BackDraw(&cld->mDrawParams);
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mStatus.Get(ESTAT_ACTIVE))
+        {
+            cld->CalcAlignPosition(pa);
+            cld->mRef->BackDraw(&cld->mDrawParams);
 
-			if (cld->mStatus.Get(ESTAT_BACKDRAW))
-			{
-				cld->mStatus.Clr(ESTAT_BACKDRAW);
-				cld->mRef->Draw(&cld->mDrawParams);
-				cld->mStatus.Set(ESTAT_BACKDRAW);
-			}
-		}
-	}
+            if (cld->mStatus.Get(ESTAT_BACKDRAW))
+            {
+                cld->mStatus.Clr(ESTAT_BACKDRAW);
+                cld->mRef->Draw(&cld->mDrawParams);
+                cld->mStatus.Set(ESTAT_BACKDRAW);
+            }
+        }
+    }
 }
+
+
 #endif
 
 //---------------------------------------------------------------------------
@@ -514,31 +549,31 @@ void CG3DResource::BackDraw(SG3DDrawParams* pa)
 
 void CG3DResource::Draw(SG3DDrawParams* pa)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																	  cld != mChilds.end();
-																		cld++)
-	{
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
 /*
-		if (cld->mRef->mType == ERTYPE_LINE)
-		{
-			cout << "name=" << cld->mRef->mName << " stat=" << cld->mStatus.Get(ESTAT_ACTIVE) << endl;
-		}
-*/
+ *      if (cld->mRef->mType == ERTYPE_LINE)
+ *      {
+ *          cout << "name=" << cld->mRef->mName << " stat=" << cld->mStatus.Get(ESTAT_ACTIVE) << endl;
+ *      }
+ */
 
-		if (cld->mStatus.Get(ESTAT_ACTIVE))
-		{
-			cld->Draw(pa);
-		}
+        if (cld->mStatus.Get(ESTAT_ACTIVE))
+        {
+            cld->Draw(pa);
+        }
 
 /*
-		if (cld->mStatus.Get(ESTAT_ACTIVE) &&
-		   !cld->mStatus.Get(ESTAT_BACKDRAW) &&
-		   !cld->mStatus.Get(ESTAT_FRONTDRAW))
-		{
-			cld->Draw(pa);
-		}
-*/
-	}
+ *      if (cld->mStatus.Get(ESTAT_ACTIVE) &&
+ *         !cld->mStatus.Get(ESTAT_BACKDRAW) &&
+ *         !cld->mStatus.Get(ESTAT_FRONTDRAW))
+ *      {
+ *          cld->Draw(pa);
+ *      }
+ */
+    }
 }
 
 
@@ -555,9 +590,10 @@ void CG3DResource::Draw(SG3DDrawParams* pa)
 
 bool CG3DResource::Inside(SG3DDrawParams* dp, CVector2<int>* Mouse)
 {
-	CRectT<float> rc;
-	rc.Set(dp->mPos.x, dp->mPos.y, dp->mPos.x + Width(dp),  dp->mPos.y + Height(dp));
-	return rc.InRect(Mouse->x, Mouse->y);
+    CRectT<float> rc;
+
+    rc.Set(dp->mPos.x, dp->mPos.y, dp->mPos.x + Width(dp), dp->mPos.y + Height(dp));
+    return rc.InRect(Mouse->x, Mouse->y);
 }
 
 
@@ -574,15 +610,16 @@ bool CG3DResource::Inside(SG3DDrawParams* dp, CVector2<int>* Mouse)
 
 bool CG3DResource::Showparams(SG3DDrawParams* dp)
 {
-	/*
-	cout << "Rollover Test:" << mName << " X=" << dp->mPos.x << " Y=" << dp->mPos.y << endl;
-	cout << " UW=" << UnscaledWidth() << " UH=" << UnscaledHeight() << endl;
-	cout << " W=" << Width(dp) << " H=" << Height(dp) << endl;
-	cout << " SX=" << dp->mScale.x << " SY=" << dp->mScale.y << endl;
-	*/
+    /*
+     * cout << "Rollover Test:" << mName << " X=" << dp->mPos.x << " Y=" << dp->mPos.y << endl;
+     * cout << " UW=" << UnscaledWidth() << " UH=" << UnscaledHeight() << endl;
+     * cout << " W=" << Width(dp) << " H=" << Height(dp) << endl;
+     * cout << " SX=" << dp->mScale.x << " SY=" << dp->mScale.y << endl;
+     */
 
-	return true;
+    return true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -597,23 +634,24 @@ bool CG3DResource::Showparams(SG3DDrawParams* dp)
 
 bool CG3DResource::Rollover(SG3DDrawParams* dp, CVector2<int>* Mouse, bool TestRollover)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mStatus.Get(ESTAT_ACTIVE))
-		{
-			cld->CalcAlignPosition(dp);
-			cld->mRef->Rollover(&cld->mDrawParams, Mouse, cld->mStatus.Get(ESTAT_TESTROLLOVER));
-		}
-	}
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mStatus.Get(ESTAT_ACTIVE))
+        {
+            cld->CalcAlignPosition(dp);
+            cld->mRef->Rollover(&cld->mDrawParams, Mouse, cld->mStatus.Get(ESTAT_TESTROLLOVER));
+        }
+    }
 
-	if (TestRollover)
-	{
-		return Inside(dp, Mouse);
-	}
-	return false;
+    if (TestRollover)
+    {
+        return Inside(dp, Mouse);
+    }
+    return false;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -629,13 +667,13 @@ bool CG3DResource::Rollover(SG3DDrawParams* dp, CVector2<int>* Mouse, bool TestR
 
 void CG3DResource::SetParents(CG3DResource* parent)
 {
-	mParent = parent;
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		cld->mRef->SetParents(this);
-	}
+    mParent = parent;
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        cld->mRef->SetParents(this);
+    }
 }
 
 
@@ -652,27 +690,27 @@ void CG3DResource::SetParents(CG3DResource* parent)
 
 void CG3DResource::Activate(bool v)
 {
-
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		if ((cld->mRef->mType == ERTYPE_STRING) || 
-			  (cld->mRef->mType == ERTYPE_LINE))
-		{
-			cld->mStatus.Set(ESTAT_ACTIVE, true);
-		}
-		else
-		{
-			cld->mStatus.Set(ESTAT_ACTIVE, v);
-			if (cld->mStatus.Get(ESTAT_ACTIVATE_CHILDREN))
-			{
-				cld->mRef->Activate(v);
-			}
-		}
-	}
-	Reset(ERESET_INIT);
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if ((cld->mRef->mType == ERTYPE_STRING) ||
+            (cld->mRef->mType == ERTYPE_LINE))
+        {
+            cld->mStatus.Set(ESTAT_ACTIVE, true);
+        }
+        else
+        {
+            cld->mStatus.Set(ESTAT_ACTIVE, v);
+            if (cld->mStatus.Get(ESTAT_ACTIVATE_CHILDREN))
+            {
+                cld->mRef->Activate(v);
+            }
+        }
+    }
+    Reset(ERESET_INIT);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -687,14 +725,14 @@ void CG3DResource::Activate(bool v)
 
 void CG3DResource::Deactivate()
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		cld->mStatus.Clr(ESTAT_ACTIVE);
-		cld->mRef->Reset(ERESET_DEACTIVATE);
-		cld->mRef->Deactivate();
-	}
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        cld->mStatus.Clr(ESTAT_ACTIVE);
+        cld->mRef->Reset(ERESET_DEACTIVATE);
+        cld->mRef->Deactivate();
+    }
 }
 
 
@@ -711,27 +749,28 @@ void CG3DResource::Deactivate()
 
 void CG3DResource::DeactivateKnotGroup(CG3DResourceKnot* GroupKnot)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mRef->mType == ERTYPE_KNOT)
-		{
-			CG3DResourceKnot* kn = dynamic_cast<CG3DResourceKnot*> (cld->mRef);
-			if (kn->Group() == GroupKnot->Group())
-			{
-				if (kn->mName != GroupKnot->mName)
-				{
-					cld->mStatus.Set(ESTAT_ACTIVE, false);
-				}
-				else
-				{
-					cld->mStatus.Set(ESTAT_ACTIVE, true);
-				}
-			}
-		}
-	}
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mRef->mType == ERTYPE_KNOT)
+        {
+            CG3DResourceKnot* kn = dynamic_cast<CG3DResourceKnot*> (cld->mRef);
+            if (kn->Group() == GroupKnot->Group())
+            {
+                if (kn->mName != GroupKnot->mName)
+                {
+                    cld->mStatus.Set(ESTAT_ACTIVE, false);
+                }
+                else
+                {
+                    cld->mStatus.Set(ESTAT_ACTIVE, true);
+                }
+            }
+        }
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -746,34 +785,35 @@ void CG3DResource::DeactivateKnotGroup(CG3DResourceKnot* GroupKnot)
 
 void CG3DResource::DeactivateButtonGroup(CG3DResourceButton* GroupButton)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		//cout << "  Test Child:" << cld->mName;
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        //cout << "  Test Child:" << cld->mName;
 
-		if (cld->mRef->IsButton())
-		{
-			CG3DResourceButton* bt = dynamic_cast<CG3DResourceButton*> (cld->mRef);
-			if (bt->Group() == GroupButton->Group())
-			{
-				if (bt->mName != GroupButton->mName)
-				{
-					//cout << " deactivate";
-					bt->Reset(ERESET_DEACTIVATE);
-					bt->SetProperty(EBTPROP_ACTIVE, false);
-					cld->mRef->Deactivate();
-				}
-			}
-		}
-		else
-		{
-			cld->mRef->DeactivateButtonGroup(GroupButton);
-		}
+        if (cld->mRef->IsButton())
+        {
+            CG3DResourceButton* bt = dynamic_cast<CG3DResourceButton*> (cld->mRef);
+            if (bt->Group() == GroupButton->Group())
+            {
+                if (bt->mName != GroupButton->mName)
+                {
+                    //cout << " deactivate";
+                    bt->Reset(ERESET_DEACTIVATE);
+                    bt->SetProperty(EBTPROP_ACTIVE, false);
+                    cld->mRef->Deactivate();
+                }
+            }
+        }
+        else
+        {
+            cld->mRef->DeactivateButtonGroup(GroupButton);
+        }
 
-		//cout << endl;
-	}
+        //cout << endl;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -788,33 +828,34 @@ void CG3DResource::DeactivateButtonGroup(CG3DResourceButton* GroupButton)
 
 void CG3DResource::SearchChild(string& Name)
 {
-	for (list<CG3DResChild>::iterator cld  = mChilds.begin();
-																		cld != mChilds.end();
-																		cld++)
-	{
-		if (cld->mRef->mName == Name)
-		{
-			throw(CSearchChild(&(*cld)));
-		}
-		else
-		{
-			cld->mRef->SearchChild(Name);
-		}
-	}
+    for (list<CG3DResChild>::iterator cld = mChilds.begin();
+        cld != mChilds.end();
+        cld++)
+    {
+        if (cld->mRef->mName == Name)
+        {
+            throw(CSearchChild(&(*cld)));
+        }
+        else
+        {
+            cld->mRef->SearchChild(Name);
+        }
+    }
 }
 
+
 /*
-int* CG3DResource::SearchInt(int x)
-{
-	for (list<int>::iterator cld  = MyList.begin();
-													 cld != MyList.end();
-													 cld++)
-	{
-		if (*cld == x)
-		{
-			return &(*cld);
-		}
-	}
-	return NULL;
-}
-*/
+ * int* CG3DResource::SearchInt(int x)
+ * {
+ *  for (list<int>::iterator cld  = MyList.begin();
+ *                                                   cld != MyList.end();
+ *                                                   cld++)
+ *  {
+ *      if (*cld == x)
+ *      {
+ *          return &(*cld);
+ *      }
+ *  }
+ *  return NULL;
+ * }
+ */

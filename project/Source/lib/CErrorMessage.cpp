@@ -1,15 +1,18 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CErrorMessage.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
-#include "CG3DResourceList.h"
+#include <CG3DResourceList.h>
 
 //---------------------------------------------------------------------------
 //
@@ -24,69 +27,66 @@
 
 void CErrorMessage::ShowError()
 {
-	cout << "***** ";
-	
-	switch (mErrCode)
-	{
-		case EPERR_UNKNOWN_KEYWORD:
+    cout << "***** ";
 
-			cout << "unknown keyword: " << mErrMsg;
-			break;
+    switch (mErrCode)
+    {
+        case EPERR_UNKNOWN_KEYWORD:
 
-		case 	EPERR_UNKNOWN_TYPE:
+            cout << "unknown keyword: " << mErrMsg;
+            break;
 
-			cout << "unknown type: " << mErrMsg;
-			break;
+        case EPERR_UNKNOWN_TYPE:
 
-		case EPERR_FINDERROR:
+            cout << "unknown type: " << mErrMsg;
+            break;
 
-			cout << "reference not found: " << mErrMsg; 
-			break;
+        case EPERR_FINDERROR:
 
-		case EPERR_WRONG_PARAMETERCOUNT:
+            cout << "reference not found: " << mErrMsg;
+            break;
 
-			cout << "wrong parameter count. " << mErrMsg;
-			break;
+        case EPERR_WRONG_PARAMETERCOUNT:
 
-		case EPERR_LANG_UNSUPPORTED:
+            cout << "wrong parameter count. " << mErrMsg;
+            break;
 
-			cout << "unsupported language: " << mErrMsg;
-			break;
+        case EPERR_LANG_UNSUPPORTED:
 
-		case EPERR_COLORUNKNOWN:
+            cout << "unsupported language: " << mErrMsg;
+            break;
 
-			cout << "unknown color name: " << mErrMsg;
-			break;
+        case EPERR_COLORUNKNOWN:
 
-		case EPERR_DOUBLE_NAME:
+            cout << "unknown color name: " << mErrMsg;
+            break;
 
-			cout << "double name tag: " << mErrMsg;
-			break;
+        case EPERR_DOUBLE_NAME:
 
-		case EPERR_NOTDEFINED:
+            cout << "double name tag: " << mErrMsg;
+            break;
 
-			cout << "not defined: " << mErrMsg; 
-			break;
+        case EPERR_NOTDEFINED:
 
-		default:
+            cout << "not defined: " << mErrMsg;
+            break;
 
-			cout << "unspecific error: " << mErrMsg;
-			break;
+        default:
 
- 
-	}
-	
-	if (mFilename.size() != 0)
-	{
-		cout << " in file " << mFilename << endl;
-	}
-	if (mLineNumber != 0)
-	{		
-	 cout << " in line " << mLineNumber << endl;
-		
-	}
-	else
-	{
-		cout << endl;
-	}
+            cout << "unspecific error: " << mErrMsg;
+            break;
+    }
+
+    if (mFilename.size() != 0)
+    {
+        cout << " in file " << mFilename << endl;
+    }
+    if (mLineNumber != 0)
+    {
+        cout << " in line " << mLineNumber << endl;
+    }
+    else
+    {
+        cout << endl;
+    }
 }

@@ -4,16 +4,23 @@
 //
 //---------------------------------------------------------------------------
 
+
+#ifndef CG3DResource_H
+#define CG3DResource_H
+
 class CG3DResource;
 class CG3DResRef
 {
-	public:
+    public:
 
-		CG3DResRef()
-		{
-			mRef = NULL;
-		}
+        CG3DResRef()
+        {
+            mRef = NULL;
+        }
 
-		string        mName;
-		CG3DResource*	mRef;
+
+        string mName;
+        CG3DResource* mRef;
 };
+
+#endif

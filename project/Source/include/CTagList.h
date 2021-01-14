@@ -1,3 +1,17 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CTagList.h
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
+
 #ifndef STAG_H
 #define STAG_H
 
@@ -9,8 +23,8 @@
 
 struct STag
 {
-	int          mTag;
-	const char*  mTagString;
+    int			mTag;
+    const char* mTagString;
 };
 
 //---------------------------------------------------------------------------
@@ -21,8 +35,8 @@ struct STag
 
 class CTagList
 {
-	public:
+    public:
 
-		int Find(string& SearchTag, STag* Tags);
+        int Find(string& SearchTag, STag* Tags);
 };
 #endif

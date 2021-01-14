@@ -1,13 +1,16 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DReslistInterface.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
 #ifdef _WIN32
 #include <windows.h>
@@ -17,22 +20,25 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 #include <CVector3T.h>
 #include <CFileIO.h>
-#include "CG3DGlobals.h"
-#include "CG3DReslistInterface.h"
+#include <CG3DGlobals.h>
+#include <CG3DReslistInterface.h>
+
+using namespace std;
+
 
 class CG3DInterfaceError
 {
-	public:
+    public:
 
-		CG3DInterfaceError(char* err)
-		{
-			mErrMsg = err;
-		}
-		char* mErrMsg;
+        CG3DInterfaceError(char* err)
+        {
+            mErrMsg = err;
+        }
+
+
+        char* mErrMsg;
 };
 
 
@@ -52,55 +58,57 @@ class CG3DInterfaceError
 
 bool CG3DReslistInterface::Init(char* ResFileName, CG3DGlobals* gbl)
 {
-	HINSTANCE hinst;
-	string MsgBuff;
-	bool ok;
+    HINSTANCE hinst;
+    string MsgBuff;
+    bool ok;
 
-	char* DllName = "G3DResourceList.dll";
+    char* DllName = "G3DResourceList.dll";
 
-	try
-	{
-		hinst = LoadLibrary(DllName);
-		if (hinst == NULL)
-		{
-			throw(CG3DInterfaceError(DllName));
-		}
-	}
-	catch (CG3DInterfaceError& ierr)
-	{
-		string MsgBuff = string(ierr.mErrMsg) + " DLL nicht gefunden";
-		MessageBox(0, MsgBuff.c_str(), "CG3DReslistInterface.cpp", MB_OK);
-	}
+    try
+    {
+        hinst = LoadLibrary(DllName);
+        if (hinst == NULL)
+        {
+            throw(CG3DInterfaceError(DllName));
+        }
+    }
+    catch (CG3DInterfaceError& ierr)
+    {
+        string MsgBuff = string(ierr.mErrMsg) + " DLL nicht gefunden";
+        MessageBox(0, MsgBuff.c_str(), "CG3DReslistInterface.cpp", MB_OK);
+    }
 
-	mSendCommand = (DLLFUNC_intvoidP) GetProcAddress(hinst, "SendCommand");
+    mSendCommand = (DLLFUNC_intvoidP)GetProcAddress(hinst, "SendCommand");
 
-	try
-	{
-		if (mSendCommand == NULL)
-		{
-			throw(CG3DInterfaceError("InitG3DResource()"));
-		}
+    try
+    {
+        if (mSendCommand == NULL)
+        {
+            throw(CG3DInterfaceError("InitG3DResource()"));
+        }
 
-		// Kein Fehler aufgetreten
-		(*mSendCommand)(EG3DcomSetGlobals, gbl);
-		(*mSendCommand)(EG3DcomInit, ResFileName);
+        // Kein Fehler aufgetreten
+        (*mSendCommand)(EG3DcomSetGlobals, gbl);
+        (*mSendCommand)(EG3DcomInit, ResFileName);
 
-		ok = true;
-	}
-	catch (CG3DInterfaceError& ierr)
-	{
-		string ErrMsg = string(ierr.mErrMsg) + " nicht gefunden";
-		MessageBox(0, MsgBuff.c_str(), "CG3DReslistInterface.cpp", MB_OK);
-		ok = false;
-	}
+        ok = true;
+    }
+    catch (CG3DInterfaceError& ierr)
+    {
+        string ErrMsg = string(ierr.mErrMsg) + " nicht gefunden";
+        MessageBox(0, MsgBuff.c_str(), "CG3DReslistInterface.cpp", MB_OK);
+        ok = false;
+    }
 
-	return ok;
+    return ok;
 }
 
-int CDReslistInterface::SendCommand(EG3DInterfaceCommand cmd, void* val=NULL)
+
+int CDReslistInterface::SendCommand(EG3DInterfaceCommand cmd, void* val = NULL)
 {
-	(*mSendCommand)(cmd, val);
+    (*mSendCommand)(cmd, val);
 }
+
 
 #else
 
@@ -115,12 +123,13 @@ int CDReslistInterface::SendCommand(EG3DInterfaceCommand cmd, void* val=NULL)
 //
 //---------------------------------------------------------------------------
 
-int	gSendCommand(int a, void* b);
+int gSendCommand(int a, void* b);
 
 int CG3DReslistInterface::SendCommand(EG3DInterfaceCommand cmd, void* val)
 {
-	return gSendCommand(cmd, val);
+    return gSendCommand(cmd, val);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -135,14 +144,15 @@ int CG3DReslistInterface::SendCommand(EG3DInterfaceCommand cmd, void* val)
 
 bool CG3DReslistInterface::Init(const char* ResFileName, CG3DGlobals* gbl)
 {
-	CFileIO fio;
-	char* ResTmpName = fio.NewString(ResFileName);
-	gSendCommand(EG3DcomSetGlobals, gbl);
-	gSendCommand(EG3DcomInit, ResTmpName);
-	delete[] ResTmpName;
+    CFileIO fio;
+    char* ResTmpName = fio.NewString(ResFileName);
 
-	return true;
+    gSendCommand(EG3DcomSetGlobals, gbl);
+    gSendCommand(EG3DcomInit, ResTmpName);
+    delete[] ResTmpName;
+
+    return true;
 }
 
-#endif
 
+#endif

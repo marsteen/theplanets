@@ -1,8 +1,0 @@
-CMDLINE=CC -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -DEFAULT:abi=n32:isa=mips4:proc=r10k -c -I././include -I/usr/include/GL -O2 -L/usr/nekoware/lib -L././lib -n32 lib/CG3DResourceList.cpp -o ././lib/CG3DResourceList.o
-PWD=/usr/people/martin/projekte/dieplaneten3/Source
-----
-_M_get_num__Q2_3std52basic_istream__pt__31_cQ2_3std20char_traits__pt__2_cGRi
-_M_put_num__Q2_3std52basic_ostream__pt__31_cQ2_3std20char_traits__pt__2_cGl
-_M_put_num__Q2_3std52basic_ostream__pt__31_cQ2_3std20char_traits__pt__2_cGUl
-StringTo__pt__2_i__11CStringToolGRCQ2_3std78basic_string__pt__58_cQ2_3std20char_traits__pt__2_cQ2_3std18allocator__pt__2_c_Z1Z
-StringTo__pt__2_f__11CStringToolGRCQ2_3std78basic_string__pt__58_cQ2_3std20char_traits__pt__2_cQ2_3std18allocator__pt__2_c_Z1Z

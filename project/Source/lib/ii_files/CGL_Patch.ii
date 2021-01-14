@@ -1,9 +1,0 @@
-CMDLINE=CC -DEFAULT:abi=n32:isa=mips4:proc=r10k -c -I././include -I/usr/include/GL -O2 -L/usr/nekoware/lib -L././lib -n32 lib/CGL_Patch.cpp -o ././lib/CGL_Patch.o
-PWD=/usr/people/martin/projekte/dieplaneten3/Source
-----
-__as__17CVector3__pt__2_fG17CVector3__pt__2_f
-SubtractVector__17CVector3__pt__2_fGP17CVector3__pt__2_fT1
-Betrag__17CVector3__pt__2_fGv
-Normalize__17CVector3__pt__2_fGv
-Set__17CVector3__pt__2_fGfN21
-RotationXZ__17CVector3__pt__2_fGP17CVector3__pt__2_ffT2

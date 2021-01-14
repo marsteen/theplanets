@@ -1,22 +1,25 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResourceOButton.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
-#include "CG3DResourceList.h"
+#include <CG3DResourceList.h>
 
 extern CG3DGlobals* gGlobals;
 
 
 CG3DResourceOButton::CG3DResourceOButton() : CG3DResourceButton()
 {
-	mProperties.Clr(EBTPROP_ROLLOVER);
+    mProperties.Clr(EBTPROP_ROLLOVER);
 }
 
 
@@ -33,9 +36,10 @@ CG3DResourceOButton::CG3DResourceOButton() : CG3DResourceButton()
 
 void CG3DResourceOButton::GetDropImagePos(SG3DDrawParams* dp, SG3DDrawParams* cdp)
 {
-	cdp->mPos.x = dp->mPos.x + (mImgRef->Width(0) * dp->mScale.x);
-	cdp->mPos.y = dp->mPos.y;
+    cdp->mPos.x = dp->mPos.x + (mImgRef->Width(0) * dp->mScale.x);
+    cdp->mPos.y = dp->mPos.y;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -50,9 +54,10 @@ void CG3DResourceOButton::GetDropImagePos(SG3DDrawParams* dp, SG3DDrawParams* cd
 
 void CG3DResourceOButton::SetOptionParams(float x, float y, float sx, float sy)
 {
-	mContChild.mOrigParams.mPos.Set(x, y);
-	mContChild.mOrigParams.mScale.Set(sx, sy);
+    mContChild.mOrigParams.mPos.Set(x, y);
+    mContChild.mOrigParams.mScale.Set(sx, sy);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -67,50 +72,49 @@ void CG3DResourceOButton::SetOptionParams(float x, float y, float sx, float sy)
 
 void CG3DResourceOButton::Draw(SG3DDrawParams* dp)
 {
-	DrawButton(dp);
+    DrawButton(dp);
 
-  if (mDropImageRef != NULL)
-  {
- 		SG3DDrawParams DropImgParams;
- 		GetDropImagePos(dp, &DropImgParams);
-		mDropImageRef->DrawImage(mBtStatus, &DropImgParams);
-	}
-
+    if (mDropImageRef != NULL)
+    {
+        SG3DDrawParams DropImgParams;
+        GetDropImagePos(dp, &DropImgParams);
+        mDropImageRef->DrawImage(mBtStatus, &DropImgParams);
+    }
 
 
 
 /*
-	if (mOptionField != NULL)
-	{
-		CG3DResChild   cld;
-		SG3DDrawParams cdp;
+ *  if (mOptionField != NULL)
+ *  {
+ *      CG3DResChild   cld;
+ *      SG3DDrawParams cdp;
+ *
+ *      cld.mOrigParams.mPos   = mOptionPos;
+ *      cld.mOrigParams.mScale = mOptionScale;
+ *      dp->mParentWidth = Width(dp);
+ *      dp->mParentHeight = Height(dp);
+ *
+ *      cld.CalcAlignPosition(dp);
+ *      mOptionField->Draw(&cld.mDrawParams);
+ *  }
+ */
 
-		cld.mOrigParams.mPos   = mOptionPos;
-		cld.mOrigParams.mScale = mOptionScale;
-		dp->mParentWidth = Width(dp);
-		dp->mParentHeight = Height(dp);
+    CG3DResource::Draw(dp);
 
-		cld.CalcAlignPosition(dp);
-		mOptionField->Draw(&cld.mDrawParams);
-	}
-*/
+    if (mContent != NULL)
+    {
+        mContChild.mRef = mContent->mRef;
+        mContChild.mStatus = mContent->mStatus;
+        mContChild.mAlignment = mContent->mAlignment;
+        mContChild.mStretchMode = mContent->mStretchMode,
 
-	CG3DResource::Draw(dp);
+        //cout << "Option " << mName << " OX=" << mContChild.mOrigParams.mPos.x
+        //     << " OY=" << mContChild.mOrigParams.mPos.y << endl;
 
-	if (mContent != NULL)
-	{
-		mContChild.mRef         = mContent->mRef;
-		mContChild.mStatus      = mContent->mStatus;
-		mContChild.mAlignment   = mContent->mAlignment;
-		mContChild.mStretchMode = mContent->mStretchMode,
-
-		//cout << "Option " << mName << " OX=" << mContChild.mOrigParams.mPos.x
-		//     << " OY=" << mContChild.mOrigParams.mPos.y << endl;
-
-		mContChild.Draw(dp);
-	}
-
+        mContChild.Draw(dp);
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -125,25 +129,26 @@ void CG3DResourceOButton::Draw(SG3DDrawParams* dp)
 
 void CG3DResourceOButton::Reset(int mode)
 {
-	switch (mode)
-	{
-		case ERESET_INIT:
+    switch (mode)
+    {
+        case ERESET_INIT:
 
-			for (list<CG3DResRef>::iterator ref  = mRefs.begin();
-																			ref != mRefs.end();
-																			ref++)
-			{
-				if (ref->mRef->mType == ERTYPE_BUTTON)
-				{
-					CG3DResourceButton* bt = dynamic_cast<CG3DResourceButton*> (ref->mRef);
-					bt->SetOButton(this);
-					bt->SetProperty(EBTPROP_TEXTROLLOVER, false);
-				}
-			}
-			break;
-	}
-	CG3DResourceButton::Reset(mode);
+            for (list<CG3DResRef>::iterator ref = mRefs.begin();
+                ref != mRefs.end();
+                ref++)
+            {
+                if (ref->mRef->mType == ERTYPE_BUTTON)
+                {
+                    CG3DResourceButton* bt = dynamic_cast<CG3DResourceButton*> (ref->mRef);
+                    bt->SetOButton(this);
+                    bt->SetProperty(EBTPROP_TEXTROLLOVER, false);
+                }
+            }
+            break;
+    }
+    CG3DResourceButton::Reset(mode);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -158,28 +163,29 @@ void CG3DResourceOButton::Reset(int mode)
 
 bool CG3DResourceOButton::Inside(SG3DDrawParams* dp, CVector2<int>* Mouse)
 {
-	if (CG3DResourceButton::Inside(dp, Mouse))
-	{
-		return true;
-	}
+    if (CG3DResourceButton::Inside(dp, Mouse))
+    {
+        return true;
+    }
 
-	if (mDropImageRef != NULL)
-	{
-		SG3DDrawParams DropImgParams;
-		GetDropImagePos(dp, &DropImgParams);
-		if (mDropImageRef->InsideImage(mStdImage, &DropImgParams, Mouse))
-		{
-			throw(CInsideObject(this));
-			return true;
-		}
-		else
-		{
-			Reset(ERESET_ROLLOVER);
-		}
-	}
+    if (mDropImageRef != NULL)
+    {
+        SG3DDrawParams DropImgParams;
+        GetDropImagePos(dp, &DropImgParams);
+        if (mDropImageRef->InsideImage(mStdImage, &DropImgParams, Mouse))
+        {
+            throw(CInsideObject(this));
+            return true;
+        }
+        else
+        {
+            Reset(ERESET_ROLLOVER);
+        }
+    }
 
-	return false;
+    return false;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -194,24 +200,23 @@ bool CG3DResourceOButton::Inside(SG3DDrawParams* dp, CVector2<int>* Mouse)
 
 void CG3DResourceOButton::AddResRef(CG3DResource* res)
 {
-	if (mImgRef == NULL)
-  {
-		CG3DResourceButton::AddResRef(res);
-	}
-	else
-	{
+    if (mImgRef == NULL)
+    {
+        CG3DResourceButton::AddResRef(res);
+    }
+    else
+    {
+        switch (res->mType)
+        {
+            case ERTYPE_IMAGE:
 
-		switch (res->mType)
-		{
-			case ERTYPE_IMAGE:
+                mDropImageRef = dynamic_cast<CG3DResourceImage*>(res);
+                break;
 
-				mDropImageRef = dynamic_cast<CG3DResourceImage*>(res);
-				break;
+            default:
 
-			default:
-
-				CG3DResourceButton::AddResRef(res);
-				break;
-		}
-	}
+                CG3DResourceButton::AddResRef(res);
+                break;
+        }
+    }
 }

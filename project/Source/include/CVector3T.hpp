@@ -1,26 +1,16 @@
-//------------------------------------------------------------------------------
-//
-// PROJECT : 3D Globus
-//
-// FILE    : CVector3<T>.cpp
-//
-// VERSION : 1.0
-//
-// AUTOR   : Martin Steen
-//           Imagon GmbH
+//***************************************************************************
 //
 //
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CVector3T.hpp
+// @DATE     :	13.1.2021
 //
-//------------------------------------------------------------------------------
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
-// Inhalt: Implementation von CVector3<T> Klassen
 //
-//------------------------------------------------------------------------------
-// Revisionsgeschichte:
-//
-// 11.04.2005 erstellt - Martin Steen
-//
-//------------------------------------------------------------------------------
+//***************************************************************************
 
 #include <cmath>
 
@@ -35,15 +25,16 @@
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator=(CVector3<T> v2)
 {
-	x = v2.x;
-	y = v2.y;
-	z = v2.z;
+    x = v2.x;
+    y = v2.y;
+    z = v2.z;
 
-	return *this;
+    return *this;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -56,17 +47,18 @@ CVector3<T> CVector3<T>::operator=(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator-(CVector3<T> v2)
 {
-	CVector3<T> v1;
+    CVector3<T> v1;
 
-	v1.x = x - v2.x;
-	v1.y = y - v2.y;
-	v1.z = z - v2.z;
+    v1.x = x - v2.x;
+    v1.y = y - v2.y;
+    v1.z = z - v2.z;
 
-	return v1;
+    return v1;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -79,17 +71,18 @@ CVector3<T> CVector3<T>::operator-(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator+(CVector3<T> v2)
 {
-	CVector3<T> v1;
+    CVector3<T> v1;
 
-	v1.x = x + v2.x;
-	v1.y = y + v2.y;
-	v1.z = z + v2.z;
+    v1.x = x + v2.x;
+    v1.y = y + v2.y;
+    v1.z = z + v2.z;
 
-	return v1;
+    return v1;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -102,17 +95,18 @@ CVector3<T> CVector3<T>::operator+(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator*(CVector3<T> v2)
 {
-	CVector3<T> v1;
+    CVector3<T> v1;
 
-	v1.x = (y * v2.z) - (z * v2.y);
-	v1.y = (z * v2.x) - (x * v2.z);
-	v1.z = (x * v2.y) - (y * v2.x);
+    v1.x = (y * v2.z) - (z * v2.y);
+    v1.y = (z * v2.x) - (x * v2.z);
+    v1.z = (x * v2.y) - (y * v2.x);
 
-	return v1;
+    return v1;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -125,17 +119,18 @@ CVector3<T> CVector3<T>::operator*(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator*(T c)
 {
-	CVector3<T> v1;
+    CVector3<T> v1;
 
-	v1.x = x * c;
-	v1.y = y * c;
-	v1.z = z * c;
+    v1.x = x * c;
+    v1.y = y * c;
+    v1.z = z * c;
 
-	return v1;
+    return v1;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -148,17 +143,18 @@ CVector3<T> CVector3<T>::operator*(T c)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator/(T c)
 {
-	CVector3<T> v1;
+    CVector3<T> v1;
 
-	v1.x = x / c;
-	v1.y = y / c;
-	v1.z = z / c;
+    v1.x = x / c;
+    v1.y = y / c;
+    v1.z = z / c;
 
-	return v1;
+    return v1;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -171,15 +167,16 @@ CVector3<T> CVector3<T>::operator/(T c)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator+=(CVector3<T> v2)
 {
-	x += v2.x;
-	y += v2.y;
-	z += v2.z;
+    x += v2.x;
+    y += v2.y;
+    z += v2.z;
 
-	return *this;
+    return *this;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -192,14 +189,15 @@ CVector3<T> CVector3<T>::operator+=(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator+=(CVector2<T> v2)
 {
-	x += v2.x;
-	y += v2.y;
+    x += v2.x;
+    y += v2.y;
 
-	return *this;
+    return *this;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -212,15 +210,16 @@ CVector3<T> CVector3<T>::operator+=(CVector2<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator-=(CVector3<T> v2)
 {
-	x -= v2.x;
-	y -= v2.y;
-	z -= v2.z;
+    x -= v2.x;
+    y -= v2.y;
+    z -= v2.z;
 
-	return *this;
+    return *this;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -233,15 +232,16 @@ CVector3<T> CVector3<T>::operator-=(CVector3<T> v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 CVector3<T> CVector3<T>::operator/=(T c)
 {
-	x /= c;
-	y /= c;
-	z /= c;
+    x /= c;
+    y /= c;
+    z /= c;
 
-	return *this;
+    return *this;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -254,11 +254,12 @@ CVector3<T> CVector3<T>::operator/=(T c)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::Print()
 {
-	std::cout << "x=" << x << "\ty=" << y << "\tz=" << z << std::endl;
+    std::cout << "x=" << x << "\ty=" << y << "\tz=" << z << std::endl;
 }
+
 
 //-------------------------::--------------------------------------------------
 //
@@ -271,11 +272,12 @@ void CVector3<T>::Print()
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 T CVector3<T>::Betrag()
 {
-	return std::sqrt((x * x) + (y * y ) + (z * z));
+    return std::sqrt((x * x) + (y * y) + (z * z));
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -288,18 +290,19 @@ T CVector3<T>::Betrag()
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::Normalize()
 {
-	T Lenght = Betrag();
+    T Lenght = Betrag();
 
-  if (Lenght > 0)
-  {
-		x /= Lenght;
-		y /= Lenght;
-		z /= Lenght;
-	}
+    if (Lenght > 0)
+    {
+        x /= Lenght;
+        y /= Lenght;
+        z /= Lenght;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -312,15 +315,16 @@ void CVector3<T>::Normalize()
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::NormalVector(CVector3<T>* v1, CVector3<T>* v2)
 {
-	x = (v1->y * v2->z) - (v1->z * v2->y);
-	y = (v1->z * v2->x) - (v1->x * v2->z);
-	z = (v1->x * v2->y) - (v1->y * v2->x);
+    x = (v1->y * v2->z) - (v1->z * v2->y);
+    y = (v1->z * v2->x) - (v1->x * v2->z);
+    z = (v1->x * v2->y) - (v1->y * v2->x);
 
-  Normalize();
+    Normalize();
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -333,13 +337,14 @@ void CVector3<T>::NormalVector(CVector3<T>* v1, CVector3<T>* v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::SubtractVector(CVector3<T>* v1, CVector3<T>* v2)
 {
-	x = v1->x - v2->x;
-	y = v1->y - v2->y;
-	z = v1->z - v2->z;
+    x = v1->x - v2->x;
+    y = v1->y - v2->y;
+    z = v1->z - v2->z;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -352,11 +357,12 @@ void CVector3<T>::SubtractVector(CVector3<T>* v1, CVector3<T>* v2)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 T CVector3<T>::SkalarProdukt(CVector3<T>* v1)
 {
-	return (x * v1->x) + (y * v1->y) + (z * v1->z);
+    return (x * v1->x) + (y * v1->y) + (z * v1->z);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -369,13 +375,14 @@ T CVector3<T>::SkalarProdukt(CVector3<T>* v1)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::Reverse()
 {
-	x = -x;
-	y = -y;
-	z = -z;
+    x = -x;
+    y = -y;
+    z = -z;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -388,14 +395,13 @@ void CVector3<T>::Reverse()
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::Set(T vx, T vy, T vz)
 {
-	x = vx;
-	y = vy;
-	z = vz;
+    x = vx;
+    y = vy;
+    z = vz;
 }
-
 
 
 //---------------------------------------------------------------------------
@@ -409,17 +415,18 @@ void CVector3<T>::Set(T vx, T vy, T vz)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::RotationXZ(CVector3<T>* v2, T sinAlpha, T cosAlpha)
 {
-	float xerg, zerg;
+    float xerg, zerg;
 
-  xerg = (cosAlpha * (x - v2->x)) - (sinAlpha * (z - v2->z));
-  zerg = (sinAlpha * (x - v2->x)) + (cosAlpha * (z - v2->z));
+    xerg = (cosAlpha * (x - v2->x)) - (sinAlpha * (z - v2->z));
+    zerg = (sinAlpha * (x - v2->x)) + (cosAlpha * (z - v2->z));
 
-  x = xerg + v2->x;
-  z = zerg + v2->z;
+    x = xerg + v2->x;
+    z = zerg + v2->z;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -432,17 +439,18 @@ void CVector3<T>::RotationXZ(CVector3<T>* v2, T sinAlpha, T cosAlpha)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::RotationYZ(CVector3<T>* v2, T sinAlpha, T cosAlpha)
 {
-	float yerg, zerg;
+    float yerg, zerg;
 
-  yerg = (cosAlpha * (y - v2->y)) - (sinAlpha * (z - v2->z));
-  zerg = (sinAlpha * (y - v2->y)) + (cosAlpha * (z - v2->z));
+    yerg = (cosAlpha * (y - v2->y)) - (sinAlpha * (z - v2->z));
+    zerg = (sinAlpha * (y - v2->y)) + (cosAlpha * (z - v2->z));
 
-  y = yerg + v2->y;
-  z = zerg + v2->z;
+    y = yerg + v2->y;
+    z = zerg + v2->z;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -455,12 +463,10 @@ void CVector3<T>::RotationYZ(CVector3<T>* v2, T sinAlpha, T cosAlpha)
 //
 //---------------------------------------------------------------------------
 
-template <class T>
+template<class T>
 void CVector3<T>::operator*=(T f)
 {
-	x *= f;
-	y *= f;
-	z *= f;
+    x *= f;
+    y *= f;
+    z *= f;
 }
-
-

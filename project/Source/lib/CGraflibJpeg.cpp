@@ -1,34 +1,38 @@
+//***************************************************************************
 //
-//                              JPEG I/O Routines 11/1997 Martin Steen
 //
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CGraflibJpeg.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
+//
+//
+//***************************************************************************
 
 #include <string>
 #include <iostream>
 #include <fstream>
-
-using namespace std;
-
 #include <stdio.h>
-
 #include <setjmp.h>
-
 #include <CFileIO.h>
 #include <CGraphicsJpeg.h>
 #include <CGraflibJpeg.h>
 
+using namespace std;
 
 bool CGraflibJpeg::GetJpegSize(const char* fname)
 {
-	CGraphicsJpeg jpeg;
-	int Channels; 
+    CGraphicsJpeg jpeg;
+    int Channels;
 
-	bool r = jpeg.GetJpegSize(fname, &mWidth, &mHeight, &Channels);
-	mBits = Channels * 8;
-	return r;
+    bool r = jpeg.GetJpegSize(fname, &mWidth, &mHeight, &Channels);
 
-
+    mBits = Channels * 8;
+    return r;
 }
-
 
 //---------------------------------------------------------------------------
 //
@@ -40,24 +44,25 @@ bool CGraflibJpeg::GetJpegSize(const char* fname)
 
 bool CGraflibJpeg::Read(const char* Filename, SFileReadInfo* fri)
 {
-	CGraphicsJpeg jpeg;
-	int           ByteProPixel;
+    CGraphicsJpeg jpeg;
+    int ByteProPixel;
 
-	if (fri != NULL)
-	{
-		jpeg.SetFileOffset(fri->mFilePosition, fri->mFileSize);
-	}
+    if (fri != NULL)
+    {
+        jpeg.SetFileOffset(fri->mFilePosition, fri->mFileSize);
+    }
 
-  mData = (unsigned char*) jpeg.ReadJpeg(Filename, &mWidth, &mHeight, &ByteProPixel);
-  mBits = ByteProPixel * 8;
+    mData = (unsigned char*)jpeg.ReadJpeg(Filename, &mWidth, &mHeight, &ByteProPixel);
+    mBits = ByteProPixel * 8;
 
-  if (mData == NULL)
-  {
-		throw(CGraflibException(EGLIB_OPENREAD, Filename));
-	}
+    if (mData == NULL)
+    {
+        throw(CGraflibException(EGLIB_OPENREAD, Filename));
+    }
 
-  return mData != NULL;
+    return mData != NULL;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -67,18 +72,19 @@ bool CGraflibJpeg::Read(const char* Filename, SFileReadInfo* fri)
 //
 //---------------------------------------------------------------------------
 
-int  CGraflibJpeg::Write(const char* Filename, bool bCompare, CFileIO* fio)
+int CGraflibJpeg::Write(const char* Filename, bool bCompare, CFileIO* fio)
 {
-	CGraphicsJpeg jpeg;
+    CGraphicsJpeg jpeg;
 
-	if (!jpeg.WriteJpeg(Filename, mWidth, mHeight, (unsigned char*) mData, mJpegQuality))
-	{
-		throw(CGraflibException(EGLIB_OPENWRITE, Filename));
-		return false;
-	}
+    if (!jpeg.WriteJpeg(Filename, mWidth, mHeight, (unsigned char*)mData, mJpegQuality))
+    {
+        throw(CGraflibException(EGLIB_OPENWRITE, Filename));
+        return false;
+    }
 
-	return true;
+    return true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -90,19 +96,21 @@ int  CGraflibJpeg::Write(const char* Filename, bool bCompare, CFileIO* fio)
 
 bool CGraflibJpeg::OpenReadLine(const char* Filename)
 {
-	CGraphicsJpeg* jpeg = new CGraphicsJpeg;
-	mJpegInterface = jpeg;
-	int ByteProPixel;
+    CGraphicsJpeg* jpeg = new CGraphicsJpeg;
+
+    mJpegInterface = jpeg;
+    int ByteProPixel;
 
 
-	if (!jpeg->OpenJpegRead(Filename, &mWidth, &mHeight, &ByteProPixel))
-	{
-		throw(CGraflibException(EGLIB_OPENREAD, Filename));
-		return false;
-	}
-	mBits = ByteProPixel * 8;
-	return true;
+    if (!jpeg->OpenJpegRead(Filename, &mWidth, &mHeight, &ByteProPixel))
+    {
+        throw(CGraflibException(EGLIB_OPENREAD, Filename));
+        return false;
+    }
+    mBits = ByteProPixel * 8;
+    return true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -114,9 +122,11 @@ bool CGraflibJpeg::OpenReadLine(const char* Filename)
 
 void CGraflibJpeg::ReadLine(void* LineBuffer)
 {
-	CGraphicsJpeg* jpeg = (CGraphicsJpeg*) mJpegInterface;
-	jpeg->ReadJpegLine(LineBuffer);
+    CGraphicsJpeg* jpeg = (CGraphicsJpeg*)mJpegInterface;
+
+    jpeg->ReadJpegLine(LineBuffer);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -128,9 +138,11 @@ void CGraflibJpeg::ReadLine(void* LineBuffer)
 
 void CGraflibJpeg::CloseReadLine()
 {
-	CGraphicsJpeg* jpeg = (CGraphicsJpeg*) mJpegInterface;
-	jpeg->CloseJpegLines();
+    CGraphicsJpeg* jpeg = (CGraphicsJpeg*)mJpegInterface;
+
+    jpeg->CloseJpegLines();
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -142,24 +154,26 @@ void CGraflibJpeg::CloseReadLine()
 
 bool CGraflibJpeg::OpenWriteLine(const char* Filename)
 {
-	CGraphicsJpeg* jpeg;
-	if (mJpegInterface == NULL)
-	{
-		jpeg = new CGraphicsJpeg;
-		mJpegInterface = jpeg;
-	}
-	else
-	{
-		jpeg = (CGraphicsJpeg*) mJpegInterface;
-	}
+    CGraphicsJpeg* jpeg;
 
-	if (!jpeg->OpenJpegWrite(Filename, mWidth, mHeight, mJpegQuality))
-	{
-		throw(CGraflibException(EGLIB_OPENWRITE, Filename));
-		return false;
-	}
-	return true;
+    if (mJpegInterface == NULL)
+    {
+        jpeg = new CGraphicsJpeg;
+        mJpegInterface = jpeg;
+    }
+    else
+    {
+        jpeg = (CGraphicsJpeg*)mJpegInterface;
+    }
+
+    if (!jpeg->OpenJpegWrite(Filename, mWidth, mHeight, mJpegQuality))
+    {
+        throw(CGraflibException(EGLIB_OPENWRITE, Filename));
+        return false;
+    }
+    return true;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -171,19 +185,21 @@ bool CGraflibJpeg::OpenWriteLine(const char* Filename)
 
 void CGraflibJpeg::SetAppendMode(bool b)
 {
-	CGraphicsJpeg* jpeg;
-	if (mJpegInterface == NULL)
-	{
-		jpeg = new CGraphicsJpeg;
-		mJpegInterface = jpeg;
-	}
-	else
-	{
-		jpeg = (CGraphicsJpeg*) mJpegInterface;
-	}
+    CGraphicsJpeg* jpeg;
 
-	jpeg->SetAppendMode(b);
+    if (mJpegInterface == NULL)
+    {
+        jpeg = new CGraphicsJpeg;
+        mJpegInterface = jpeg;
+    }
+    else
+    {
+        jpeg = (CGraphicsJpeg*)mJpegInterface;
+    }
+
+    jpeg->SetAppendMode(b);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -195,9 +211,11 @@ void CGraflibJpeg::SetAppendMode(bool b)
 
 void CGraflibJpeg::WriteLine(void* LineBuffer)
 {
-	CGraphicsJpeg* jpeg = (CGraphicsJpeg*) mJpegInterface;
-	jpeg->WriteJpegLine(LineBuffer);
+    CGraphicsJpeg* jpeg = (CGraphicsJpeg*)mJpegInterface;
+
+    jpeg->WriteJpegLine(LineBuffer);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -209,9 +227,9 @@ void CGraflibJpeg::WriteLine(void* LineBuffer)
 
 void CGraflibJpeg::CloseWriteLine()
 {
-	CGraphicsJpeg* jpeg = (CGraphicsJpeg*) mJpegInterface;
-	jpeg->CloseJpegWrite();
+    CGraphicsJpeg* jpeg = (CGraphicsJpeg*)mJpegInterface;
+
+    jpeg->CloseJpegWrite();
 //	delete[] jpeg;
 //	mJpegInterface = NULL;
-
 }

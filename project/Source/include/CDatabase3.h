@@ -1,4 +1,3 @@
-
 #ifndef CDATABASE3_H
 #define CDATABASE3_H
 
@@ -8,43 +7,42 @@
 
 enum ERecType
 {
-	ERT_INT,
-	ERT_FLOAT,
-	ERT_DOUBLE,
-	ERT_STRING
+    ERT_INT,
+    ERT_FLOAT,
+    ERT_DOUBLE,
+    ERT_STRING
 };
 
 struct CRecField
 {
-	char* mTag;
-	int   mTagType;
-	void* mVar;
-	bool  mFound;
+    char*	mTag;
+    int		mTagType;
+    void*	mVar;
+    bool	mFound;
 };
 
 class CRecord : public std::vector<std::string>
 {
-	public:
+    public:
 
-		int    mLineNumber;
-		std::string mFilename;
+        int mLineNumber;
+        std::string mFilename;
 
-		void   Show(void);
-		void   AddString(std::string& as);
+        void Show(void);
+        void AddString(std::string& as);
 };
 
 
 class CDatabase3 : public std::list<CRecord>
 {
-	public:
+    public:
 
-		int Read(std::list<CRecord>* db, std::string& BasePath, std::string& Filename, char SplitChar);
+        int Read(std::list<CRecord>* db, std::string& BasePath, std::string& Filename, char SplitChar);
 
-	protected:
+    protected:
 
-		void AddRecord(CRecord& rc);
-		bool IsValid(int c);
-
+        void AddRecord(CRecord& rc);
+        bool IsValid(int c);
 };
 
 

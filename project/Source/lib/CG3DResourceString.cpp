@@ -1,18 +1,21 @@
-//---------------------------------------------------------------------------
-//
-// PROJECT : Die Planeten
+//***************************************************************************
 //
 //
-// AUTOR   : Martin Steen
-//           email: martin@martin-steen.de
+// @PROJECT  :	The Planets
+// @VERSION  :	2.0
+// @FILENAME :	CG3DResourceString.cpp
+// @DATE     :	13.1.2021
+//
+// @AUTHOR   :	Martin Steen
+// @EMAIL    :	martin@martin-steen.de
 //
 //
-//----------------------------------------------------------------------------
+//***************************************************************************
 
-#include "CG3DResourceList.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
+#include <CG3DResourceList.h>
 
 extern CG3DGlobals* gGlobals;
 
@@ -29,16 +32,15 @@ extern CG3DGlobals* gGlobals;
 
 void CG3DResourceString::AddResRef(CG3DResource* res)
 {
-	switch (res->mType)
-	{
-		case ERTYPE_FONT:
+    switch (res->mType)
+    {
+        case ERTYPE_FONT:
 
-			mFontRef = dynamic_cast<CG3DResourceFont*>(res);
-			break;
-
-
-	}
+            mFontRef = dynamic_cast<CG3DResourceFont*>(res);
+            break;
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -53,27 +55,28 @@ void CG3DResourceString::AddResRef(CG3DResource* res)
 
 void CG3DResourceString::Draw(CVector2<float>* Pos)
 {
-	char* tx = (char*) mText[gGlobals->mLanguage].c_str();
+    char* tx = (char*)mText[gGlobals->mLanguage].c_str();
 
-	//cout << "Draw String " << tx << endl;
+    //cout << "Draw String " << tx << endl;
 
-	if (tx[0] == 0)
-	{
-		tx = (char*) mText[0].c_str();
-	}
+    if (tx[0] == 0)
+    {
+        tx = (char*)mText[0].c_str();
+    }
 
 
-	if (mColorRef != NULL)
-	{
-		glColor4fv(mColorRef);
-		mFontRef->DrawString(tx, (int) Pos->x, (int) Pos->y);
-		SetColorWhite();
-	}
-	else
-	{
-		mFontRef->DrawString(tx, (int) Pos->x, (int) Pos->y);
-	}
+    if (mColorRef != NULL)
+    {
+        glColor4fv(mColorRef);
+        mFontRef->DrawString(tx, (int)Pos->x, (int)Pos->y);
+        SetColorWhite();
+    }
+    else
+    {
+        mFontRef->DrawString(tx, (int)Pos->x, (int)Pos->y);
+    }
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -88,16 +91,16 @@ void CG3DResourceString::Draw(CVector2<float>* Pos)
 
 void CG3DResourceString::Draw(const char* str, CVector2<float>* Pos)
 {
-	if (mColorRef != NULL)
-	{
-		glColor4fv(mColorRef);
-		mFontRef->DrawStringRaw(str, Pos->x, Pos->y);
-		SetColorWhite();
-	}
-	else
-	{
-		mFontRef->DrawStringRaw(str, Pos->x, Pos->y);
-	}
+    if (mColorRef != NULL)
+    {
+        glColor4fv(mColorRef);
+        mFontRef->DrawStringRaw(str, Pos->x, Pos->y);
+        SetColorWhite();
+    }
+    else
+    {
+        mFontRef->DrawStringRaw(str, Pos->x, Pos->y);
+    }
 }
 
 
@@ -114,13 +117,13 @@ void CG3DResourceString::Draw(const char* str, CVector2<float>* Pos)
 
 void CG3DResourceString::Reset(int mode)
 {
-	switch (mode)
-	{
-		case ERESET_ROLLOVER:
+    switch (mode)
+    {
+        case ERESET_ROLLOVER:
 
-			mColorRef = mOrigColor;
-			break;
-	}
+            mColorRef = mOrigColor;
+            break;
+    }
 }
 
 
@@ -137,8 +140,9 @@ void CG3DResourceString::Reset(int mode)
 
 void CG3DResourceString::Draw(SG3DDrawParams* dp)
 {
-	Draw(&(dp->mPos));
+    Draw(&(dp->mPos));
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -153,14 +157,15 @@ void CG3DResourceString::Draw(SG3DDrawParams* dp)
 
 inline char* CG3DResourceString::GetText()
 {
-	char* tx = (char*) mText[gGlobals->mLanguage].c_str();
+    char* tx = (char*)mText[gGlobals->mLanguage].c_str();
 
-	if (tx[0] == 0)
-	{
-		tx = (char*) mText[0].c_str();
-	}
-	return tx;
+    if (tx[0] == 0)
+    {
+        tx = (char*)mText[0].c_str();
+    }
+    return tx;
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -175,8 +180,9 @@ inline char* CG3DResourceString::GetText()
 
 int CG3DResourceString::UnscaledWidth()
 {
-	return mFontRef->FontWidth(GetText());
+    return mFontRef->FontWidth(GetText());
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -191,5 +197,5 @@ int CG3DResourceString::UnscaledWidth()
 
 int CG3DResourceString::UnscaledHeight()
 {
-	return mFontRef->FontHeight();
+    return mFontRef->FontHeight();
 }
