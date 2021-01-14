@@ -23,6 +23,14 @@
 
 using namespace std;
 
+//---------------------------------------------------------------------------
+//
+// Klasse:    CGraflibJpeg
+// Methode:   GetJpegSize
+//
+//
+//---------------------------------------------------------------------------
+
 bool CGraflibJpeg::GetJpegSize(const char* fname)
 {
     CGraphicsJpeg jpeg;

@@ -753,6 +753,7 @@ static SPlanetDesc sSaturnDesc[] =
 //
 //---------------------------------------------------------------------------
 
+#define USE_MOONS
 #define SIZE_URANUS    51118.0
 static SPlanetDesc sUranusDesc[] =
 {
@@ -762,8 +763,9 @@ static SPlanetDesc sUranusDesc[] =
         "Uranus",
         0.0, 1.0, 1.0, 1.0
     },
+    #ifdef USE_MOONS
     {
-        "planeten/monde/dummy.jpg",
+        "planeten/monde/titan.jpg",
         "Oberon",
         "Oberon",
         (583519.0 / SIZE_URANUS) * 20,
@@ -802,6 +804,7 @@ static SPlanetDesc sUranusDesc[] =
         472.0 / SIZE_URANUS,
         0.2, 1.0 / 60
     },
+    #endif
     { NULL, NULL, NULL, 0, 0, 0, 0 }
 };
 
@@ -820,6 +823,7 @@ static SPlanetDesc sNeptunDesc[] =
         "Neptune",
         0.0, 1.0, 1.0, 1.0
     },
+    #ifdef USE_MOONS
     {
         "planeten/monde/dummy.jpg",
         "Triton",
@@ -836,6 +840,7 @@ static SPlanetDesc sNeptunDesc[] =
         340.0 / SIZE_NEPTUN,
         0.2, 1.0 / 60
     },
+    #endif
     { NULL, NULL, NULL, 0, 0, 0, 0 }
 };
 
@@ -950,7 +955,7 @@ static SPlanetDesc sSonneDesc[] =
 void CMond::InitOrbit(float Radius)
 {
     mOrbit.mRadius = Radius;
-    mOrbit.mSegments = 64;
+    mOrbit.mSegments = 256;
     mOrbit.mOrigin.Set(0, 0, 0);
     mOrbit.Init();
 }
@@ -993,8 +998,8 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
     //cout << "InitSonne START" << endl;
 
     CGL_Texture tx;
-    int sx = 6;
-    int sy = 3;
+    int sx = 12;
+    int sy = 6;
     float WasserMaterial[] = { 122.0 / 255, 219.0 / 255, 251.0 / 255, 1.0 };
 
     if (gSonne1 == NULL)
@@ -1126,13 +1131,14 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         CGL_EllipsoidPatched* thing;
         CGraflibJpeg jpeg;
 
-        cout << "GetJpegSize START " << TextureName << endl;
+        cout << "GetJpegSize START=" << TextureName << " i=" << i << endl;
 
         if (jpeg.GetJpegSize(TextureName))
         {
-            xsegs = jpeg.mWidth / 256;
-            ysegs = jpeg.mHeight / 256;
-            cout << "xsegs=" << xsegs << " xsegs=" << ysegs << " bits=" << jpeg.mBits << endl;
+            xsegs = jpeg.mWidth  * 4 / 256;
+            ysegs = jpeg.mHeight * 4 / 256;
+            cout << "Texture w=" << jpeg.mWidth << " h=" << jpeg.mHeight << endl;
+            cout << "xsegs=" << xsegs << " ysegs=" << ysegs << " bits=" << jpeg.mBits << endl;
         }
         else
         {
@@ -1156,8 +1162,8 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         {
             thing = &mond;
         }
+                
         thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
-
         unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, gOpenGL->mAnaglyph);
 
         if (i > 0)
