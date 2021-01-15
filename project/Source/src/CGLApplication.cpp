@@ -420,7 +420,7 @@ void CPlanet::Delete()
 static SPlanetDesc sMerkurDesc[] =
 {
     {
-        "planeten/merkur.jpg",
+        "planeten/4k/merkur.jpg",
         "Merkur",
         "Mercury",
         0.0, 1.0, 1.0, 1.0
@@ -482,8 +482,7 @@ static SPlanetDesc sErdeDesc[] =
 static SPlanetDesc sMarsDesc[] =
 {
     {
-        //"planeten/mars.jpg",
-        "planeten/mars.jpg",
+        "planeten/4k/mars.jpg",
         "Mars",
         "Mars",
         0.0, 1.0, 1.0, 1.0
@@ -501,7 +500,7 @@ static SPlanetDesc sMarsDesc[] =
 static SPlanetDesc sJupiterDesc[] =
 {
     {
-        "planeten/jupiter.jpg",
+        "planeten/4k/jupiter.jpg",
         "Jupiter",
         "Jupiter",
         0.0, 1.0, 1.0, 1.0
@@ -699,7 +698,7 @@ static SPlanetDesc sIoDesc[] =
 static SPlanetDesc sSaturnDesc[] =
 {
     {
-        "planeten/saturn.jpg",
+        "planeten/4k/saturn.jpg",
         "Saturn",
         "Saturn",
         1.0, 1.0, 1.0, 1.0
@@ -1201,6 +1200,7 @@ void CGLApplication::SetResolution(int w, int h)
     if (!mInitFlag)
     {
         InitResources();
+        //gG3Dinterface->SendCommand(EG3DcomAdjust);
         mInitFlag = true;
     }
     else

@@ -42,15 +42,16 @@ using namespace std;
 
 bool CGL_FontTableau::Load(const char* TabFile, const char* AlphaFile, const char* RectFile, int wh)
 {
-    /*
-     * cout << "Load Font" << endl;
-     * cout << "  File =" << TabFile << endl;
-     * cout << "  Alpha=" << AlphaFile << endl;
-     * cout << "  Rect =" << RectFile << endl;
-     */
-
+	cout << "Load Font" << endl;
+	cout << "  File =" << TabFile << endl;
+	cout << "  Alpha=" << AlphaFile << endl;
+	cout << "  Rect =" << RectFile << endl;
+	
     if (LoadTextureTga2D(TabFile, AlphaFile, false, false))
     {
+    
+    	cout << "mTexWidth=" << mTexWidth << endl;
+    
         ifstream fin(RectFile, ios::binary);
 
         mWindowHeight = wh;

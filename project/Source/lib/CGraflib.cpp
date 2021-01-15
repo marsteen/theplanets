@@ -87,8 +87,12 @@ void CGraflib::Yflip()
 bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
 {
     bool r = false;
+	int alphaPixelSize = 0;
+	if (Alpha->mBits ==  8) alphaPixelSize = 1;
+	if (Alpha->mBits == 32) alphaPixelSize = 4;
 
-    if (Alpha->mBits == 8)
+
+    if (alphaPixelSize > 0)
     {
         if ((mWidth == Alpha->mWidth) && (mHeight == Alpha->mHeight))
         {
@@ -109,7 +113,7 @@ bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
                     C32DataPtr[3] = *AlphaDataPtr;
 
                     PixelDataPtr += 3;
-                    AlphaDataPtr += 1;
+                    AlphaDataPtr += alphaPixelSize;
                     C32DataPtr += 4;
                 }
                 delete[] mData;
@@ -124,7 +128,7 @@ bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
                 for (int i = 0; i < Size; i++)
                 {
                     C32DataPtr[3] = *AlphaDataPtr;
-                    AlphaDataPtr += 1;
+                    AlphaDataPtr += alphaPixelSize;
                     C32DataPtr += 4;
                 }
                 r = true;

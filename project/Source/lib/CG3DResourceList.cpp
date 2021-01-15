@@ -356,15 +356,23 @@ int WINAPI DllMain(HINSTANCE hInstance, DWORD fdwReason, PVOID pvReserved)
 
 #endif
 
+//---------------------------------------------------------------------------
+//
+// Klasse:    CG3DResourceList
+//
+//---------------------------------------------------------------------------
+
+template <typename T>
+static T readScaled(const std::string& str)
+{
+    CStringTool stconv;
+    return stconv.StringTo<T>(str) * 2.5f;
+}
+
 
 //---------------------------------------------------------------------------
 //
 // Klasse:    CG3DResourceList
-// Methode:		~CG3DResourceList
-//
-// Parameter:
-//
-// Return:
 //
 //---------------------------------------------------------------------------
 
@@ -1003,10 +1011,10 @@ bool CG3DResourceList::Read(string& Filepath)
                             }
                             else
                             {
-                                RectPtr->left = stconv.StringTo<int>((*dr)[1]);
-                                RectPtr->top = stconv.StringTo<int>((*dr)[2]);
-                                RectPtr->right = stconv.StringTo<int>((*dr)[3]);
-                                RectPtr->bottom = stconv.StringTo<int>((*dr)[4]);
+                                RectPtr->left = readScaled<int>((*dr)[1]);
+                                RectPtr->top = readScaled<int>((*dr)[2]);
+                                RectPtr->right = readScaled<int>((*dr)[3]);
+                                RectPtr->bottom = readScaled<int>((*dr)[4]);
 
 
                                 int AlignStatus = GetAlignStatus((*dr)[5], &(*dr));
@@ -1036,8 +1044,8 @@ bool CG3DResourceList::Read(string& Filepath)
                         {
                             if (CheckParamCount(*dr, 5))
                             {
-                                float x = stconv.StringTo<int>((*dr)[1]);
-                                float y = stconv.StringTo<int>((*dr)[2]);
+                                float x = readScaled<int>((*dr)[1]);
+                                float y = readScaled<int>((*dr)[2]);
                                 int tmax = stconv.StringTo<int>((*dr)[3]);
                                 int freq = stconv.StringTo<int>((*dr)[4]);
 
@@ -1048,10 +1056,10 @@ bool CG3DResourceList::Read(string& Filepath)
 
                     case ERTAG_OPOS:
                     {
-                        float x = stconv.StringTo<float>((*dr)[1]);
-                        float y = stconv.StringTo<float>((*dr)[2]);
-                        float scx = stconv.StringTo<float>((*dr)[3]);
-                        float scy = stconv.StringTo<float>((*dr)[4]);
+                        float x = readScaled<float>((*dr)[1]);
+                        float y = readScaled<float>((*dr)[2]);
+                        float scx = readScaled<float>((*dr)[3]);
+                        float scy = readScaled<float>((*dr)[4]);
 
                         OptRes->SetOptionParams(x, y, scx, scy);
                     }
@@ -1088,10 +1096,10 @@ bool CG3DResourceList::Read(string& Filepath)
                             Line->ParseColor((*dr)[1], Line->mColor);
 
 
-                            Line->mLineStart.x = stconv.StringTo<int>((*dr)[2]);
-                            Line->mLineStart.y = stconv.StringTo<int>((*dr)[3]);
-                            Line->mLineEnd.x = stconv.StringTo<int>((*dr)[4]);
-                            Line->mLineEnd.y = stconv.StringTo<int>((*dr)[5]);
+                            Line->mLineStart.x = readScaled<int>((*dr)[2]);
+                            Line->mLineStart.y = readScaled<int>((*dr)[3]);
+                            Line->mLineEnd.x = readScaled<int>((*dr)[4]);
+                            Line->mLineEnd.y = readScaled<int>((*dr)[5]);
 
                             NewRes->mChilds.push_back(ResChild);
                             CldRes = &(NewRes->mChilds.back());
@@ -1165,8 +1173,8 @@ bool CG3DResourceList::Read(string& Filepath)
                         {
                             CG3DResChild ResChild;
                             ResChild.mName = (*dr)[1];
-                            ResChild.mOrigParams.mPos.x = stconv.StringTo<int>((*dr)[2]);
-                            ResChild.mOrigParams.mPos.y = stconv.StringTo<int>((*dr)[3]);
+                            ResChild.mOrigParams.mPos.x = readScaled<int>((*dr)[2]);
+                            ResChild.mOrigParams.mPos.y = readScaled<int>((*dr)[3]);
 
                             int AlignStatus = GetAlignStatus((*dr)[4], &(*dr));
                             if (AlignStatus > 0)
@@ -1206,8 +1214,8 @@ bool CG3DResourceList::Read(string& Filepath)
                         if (CheckParamCount(*dr, 5))
                         {
                             ResChild.mName = (*dr)[1];
-                            ResChild.mOrigParams.mPos.x = stconv.StringTo<int>((*dr)[2]);
-                            ResChild.mOrigParams.mPos.y = stconv.StringTo<int>((*dr)[3]);
+                            ResChild.mOrigParams.mPos.x = readScaled<int>((*dr)[2]);
+                            ResChild.mOrigParams.mPos.y = readScaled<int>((*dr)[3]);
 
                             int AlignStatus = GetAlignStatus((*dr)[4], &(*dr));
                             if (AlignStatus > 0)
@@ -1229,10 +1237,10 @@ bool CG3DResourceList::Read(string& Filepath)
                         if (ImgRes != NULL)
                         {
                             CRectT<int>* rc = ImgRes->mIrect + stconv.StringTo<int>((*dr)[1]);
-                            rc->left = stconv.StringTo<int>((*dr)[2]);
-                            rc->top = stconv.StringTo<int>((*dr)[3]);
-                            rc->right = stconv.StringTo<int>((*dr)[4]);
-                            rc->bottom = stconv.StringTo<int>((*dr)[5]);
+                            rc->left = readScaled<int>((*dr)[2]);
+                            rc->top = readScaled<int>((*dr)[3]);
+                            rc->right = readScaled<int>((*dr)[4]);
+                            rc->bottom = readScaled<int>((*dr)[5]);
                         }
                         else
                         {
@@ -1320,7 +1328,9 @@ bool CG3DResourceList::Read(string& Filepath)
                         {
                             string FontPath = mBasePath + (*dr)[1];
 
+							cout << "Load font path:" << FontPath.c_str() << " file:" << (*dr)[2] << endl;
                             FntRes->Load(FontPath.c_str(), (*dr)[2].c_str(), gGlobals->mWindowHeight);
+                            cout << "Load font OK:" << (*dr)[2] << endl;
                         }
                         break;
 

@@ -181,7 +181,7 @@ bool CGL_Texture::LoadTextureTga2D(const char* TextureFilename, const char* Alph
     CGraflibTga tga;
     CGraflibTga tgaAlpha;
 
-    //cout << "CGL_Texture::LoadTextureTga ALPHA START: " << TextureFilename << " Alpha=" << AlphaFilename << endl;
+	cout << "CGL_Texture::LoadTextureTga ALPHA START: " << TextureFilename << " Alpha=" << AlphaFilename << endl;
 
     tga.Read(TextureFilename);
     tga.SwapRedBlue();
@@ -195,11 +195,13 @@ bool CGL_Texture::LoadTextureTga2D(const char* TextureFilename, const char* Alph
     //string tst = "test8bit.tga";
     //tgaAlpha.Write(tst, true);
 
-    //cout << "CGL_Texture Width=" << tga.mWidth << " Height=" << tga.mHeight << endl;
+    cout << "CGL_Texture Width=" << tga.mWidth << " Height=" << tga.mHeight << endl;
 
     if ((tga.mData != NULL) && (tgaAlpha.mData != NULL))
     {
         tga.InterleaveAlpha(&tgaAlpha);
+
+        cout << "InterleaveAlpha OK" << endl;
 
         glGenTextures(1, &mTexHandle);              // Create One Texture
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

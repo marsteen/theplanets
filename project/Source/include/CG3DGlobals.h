@@ -1,3 +1,8 @@
+
+#ifndef CG3DGlobals_H
+#define CG3DGlobals_H
+
+
 enum ELanguage
 {
     ELANG_GERMAN,
@@ -31,3 +36,5 @@ class CG3DGlobals
         float mTTboxColor[4];
         float mTTfontColor[4];
 };
+
+#endif
