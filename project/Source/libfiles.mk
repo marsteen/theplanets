@@ -20,6 +20,7 @@ LIBFILES = $(LIBBASE)/CG3DReslistInterface.cpp \
            $(LIBBASE)/CTagList.cpp \
            $(LIBBASE)/CErrorMessage.cpp \
            $(LIBBASE)/CPixel24.cpp \
+		   $(LIBBASE)/CPixel32.cpp \
            $(LIBBASE)/CDatabase3.cpp \
            $(LIBBASE)/CFileIO.cpp \
            $(LIBBASE)/CGraflib.cpp \

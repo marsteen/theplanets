@@ -13,6 +13,7 @@ endif()
 
 include_directories(Source/include)
 
+set(CMAKE_C_LINK_EXECUTABLE "g++")
 set(SRCBASE "Source/src")
 set(LIBBASE "Source/lib")
 set(BINDIR  "./build/bin/${CMAKE_SYSTEM_NAME}")
@@ -63,13 +64,19 @@ add_executable(theplanets
 )
 
 
-if (CMAKE_SYSTEM_NAME STREQUAL "MSYS")
+if (1) #CMAKE_SYSTEM_NAME STREQUAL "MSYS")
     #
     # Windows
     #
     SET(SYSTEM_NAME "windows")
     target_link_libraries(theplanets
-        gl)
+		glu32
+		freeglut
+		opengl32
+		gdi32
+		winmm
+		libjpeg
+		)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     #
     # Linux

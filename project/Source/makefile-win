@@ -64,7 +64,7 @@ OBJECTS2 = $(LIBFILES:.cpp=.obj)
 #
 $(SRCBASE)/main.o : $(SRCBASE)/main.cpp $(HEADERS)
 #
-LDFLAGS = -lm -lsuperlib-win -lglu32  -lfreeglut -lglaux -lopengl32 -lgdi32 -lwinmm -ljpeg-win
+LDFLAGS = -lm -lsuperlib-win -lglu32 -lfreeglut -lopengl32 -lgdi32 -lwinmm -ljpeg62
 #
 #
 # Making the superlib-archive
