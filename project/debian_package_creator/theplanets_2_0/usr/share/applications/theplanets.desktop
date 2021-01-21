@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name[de_DE]=The Planets
+Exec=/opt/theplanets/start_linux.sh
+Icon=/opt/theplanets/theplanets.ico
+Path=/opt/theplanets
+Type=Application
+Categories=Education;Science;

@@ -1,0 +1,8 @@
+Package: ThePlanets
+Version: 2.0
+Section: base
+Priority: optional
+Architecture: amd64
+Depends:  freeglut3,libglu1-mesa,libjpeg62
+Maintainer: Martin Steen <martin@martin-steen.de>
+Description: The Planets
