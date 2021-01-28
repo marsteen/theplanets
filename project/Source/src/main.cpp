@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+
 
 #include <GLinclude.h>
 
@@ -35,6 +35,8 @@ using namespace std;
 #include "CG3DGlobals.h"
 #include "CG3DReslistInterface.h"
 #include "CGLApplication.h"
+
+using namespace std;
 
 CGLApplication gApp;
 

@@ -38,6 +38,7 @@ enum EPlanet
 
 #include <list>
 #include <CGL_Circle.h>
+#include <CGL_StarField.h>
 #include "SPlanetDesc.h"
 #include "SLabel.h"
 
@@ -169,6 +170,7 @@ class CGLApplication
         void ActivatePlanet(EPlanet p);
         void InitPlanet(const SPlanetDesc* PlanetDesc);
         void InitSonne(const SPlanetDesc* PlanetDesc);
+        void InitStarfield();
         void InitResources(void);
         void Zoom(float f);
         void LoadSaturnRing();
@@ -206,10 +208,14 @@ class CGLApplication
         CGL_Disk mSaturnRing;
         CGL_Disk mUranusRing;
         CGL_Disk mSonneHalo;
+        CGL_StarField* mStarField;
         SG3DcomData gSlider;
         EPlanet mPlanet;
         float mPlanetSize;
-    public: float mScale;
+        
+    public: 
+    
+        float mScale;
         const char* mActInfobox;
         bool mInitFlag;
         bool mAutoScale;

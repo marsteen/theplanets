@@ -50,6 +50,8 @@ static float sZrot;
 static float sXrot;
 static float sYrotAuto;
 
+#define NUMBER_OF_STARS 10000
+
 struct SMoonColor
 {
     const float mColor[3];
@@ -944,8 +946,8 @@ static SPlanetDesc sSonneDesc[] =
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CGLApplication
-// METHODE       : CMond
+// KLASSE        : CMond
+// METHODE       : InitOrbit
 //
 //
 //
@@ -1225,6 +1227,7 @@ void CGLApplication::InitApplication(int argc, char* argv[])
     gOpenGL = new COpenGL;
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
+    
 
     /*
      * int ScreenWidth =  glutGet(GLUT_WINDOW_WIDTH);
@@ -1485,6 +1488,9 @@ void CGLApplication::InitResources()
         mSonneHalo.mSegments = 256;
         mSonneHalo.mRadius = 2 * 13;
         mSonneHalo.Init();
+        
+        mStarField = new CGL_StarField(NUMBER_OF_STARS);
+        mStarField->Init();
 
         ReadSettings();
 
@@ -1503,6 +1509,7 @@ void CGLApplication::InitResources()
 
         mLabelName.mName = "LabelName";
         gG3Dinterface->SendCommand(EG3DcomSearchChild, &mLabelName);
+
 
 
         //cout << "InitResources OK" << endl;
@@ -1832,6 +1839,14 @@ void CGLApplication::Draw3DObjects()
     glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
     //glRotatef(sZrot, 0.0, 0.0, 1.0); // Rotation um Z-Achse (entfaellt)
     glRotatef(sYrot, 0.0, 1.0, 0.0);    // Rotation um Y-Achse
+    
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);    
+    mStarField->Draw();
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+
 
     glScalef(mScale, mScale, mScale);
 
@@ -1843,6 +1858,7 @@ void CGLApplication::Draw3DObjects()
     glEnable(GL_CULL_FACE);
     //glCullFace(GL_BACK);
 
+    
 
 #if 1
     if (mPlanet == EPLANET_SONNE)
@@ -1929,6 +1945,7 @@ void CGLApplication::Draw3DObjects()
         glPopMatrix();
         glEnable(GL_CULL_FACE);
     }
+    
 
     glPopMatrix();
 
@@ -2005,6 +2022,8 @@ void CGLApplication::Draw3DObjects()
             sYrotAuto -= 360;
         }
     }
+    
+   
     //cout << "Draw3DObjects OK" << endl;
 }
 

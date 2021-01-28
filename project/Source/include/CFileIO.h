@@ -2,10 +2,6 @@
 #define NULL    ((void*)0L)
 #endif
 
-#ifndef _Ios_Openmode
-#define _Ios_Openmode    ios
-#endif
-
 
 #ifndef CFILEIO_H
 #define CFILEIO_H

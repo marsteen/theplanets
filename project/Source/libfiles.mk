@@ -36,6 +36,7 @@ LIBFILES = $(LIBBASE)/Resource/CG3DReslistInterface.cpp \
            $(LIBBASE)/CGL/CGL_FontTableau.cpp \
            $(LIBBASE)/CGL/CGL_Circle.cpp \
            $(LIBBASE)/CGL/CGL_Patch.cpp \
-           $(LIBBASE)/CGL/CGL_Ellipsoid.cpp
+           $(LIBBASE)/CGL/CGL_Ellipsoid.cpp \
+           $(LIBBASE)/CGL/CGL_StarField.cpp \
            
            
