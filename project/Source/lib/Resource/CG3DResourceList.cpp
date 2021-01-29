@@ -366,7 +366,7 @@ template <typename T>
 static T readScaled(const std::string& str)
 {
     CStringTool stconv;
-    return stconv.StringTo<T>(str) * 2.0f;
+    return stconv.StringTo<T>(str) * 2.5f;
 }
 
 
