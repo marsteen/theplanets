@@ -1,0 +1,64 @@
+#
+NAME	DIALOG	GlobenDialog
+REF	InteraktImg
+CHILD	HintergrDialog	0	33	VOID
+STATUS	REFERENCE
+CHILD	SymbolDialog	0	0	BOTTOM_OBJECT
+STATUS	REFERENCE
+CHILD	InhalteDialog	0	0	BOTTOM_OBJECT
+#
+#
+# HINTERGRUND GLOBEN
+#
+#
+NAME	DIALOG	HintergrDialog
+REF	InteraktImg
+CHILD	HintergrBt	20	10	VOID
+#
+#
+NAME	BUTTON	HintergrBt
+GROUPPARENT	HintergrDialog
+GROUP	0
+CHILD	HintergrStr	20	0	VOID
+BTPROP	TEXTROLL
+REF	KlappImg
+CHILD	HintergrDialog2	-20	23	VOID
+SCALE	1.0	2.0
+CHILD	MenuShadowImg	-20	23	VOID
+#
+NAME	DIALOG	HintergrDialog2
+REF	MenuBox
+CHILD	PhysischKbt	20	20	VOID
+CHILD	PhysischKstr	40	22	VOID
+CHILD	PolitischKbt	20	50	VOID
+CHILD	PolitischKstr	40	52	VOID
+CHILD	SatbildBt	20	80	VOID
+CHILD	Satbildstr	40	82	VOID
+CHILD	BodenbedBt	20	110	VOID
+CHILD	Bodenbedstr	40	112	VOID
+CHILD	NeutralKbt	20	140	VOID
+CHILD	NeutralKstr	40	142	VOID
+#
+NAME	BUTTON	PhysischKbt
+GROUP	0
+REF	RadioButtonImg
+#
+NAME	BUTTON	PolitischKbt
+GROUP	0
+REF	RadioButtonImg
+#
+NAME	BUTTON	SatbildBt
+GROUP	0
+REF	RadioButtonImg
+#
+NAME	BUTTON	BodenbedBt
+GROUP	0
+REF	RadioButtonImg
+#
+NAME	BUTTON	NeutralKbt
+GROUP	0
+REF	RadioButtonImg
+#
+
+
+

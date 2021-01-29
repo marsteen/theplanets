@@ -1,0 +1,58 @@
+#------------------------------------------------------------------
+#
+#  MARS
+#
+#------------------------------------------------------------------
+NAME	BOX	MarsInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	MondeMarsStr	5	20	LEFT_TOP
+CHILD	DurchmesserMarsStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitMarsStr	5	60	LEFT_TOP
+CHILD	FluchtMarsStr	5	80	LEFT_TOP
+CHILD	MasseMarsStr	5	100	LEFT_TOP
+CHILD	hoch23str	66	95	LEFT_TOP
+CHILD	FallMarsStr	5	120	LEFT_TOP
+CHILD	hoch2str	57	115	LEFT_TOP
+CHILD	RotationMarsStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+NAME	STRING	MondeMarsStr
+REF	Verdana13
+TEXT	DE	2
+TEXT	EN	2
+#
+NAME	STRING	DurchmesserMarsStr
+REF	Verdana13
+TEXT	DE	6.794 km
+TEXT	EN	6,794 km
+#
+NAME	STRING	UmlaufzeitMarsStr
+REF	Verdana13
+TEXT	DE	686,98 Tage
+TEXT	EN	686.980 days
+#
+NAME	STRING	FluchtMarsStr
+REF	Verdana13
+TEXT	DE	5,03 km/s
+TEXT	EN	5.03 km/s
+#
+NAME	STRING	MasseMarsStr
+REF	Verdana13
+TEXT	DE	6,419 * 10    kg
+TEXT	EN	6.419 * 10    kg
+#
+NAME	STRING	RotationMarsStr
+REF	Verdana13
+TEXT	DE	24 h 37 min 22 s
+TEXT	EN	24 h 37 min 22 s
+#
+NAME	STRING	FallMarsStr
+REF	Verdana13
+TEXT	DE	3,71 m/s
+TEXT	EN	3.71 m/s
+#

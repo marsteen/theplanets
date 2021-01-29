@@ -1,0 +1,54 @@
+#------------------------------------------------------------------
+#
+#  Io
+#
+#------------------------------------------------------------------
+#
+NAME	BOX	IoInfoBox
+FRECT	0	0	140	180	VOID
+CHILD	DurchmesserIoStr	5	40	LEFT_TOP
+CHILD	UmlaufzeitIoStr	5	60	LEFT_TOP
+CHILD	FluchtIoStr	5	80	LEFT_TOP
+CHILD	MasseIoStr	5	100	LEFT_TOP
+CHILD	hoch22str	66	95	LEFT_TOP
+CHILD	FallIoStr	5	120	LEFT_TOP
+CHILD	hoch2str	57	115	LEFT_TOP
+CHILD	RotationIoStr	5	140	LEFT_TOP
+#
+#------------------------------------------------------------------
+#
+#  Texte
+#
+#------------------------------------------------------------------
+#
+#
+NAME	STRING	DurchmesserIoStr
+REF	Verdana13
+TEXT	DE	3.643 km
+TEXT	EN	3,643 km
+#
+NAME	STRING	UmlaufzeitIoStr
+REF	Verdana13
+TEXT	DE	1,769 Tage
+TEXT	EN	1.769 days
+#
+NAME	STRING	FluchtIoStr
+REF	Verdana13
+TEXT	DE	2,56 km/s
+TEXT	EN	2.56 km/s
+#
+NAME	STRING	MasseIoStr
+REF	Verdana13
+TEXT	DE	1,076 * 10    kg
+TEXT	EN	1.076 * 10    kg
+#
+NAME	STRING	RotationIoStr
+REF	Verdana13
+TEXT	DE	16 d 16 h 32 m
+TEXT	EN	16 d 16 h 32 m
+#
+NAME	STRING	FallIoStr
+REF	Verdana13
+TEXT	DE	1,81 m/s
+TEXT	EN	1.81 m/s
+#
