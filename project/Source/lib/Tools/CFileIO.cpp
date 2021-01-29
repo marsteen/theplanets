@@ -135,13 +135,13 @@ int CFileIO::GetFileSize(const char* Filename)
 //
 //---------------------------------------------------------------------------
 
-bool CFileIO::OpenFileRead(const char* Filename, int OpenMode)
+bool CFileIO::OpenFileRead(const char* Filename, OPENMODE OpenMode)
 {
     if (mFs != NULL)
     {
         delete mFs;
     }
-    mFs = new fstream(Filename, std::_Ios_Openmode::in | std::_Ios_Openmode::binary);
+    mFs = new fstream(Filename, ios::in | OpenMode);
     mOpenRead = mFs->good();
     return mOpenRead;
 }
@@ -161,13 +161,13 @@ bool CFileIO::OpenFileRead(const char* Filename, int OpenMode)
 //
 //---------------------------------------------------------------------------
 
-bool CFileIO::OpenFileWrite(const char* Filename, int OpenMode)
+bool CFileIO::OpenFileWrite(const char* Filename, OPENMODE OpenMode)
 {
     if (mFs != NULL)
     {
         delete mFs;
     }
-    mFs = new fstream(Filename, std::_Ios_Openmode::out | std::_Ios_Openmode::binary);
+    mFs = new fstream(Filename, ios::out | OpenMode);
     mOpenWrite = mFs->good();
     return mOpenWrite;
 }
@@ -187,13 +187,13 @@ bool CFileIO::OpenFileWrite(const char* Filename, int OpenMode)
 //
 //---------------------------------------------------------------------------
 
-bool CFileIO::OpenFileAppend(const char* Filename, int OpenMode)
+bool CFileIO::OpenFileAppend(const char* Filename, OPENMODE OpenMode)
 {
     if (mFs != NULL)
     {
         delete mFs;
     }
-    mFs = new fstream(Filename, std::_Ios_Openmode::app | std::_Ios_Openmode::binary);
+    mFs = new fstream(Filename, ios::app | OpenMode);
     mOpenWrite = mFs->good();
     return mOpenWrite;
 }

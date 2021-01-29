@@ -8,6 +8,10 @@
 
 #include <fstream>
 
+#define OPENMODE	std::ios::openmode
+#define SEEKDIR		std::ios::seekdir
+
+
 class CFileIO
 {
     public:
@@ -21,9 +25,9 @@ class CFileIO
 
 
         void* ReadFile(const char* Filename, int* nBytes);
-        bool OpenFileRead(const char* Filename, int type);
-        bool OpenFileWrite(const char* Filename, int type);
-        bool OpenFileAppend(const char* Filename, int type);
+        bool OpenFileRead(const char* Filename, OPENMODE type);
+        bool OpenFileWrite(const char* Filename, OPENMODE type);
+        bool OpenFileAppend(const char* Filename, OPENMODE type);
         bool ReadBytes(void* buffer, int nBytes);
         void*   ReadBytes(int nBytes);
         bool WriteBytes(void* buffer, int nBytes);
