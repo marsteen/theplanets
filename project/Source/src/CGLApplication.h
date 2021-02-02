@@ -15,6 +15,8 @@
 #ifndef CGLAPPLICATION_H
 #define CGLAPPLICATION_H
 
+#include <CSdlApp.h>
+
 enum EPlanet
 {
     EPLANET_MERKUR,
@@ -143,8 +145,8 @@ class CGLApplication
 
         CGLApplication();
 
-        const char* Name() { return "dieplaneten"; }
-        const char* Version() { return "1.3.1"; }
+        const char* Name() { return "theplanets"; }
+        const char* Version() { return "2.0.0"; }
 
         void InitApplication(int argc, char* argv[]);
         void Draw3DObjects();
@@ -197,7 +199,8 @@ class CGLApplication
         void ReadSettings(void);
         void WriteSettings(void);
 
-        COpenGL* gOpenGL;
+        CSdlApp* mSdlApp;
+        //COpenGL* gOpenGL;
         CPlanet* gErde;
         CPlanet* gSonne1;
         //CGL_EllipsoidPatched* gErdeSmall;

@@ -52,6 +52,7 @@ add_executable(theplanets
            ${LIBBASE}/Tools/CErrorMessage.cpp
            ${LIBBASE}/Tools/CDatabase3.cpp
            ${LIBBASE}/Tools/CFileIO.cpp
+           ${LIBBASE}/Tools/NStringTool.cpp
            ${LIBBASE}/Graflib/CPixel24.cpp
            ${LIBBASE}/Graflib/CPixel32.cpp
            ${LIBBASE}/Graflib/CGraflib.cpp
@@ -63,6 +64,7 @@ add_executable(theplanets
            ${LIBBASE}/CGL/CGL_Ellipsoid.cpp
            ${LIBBASE}/CGL/CGL_Texture.cpp
            ${LIBBASE}/CGL/COpenGL.cpp
+           ${LIBBASE}/CGL/CSdlApp.cpp
            ${LIBBASE}/CGL/CGL_Camera.cpp
            ${LIBBASE}/CGL/CGL_Object.cpp
            ${LIBBASE}/CGL/CGL_Disk.cpp
@@ -80,13 +82,14 @@ if (CMAKE_SYSTEM_NAME STREQUAL "MSYS")
     #
     SET(SYSTEM_NAME "windows")
     target_link_libraries(theplanets
-		glu32
-		freeglut
-		opengl32
-		gdi32
-		winmm
-		jpeg62
-		)
+        glu32
+        freeglut
+        opengl32
+        gdi32
+        winmm
+        jpeg62
+        SDL2
+    )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     #
     # Linux

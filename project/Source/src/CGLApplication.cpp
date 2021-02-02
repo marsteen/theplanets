@@ -1051,7 +1051,7 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
     gSonne1->SetMultiTextures(gSonne1->mSunTexHandles, sx, sy);
     gSonne1->InitDisplayList();
 
-    gOpenGL->mCamera.mStandort.z = -80.0;
+    mSdlApp->mCamera.mStandort.z = -80.0;
 
     gErde = gSonne1;
 #if 1
@@ -1067,12 +1067,12 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
 
         thing->CreateEllipsoid(sx * 10, 20.0 * PlanetDesc[i].mSize, sy * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
 
-        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, sx, sy, gOpenGL->mAnaglyph);
+        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, sx, sy, mSdlApp->mAnaglyph);
 
         mond.InitOrbit(PlanetDesc[i].mDistance);
         thing->SetMultiTextures(ErdeTexHandles, sx, sy);
         thing->InitDisplayList();
-        gOpenGL->mCamera.mStandort.z = -80.0;
+        mSdlApp->mCamera.mStandort.z = -80.0;
 
         if (i > 0)
         {
@@ -1165,7 +1165,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         }
                 
         thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
-        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, gOpenGL->mAnaglyph);
+        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, mSdlApp->mAnaglyph);
 
         if (i > 0)
         {
@@ -1173,7 +1173,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         }
         thing->SetMultiTextures(ErdeTexHandles, xsegs, ysegs);
         thing->InitDisplayList();
-        gOpenGL->mCamera.mStandort.z = -80.0;
+        mSdlApp->mCamera.mStandort.z = -80.0;
 
         if (i > 0)
         {
@@ -1224,7 +1224,7 @@ void CGLApplication::SetResolution(int w, int h)
 
 void CGLApplication::InitApplication(int argc, char* argv[])
 {
-    gOpenGL = new COpenGL;
+    mSdlApp = new CSdlApp;
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
     
@@ -1244,11 +1244,15 @@ void CGLApplication::InitApplication(int argc, char* argv[])
     }
 
 
-    gOpenGL->InitWindowGLUT(argc, argv, APP_NAME, 1024, 768, mFullscreen);
-    gOpenGL->InitGLUTCallback(10);
+    //mSdlApp->InitWindowGLUT(argc, argv, APP_NAME, 1024, 768, mFullscreen);
+    //mSdlApp->InitGLUTCallback(10);
     //cout << "InitWindowGLUT OK" << endl;
+    
+    mSdlApp->Init();
+    mSdlApp->InitScreen();
+    
 
-    gOpenGL->mCamera.mStandort.z = -80.0;
+    mSdlApp->mCamera.mStandort.z = -80.0;
 }
 
 
@@ -1473,18 +1477,18 @@ void CGLApplication::InitResources()
             exit(0);
         }
 
-        mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, gOpenGL->mAnaglyph);
+        mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mSdlApp->mAnaglyph);
         mSaturnRing.mSegments = 256;
         mSaturnRing.mRadius = 60.0 * Scale;
         mSaturnRing.Init();
 
-        mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, gOpenGL->mAnaglyph);
+        mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mSdlApp->mAnaglyph);
         mUranusRing.mSegments = 256;
         mUranusRing.mRadius = 2 * 20;
         mUranusRing.Init();
 
 
-        mSonneHalo.LoadTextureTga2D(SonneHaloFile, SonneHaloMask, false, gOpenGL->mAnaglyph);
+        mSonneHalo.LoadTextureTga2D(SonneHaloFile, SonneHaloMask, false, mSdlApp->mAnaglyph);
         mSonneHalo.mSegments = 256;
         mSonneHalo.mRadius = 2 * 13;
         mSonneHalo.Init();
@@ -1869,7 +1873,7 @@ void CGLApplication::Draw3DObjects()
             glDisable(GL_BLEND);
             glDisable(GL_LIGHTING);
 
-            if (gOpenGL->mAnaglyph)
+            if (mSdlApp->mAnaglyph)
             {
                 float SunMaterial[] = { 0.8, 0.8, 0.8, 1.0 };
                 glColor3fv(SunMaterial);
@@ -2396,7 +2400,7 @@ void CGLApplication::LoadSaturnRing()
     const char* SaturnRingFile = "planeten/saturnring.tga";
     const char* SaturnRingMask = "planeten/A_saturnring.tga";
 
-    mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, gOpenGL->mAnaglyph);
+    mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mSdlApp->mAnaglyph);
 }
 
 
@@ -2414,7 +2418,7 @@ void CGLApplication::LoadUranusRing()
     const char* UranusRingFile = "planeten/uranusring.tga";
     const char* UranusRingMask = "planeten/A_uranusring.tga";
 
-    mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, gOpenGL->mAnaglyph);
+    mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mSdlApp->mAnaglyph);
 }
 
 
@@ -2570,7 +2574,7 @@ void CGLApplication::LeftMouseButtonDown()
         else
         if (scom.mName == "AnaglyphBt")
         {
-            gOpenGL->mAnaglyph = scom.mFlags;
+            mSdlApp->mAnaglyph = scom.mFlags;
             ActivatePlanet(mPlanet);
             LoadSaturnRing();
             LoadUranusRing();

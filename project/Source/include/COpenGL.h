@@ -17,23 +17,7 @@
 
 #include <CVector3T.h>
 #include <CGL_Camera.h>
-
-class CGL_Mouse : public CVector3<int>
-{
-    public:
-
-        CGL_Mouse()
-        {
-            mState[0] = GLUT_UP;
-            mState[1] = GLUT_UP;
-            mState[2] = GLUT_UP;
-            mState[3] = GLUT_UP;
-        }
-
-
-        int mButton;
-        int mState[4];
-};
+#include <CGL_Mouse.h>
 
 class COpenGL
 {
