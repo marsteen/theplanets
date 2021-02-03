@@ -1,7 +1,7 @@
 #ifndef CGL_Mouse_H
 #define CGL_Mouse_H
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 
 class CGL_Mouse : public CVector3<int>
 {

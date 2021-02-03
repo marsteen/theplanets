@@ -3,7 +3,7 @@
 //
 // @PROJECT  :	Basic SDL
 // @VERSION  :	1.0
-// @FILENAME :	CSdlApp.cpp
+// @FILENAME :	CSDL_App.cpp
 // @DATE     :	8.1.2015
 //
 // @AUTHOR   :	Martin Steen
@@ -18,24 +18,24 @@
 #include <vector>
 #include <string>
 
-#include <GL/glew.h>
+#include <GLinclude.h>
 #include <SDL2/SDL.h>
 #include <NStringTool.h>
-#include <CSdlApp.h>
+#include <CSDL/CSDL_App.h>
 
 using namespace std;
 
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
-// METHODE       : CSdlApp
+// KLASSE        : CSDL_App
+// METHODE       : CSDL_App
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-CSdlApp::CSdlApp()
+CSDL_App::CSDL_App()
 {
     mFullscreen        = false;
 	//mMouseFaktor       = 10.0;
@@ -130,12 +130,12 @@ void GlobalShowOpenGLError(const char* Titel)
 //
 // METHODE       : ShowOpenGLError
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 //
 //---------------------------------------------------------------------------
 
 
-void CSdlApp::ShowOpenGLError(const char* Titel)
+void CSDL_App::ShowOpenGLError(const char* Titel)
 {
 	int GlError = glGetError();
 
@@ -209,14 +209,14 @@ void CSdlApp::ShowOpenGLError(const char* Titel)
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : ParseArgVec
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::ParseArgVec(const vector<string>& ArgStr)
+void CSDL_App::ParseArgVec(const vector<string>& ArgStr)
 {
 	for (int i = 0; i < ArgStr.size(); i++)
 	{
@@ -233,14 +233,14 @@ void CSdlApp::ParseArgVec(const vector<string>& ArgStr)
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : ParseArgs
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::ParseArgs(int argc, char* argv[])
+void CSDL_App::ParseArgs(int argc, char* argv[])
 {
 	mFullscreen = true;
 	vector<string> ArgVec;
@@ -257,14 +257,14 @@ void CSdlApp::ParseArgs(int argc, char* argv[])
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : ParseWinArgs
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::ParseWinArgs(const char* Commandline)
+void CSDL_App::ParseWinArgs(const char* Commandline)
 {
   vector<string> SplitResult;
 
@@ -294,21 +294,21 @@ void CSdlApp::ParseWinArgs(const char* Commandline)
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : GameLoop
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::GameLoop()
+void CSDL_App::GameLoop()
 {
 
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       :
 //
 //
@@ -317,7 +317,7 @@ void CSdlApp::GameLoop()
 
 static Uint32 sTimerCallback(Uint32 interval, void* param)
 {
-  CSdlApp* SdlApp = (CSdlApp*) param;
+  CSDL_App* SdlApp = (CSDL_App*) param;
   SdlApp->Timer();
 
   return interval;
@@ -325,14 +325,14 @@ static Uint32 sTimerCallback(Uint32 interval, void* param)
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : Timer
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::Timer()
+void CSDL_App::Timer()
 {
 /*
   static int t;
@@ -346,42 +346,42 @@ void CSdlApp::Timer()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : SetResolution
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::SetResolution(int w, int h)
+void CSDL_App::SetResolution(int w, int h)
 {
 
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       :
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::InitGame()
+void CSDL_App::InitGame()
 {
 
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : FinishGame
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::FinishGame()
+void CSDL_App::FinishGame()
 {
 	SDL_ShowCursor(true);
 }
@@ -389,14 +389,14 @@ void CSdlApp::FinishGame()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       :
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-bool CSdlApp::Init()
+bool CSDL_App::Init()
 {
   bool r = true;
 
@@ -424,14 +424,14 @@ bool CSdlApp::Init()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : SetViewport
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::SetViewport(int w, int h)
+void CSDL_App::SetViewport(int w, int h)
 {
 	mWindowWidth  = w;
 	mWindowHeight = h;
@@ -454,14 +454,14 @@ void CSdlApp::SetViewport(int w, int h)
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : InitScreen
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-bool CSdlApp::InitScreen()
+bool CSDL_App::InitScreen()
 {
   bool r = true;
 
@@ -521,42 +521,42 @@ bool CSdlApp::InitScreen()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : DisableKeyRepeat
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::DisableKeyRepeat()
+void CSDL_App::DisableKeyRepeat()
 {
   //SDL_EnableKeyRepeat(0, 0);
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : ParseKeys
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-bool CSdlApp::ParseKeys(int key, bool down)
+bool CSDL_App::ParseKeys(int key, bool down)
 {
 	return true;
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : MainLoop
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::MainLoop()
+void CSDL_App::MainLoop()
 {
   while (1)
   {
@@ -576,27 +576,27 @@ void CSdlApp::MainLoop()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : ParseMouseRel
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::ParseMouseRel(int xrel, int yrel)
+void CSDL_App::ParseMouseRel(int xrel, int yrel)
 {
 }
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 // METHODE       : EventLoop
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-void CSdlApp::EventLoop()
+void CSDL_App::EventLoop()
 {
   SDL_Event event;
 

@@ -28,20 +28,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-using namespace std;
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
-
 #include <CDatabase3.h>
-#include <CVector3T.h>
 #include <CRectT.h>
 #include <CStringConverter.h>
 #include <CGL_Texture.h>
 #include <CGL_FontTableau.h>
 #include <CStringTool.h>
+#include <Math/CVector3T.h>
+#include <GLinclude.h>
+
+using namespace std;
+
 
 //---------------------------------------------------------------------------
 //

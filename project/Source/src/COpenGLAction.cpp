@@ -22,7 +22,7 @@
 #include <vector>
 
 #include <GLinclude.h>
-#include <COpenGL.h>
+//#include <COpenGL.h>
 #include <CGL_GLU_Sphere.h>
 #include <CGL_Object.h>
 #include <CGL_Disk.h>
@@ -36,6 +36,7 @@ using namespace std;
 
 extern CGLApplication gApp;
 
+#if 0
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : COpenGL
@@ -138,7 +139,7 @@ void COpenGL::Action()
 
     gApp.ManageInterface(&mMouse);
 
-    glutSwapBuffers();
+    // glutSwapBuffers();
 }
 
 
@@ -157,6 +158,7 @@ void COpenGL::MouseButtonAction()
 
     //cout << "mMouse.mButton=" << mMouse.mButton << endl;
 
+#if 0
     switch (mMouse.mButton)
     {
         case GLUT_LEFT_BUTTON:
@@ -195,6 +197,7 @@ void COpenGL::MouseButtonAction()
             }
             break;
     }
+#endif    
 }
 
 
@@ -219,6 +222,8 @@ void COpenGL::MouseMotionAction()
     MousePos.x = mMouse.x;
     MousePos.y = mMouse.y;
 
+
+#if 0
     if (mMouse.mState[GLUT_LEFT_BUTTON] == GLUT_DOWN)
     {
         gApp.MouseMotionLeft(dx, dy);
@@ -235,7 +240,7 @@ void COpenGL::MouseMotionAction()
     {
         gApp.MouseMotionRight(dx, dy);
     }
-
+#endif
 
     //cout << "MouseMotionAction X=" << mMouse.x << " Y=" << mMouse.y << endl;
 }
@@ -254,3 +259,4 @@ void COpenGL::KeyboardAction(unsigned char key)
 {
     gApp.KeyboardAction(key);
 }
+#endif

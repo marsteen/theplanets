@@ -17,10 +17,8 @@
 #endif
 
 #include <iostream>
-#include <CVector3T.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <Math/CVector3T.h>
+#include <GLinclude.h>
 #include <CGL_Object.h>
 #include <CGL_Circle.h>
 #include <math.h>

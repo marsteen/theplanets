@@ -19,16 +19,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "CGL_Texture.h"
-#include <CVector3T.h>
+#include <CGL_Texture.h>
+#include <Math/CVector3T.h>
 
 enum ECGL_STATUS
 {
     CGL_STATUS_ALPHA = 32
 };
 
-#define DEG_TO_RAD(x)		((x) / 57.29577951)
-#define RAD_TO_DEG(x)		((x) * 57.29577951)
+//#define DEG_TO_RAD(x)		((x) / 57.29577951)
+//#define RAD_TO_DEG(x)		((x) * 57.29577951)
 
 class CGL_Object : public CGL_Texture
 {

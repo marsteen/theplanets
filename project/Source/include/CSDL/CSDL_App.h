@@ -27,15 +27,15 @@
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : CSdlApp
+// KLASSE        : CSDL_App
 //
 // ---------------------------------------------------------------------------
 
-class CSdlApp
+class CSDL_App
 {
     public:
 
-        CSdlApp();
+        CSDL_App();
         bool Init();
         void ParseArgs(int argc, char* argv[]);
         void ParseWinArgs(const char* Commandline);

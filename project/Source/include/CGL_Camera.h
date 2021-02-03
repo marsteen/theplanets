@@ -15,7 +15,7 @@
 #ifndef CGL_CAMERA_H
 #define CGL_CAMERA_H
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 
 class CGL_Camera
 {

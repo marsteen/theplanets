@@ -15,12 +15,9 @@
 #ifndef CGL_MATOBJECT_H
 #define CGL_MATOBJECT_H
 
-#define DEG_TO_RAD(x)		((x) / 57.29577951)
-#define RAD_TO_DEG(x)		((x) * 57.29577951)
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 class CGL_MatObject
 {

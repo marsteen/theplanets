@@ -15,7 +15,7 @@
 #ifndef CVERTEXARRAYS_H
 #define CVERTEXARRAYS_H
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 
 class CVertexArrays
 {

@@ -19,9 +19,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <GLinclude.h>
 #include <COpenGL.h>
 #include <CGL_GLU_Sphere.h>
 #include <CGL_Ellipsoid.h>
@@ -56,5 +54,5 @@ void COpenGL::Action()
 
 
     glFlush();
-    glutSwapBuffers();
+    //glutSwapBuffers();
 }

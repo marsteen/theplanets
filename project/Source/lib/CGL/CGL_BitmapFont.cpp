@@ -21,9 +21,7 @@ using namespace std;
 
 #include <iostream>
 #include <fstream>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
+#include <GLinclude.h>
 #include <CGL_BitmapFont.h>
 
 using namespace std;

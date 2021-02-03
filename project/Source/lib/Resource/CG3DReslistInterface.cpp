@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 #include <CFileIO.h>
 #include <CG3DGlobals.h>
 #include <CG3DReslistInterface.h>

@@ -15,7 +15,7 @@
 #ifndef CGL_PATCH_H
 #define CGL_PATCH_H
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 #include <CGL_Object.h>
 #include <CGL_MatObject.h>
 

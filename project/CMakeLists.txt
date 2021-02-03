@@ -20,6 +20,9 @@ message("System: ${CMAKE_SYSTEM_NAME}")
 #
 # for 
 
+
+
+
 include_directories(Source/include)
 
 set(CMAKE_C_LINK_EXECUTABLE "g++")
@@ -27,8 +30,12 @@ set(SRCBASE "Source/src")
 set(LIBBASE "Source/lib")
 set(BINDIR  "./build/bin/${CMAKE_SYSTEM_NAME}")
 
+#find_package(SDL2 REQUIRED)
+#include_directories(${SDL2_INCLUDE_DIR})
+
+
 add_executable(theplanets
-           ${SRCBASE}/main.cpp 
+           ${SRCBASE}/mainSdl.cpp 
            ${SRCBASE}/CGLApplication.cpp
            ${SRCBASE}/COpenGLAction.cpp
            ${LIBBASE}/Resource/CG3DReslistInterface.cpp
@@ -62,9 +69,7 @@ add_executable(theplanets
            ${LIBBASE}/CGL/CGL_MatObject.cpp
            ${LIBBASE}/CGL/CGL_Patch.cpp
            ${LIBBASE}/CGL/CGL_Ellipsoid.cpp
-           ${LIBBASE}/CGL/CGL_Texture.cpp
-           ${LIBBASE}/CGL/COpenGL.cpp
-           ${LIBBASE}/CGL/CSdlApp.cpp
+           ${LIBBASE}/CGL/CGL_Texture.cpp           
            ${LIBBASE}/CGL/CGL_Camera.cpp
            ${LIBBASE}/CGL/CGL_Object.cpp
            ${LIBBASE}/CGL/CGL_Disk.cpp
@@ -73,22 +78,23 @@ add_executable(theplanets
            ${LIBBASE}/CGL/CGL_FontTableau.cpp
            ${LIBBASE}/CGL/CGL_Circle.cpp
            ${LIBBASE}/CGL/CGL_StarField.cpp
+           ${LIBBASE}/CSDL/CSDL_App.cpp
 )
 
 
-if (CMAKE_SYSTEM_NAME STREQUAL "MSYS")
+if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
     #
     # Windows
     #
     SET(SYSTEM_NAME "windows")
     target_link_libraries(theplanets
-        glu32
-        freeglut
+        glu32        
         opengl32
         gdi32
         winmm
         jpeg62
         SDL2
+        glew32
     )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     #
@@ -109,5 +115,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 endif()
 
 
+
+add_definitions(-DSDL_MAIN_HANDLED)
+
 file(MAKE_DIRECTORY ${BINDIR})
-set_target_properties(theplanets PROPERTIES OUTPUT_NAME ../${BINDIR}/theplanets)    

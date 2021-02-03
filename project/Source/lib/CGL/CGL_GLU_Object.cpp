@@ -17,9 +17,7 @@
 #endif
 
 #include <iostream>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <GLinclude.h>
 #include <CGL_GLU_Object.h>
 
 using namespace std;

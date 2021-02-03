@@ -19,11 +19,8 @@
 #include <iostream>
 #include <fstream>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
-
-#include <CVector3T.h>
+#include <GLinclude.h>
+#include <Math/CVector3T.h>
 #include <CGL_FontTableau.h>
 #include <GSystemFunctions.h>
 

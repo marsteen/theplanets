@@ -15,7 +15,7 @@
 #ifndef SLABEL_H
 #define SLABEL_H
 
-#include <CVector3T.h>
+#include <Math/CVector3T.h>
 
 
 enum ELabelType

@@ -29,8 +29,8 @@
 
 #include <GLinclude.h>
 
-#include <CVector3T.h>
-#include <COpenGL.h>
+#include <Math/CVector3T.h>
+//#include <COpenGL.h>
 #include <CGL_GLU_Sphere.h>
 #include <CGL_Object.h>
 #include <CGL_Disk.h>
@@ -1224,10 +1224,12 @@ void CGLApplication::SetResolution(int w, int h)
 
 void CGLApplication::InitApplication(int argc, char* argv[])
 {
-    mSdlApp = new CSdlApp;
+    mSdlApp = new CSDL_App;
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
     
+    
+    cout << "InitApplication START" << endl;
 
     /*
      * int ScreenWidth =  glutGet(GLUT_WINDOW_WIDTH);
@@ -1248,8 +1250,12 @@ void CGLApplication::InitApplication(int argc, char* argv[])
     //mSdlApp->InitGLUTCallback(10);
     //cout << "InitWindowGLUT OK" << endl;
     
+    glewInit();
     mSdlApp->Init();
     mSdlApp->InitScreen();
+    mSdlApp->MainLoop();
+    
+    
     
 
     mSdlApp->mCamera.mStandort.z = -80.0;

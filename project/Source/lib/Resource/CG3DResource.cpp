@@ -14,6 +14,7 @@
 
 #include <CG3DResourceList.h>
 #include <CHexConv.h>
+#include <GLinclude.h>
 
 extern CG3DGlobals* gGlobals;
 extern CG3DResourceList* gResourceList;

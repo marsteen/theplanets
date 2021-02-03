@@ -15,15 +15,17 @@
 #ifndef CSTRINGCONVERTER_H
 #define CSTRINGCONVERTER_H
 
+#include <string>
+
 class CStringConverter
 {
     public:
 
-        int ToInt(string& s);
-        float ToFloat(string& s);
-        float ToDouble(string& s);
+        int ToInt(std::string& s);
+        float ToFloat(std::string& s);
+        float ToDouble(std::string& s);
 
-        string ToStr(int n);
+        std::string ToStr(int n);
 };
 
 #endif // CSTRINGCONVERTER

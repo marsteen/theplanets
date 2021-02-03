@@ -12,9 +12,7 @@
 //
 //***************************************************************************
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
+#include <GLinclude.h>
 #include <CG3DResourceList.h>
 #include <CHexConv.h>
 

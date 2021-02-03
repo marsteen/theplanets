@@ -18,13 +18,7 @@
 
 #include <iostream>
 #include <fstream>
-
-extern "C"
-{
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-};
+#include <GLinclude.h>
 
 #include <COpenGL.h>
 #include <CFileIO.h>
@@ -122,7 +116,7 @@ static void sMouseMotion(int x, int y)
 static void sTimefunc(int value)
 {
     sOpenGL->Action();
-    glutTimerFunc(sOpenGL->mActionFrequency, sTimefunc, 1);
+    //glutTimerFunc(sOpenGL->mActionFrequency, sTimefunc, 1);
 }
 
 
@@ -216,6 +210,7 @@ void COpenGL::SaveGLStrings(char* filename)
 
 bool COpenGL::InitWindowGLUT(int argc, char** argv, const char* WindowName, int Width, int Height, bool Fullscreen)
 {
+    #if 0
     glutInit(&argc, argv);
     glutInitWindowSize(Width, Height);
     glutInitWindowPosition(0, 0);

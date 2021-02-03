@@ -15,7 +15,13 @@
 #ifndef CGLAPPLICATION_H
 #define CGLAPPLICATION_H
 
-#include <CSdlApp.h>
+#include <list>
+#include <CGL_Circle.h>
+#include <CGL_StarField.h>
+#include "SPlanetDesc.h"
+#include "SLabel.h"
+#include <CSDL/CSDL_App.h>
+
 
 enum EPlanet
 {
@@ -37,12 +43,6 @@ enum EPlanet
     EMOND_RHEA,
     EMOND_TRITON
 };
-
-#include <list>
-#include <CGL_Circle.h>
-#include <CGL_StarField.h>
-#include "SPlanetDesc.h"
-#include "SLabel.h"
 
 
 class CMond : public CGL_EllipsoidPatched
@@ -199,7 +199,7 @@ class CGLApplication
         void ReadSettings(void);
         void WriteSettings(void);
 
-        CSdlApp* mSdlApp;
+        CSDL_App* mSdlApp;
         //COpenGL* gOpenGL;
         CPlanet* gErde;
         CPlanet* gSonne1;

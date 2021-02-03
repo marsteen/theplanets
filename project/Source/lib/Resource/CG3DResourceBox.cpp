@@ -12,10 +12,8 @@
 //
 //***************************************************************************
 
+#include <GLinclude.h>
 #include <CHexConv.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
 #include <CG3DResourceList.h>
 
 extern CG3DGlobals* gGlobals;
