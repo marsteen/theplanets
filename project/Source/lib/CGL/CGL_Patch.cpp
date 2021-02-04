@@ -19,7 +19,7 @@
 #include <iostream>
 #include <GLinclude.h>
 #include <math.h>
-#include <CVertexArrays.h>
+#include <Math/CVertexArrays.h>
 #include <CGL_Patch.h>
 
 using namespace std;
