@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <GLinclude.h>
 #include <CGL_Texture.h>
 #include <Math/CVector3T.h>
 

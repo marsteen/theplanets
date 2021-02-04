@@ -19,10 +19,11 @@
 #include <iostream>
 
 #include <NStringTool.h>
-#include <CSDL/CSDL_Theplanets.h>
+//#include <CSDL/CSDL_Theplanets.h>
+#include <CGLApplication.h>
 
 const char* GlobalArg0;
-const char* GlobalWindowName = "SDL2 Hello";
+const char* GlobalWindowName = "Die Planeten";
 
 
 using namespace std;
@@ -48,7 +49,7 @@ using namespace std;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				   LPSTR lpCmdLine, int iCmdShow)
 {
-	CSDL_App* SdlApp = new CSDL_Theplanets;
+	CSDL_App* SdlApp = new CGLApplication;
 	static string CmdStr = NStringTool::Trim(lpCmdLine, "\"");
 
 	GlobalArg0 = CmdStr.c_str();

@@ -60,7 +60,7 @@ class CSDL_App
 
         void StartProjectionView();
         void StartModelView();
-        void StartModelView(int width, int height);
+        void StartModelView(float width, float height);
         void SetViewport(int w, int h);
         void SetupLight();
         void DrawGeodaesic();

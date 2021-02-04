@@ -15,6 +15,9 @@
 #ifndef CGL_CIRCLE_H
 #define CGL_CIRCLE_H
 
+#include <CGL_Object.h>
+#include <Math/CVector3T.h>
+
 class CGL_Circle : public CGL_Object
 {
     public:

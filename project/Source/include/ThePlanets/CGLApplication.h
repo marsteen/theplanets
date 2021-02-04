@@ -17,129 +17,17 @@
 
 #include <list>
 #include <CGL_Circle.h>
+#include <CGL_Disk.h>
 #include <CGL_StarField.h>
-#include "SPlanetDesc.h"
-#include "SLabel.h"
+#include <SPlanetDesc.h>
+#include <SLabel.h>
+
+#include <EPlanet.h>
+#include <CMond.h>
+#include <CPlanet.h>
 #include <CSDL/CSDL_App.h>
 
-
-enum EPlanet
-{
-    EPLANET_MERKUR,
-    EPLANET_VENUS,
-    EPLANET_ERDE,
-    EPLANET_MARS,
-    EPLANET_JUPITER,
-    EPLANET_SATURN,
-    EPLANET_URANUS,
-    EPLANET_NEPTUN,
-    EPLANET_SONNE,
-    EMOND_GANYMED,
-    EMOND_EUROPA,
-    EMOND_KALLISTO,
-    EMOND_IO,
-    EMOND_MOND,
-    EMOND_TITAN,
-    EMOND_RHEA,
-    EMOND_TRITON
-};
-
-
-class CMond : public CGL_EllipsoidPatched
-{
-    public:
-
-        const SPlanetDesc* mPlanetDesc;
-
-        float mUmlauf;
-        float mRotation;
-        CVector3<double> mScreenKoor;
-
-        void SaveMatrixes(void);
-        void GetScreenKoor(CVector3<float>* Vert);
-        void InitOrbit(float Radius);
-
-        void Delete()
-        {
-            CGL_EllipsoidPatched::Delete();
-            mOrbit.DeleteDisplayList();
-        }
-
-
-        void Umlauf(bool r, bool Retrograd)
-        {
-            glRotatef(mUmlauf, 0.0, 1.0, 0.0);
-            if (r)
-            {
-                if (Retrograd)
-                {
-                    mUmlauf -= mPlanetDesc->mOrbitSpeed;
-                }
-                else
-                {
-                    mUmlauf += mPlanetDesc->mOrbitSpeed;
-                }
-            }
-        }
-
-
-        void Rotation(bool r, bool Retrograd)
-        {
-            glRotatef(mRotation, 0.0, 1.0, 0.0);
-            if (r)
-            {
-                if (Retrograd)
-                {
-                    mRotation -= mPlanetDesc->mRotSpeed;
-                }
-                else
-                {
-                    mRotation += mPlanetDesc->mRotSpeed;
-                }
-            }
-        }
-
-
-        CMond()
-        {
-            mUmlauf = rand() % 360;
-            mRotation = rand() % 360;
-        }
-
-
-        double mModelMatrix[16];
-        double mProjectionMatrix[16];
-        int mViewport[4];
-        CGL_Circle mOrbit;
-};
-
-class CPlanet : public CGL_EllipsoidPatched
-{
-    public:
-
-        CPlanet()
-        {
-            mSunTexHandles = NULL;
-        }
-
-
-        void LadeMonde(char** Monde);
-        void Delete();
-        void DrawMonde(bool AutoRotate, bool ShowOrbits, bool Retrograd);
-        void DrawMondeNames(CG3DReslistInterface* gi, SG3DcomData* MondName, int Language);
-        void GetMondScreenKoor();
-
-        std::vector<CMond> mMonde;
-
-
-
-        unsigned int* mSunTexHandles;
-
-        //void GetScreenKoor(CVector3<float>* Vert, CVector3<double>* ScreenKoor);
-};
-
-
-class CGLApplication
+class CGLApplication : public CSDL_App   
 {
     public:
 
@@ -147,8 +35,11 @@ class CGLApplication
 
         const char* Name() { return "theplanets"; }
         const char* Version() { return "2.0.0"; }
+        
+        void InitGame();
+        void GameLoop();
+        
 
-        void InitApplication(int argc, char* argv[]);
         void Draw3DObjects();
         void Draw2DObjects();
         void ManageInterface(CGL_Mouse* Mouse);
@@ -199,8 +90,7 @@ class CGLApplication
         void ReadSettings(void);
         void WriteSettings(void);
 
-        CSDL_App* mSdlApp;
-        //COpenGL* gOpenGL;
+        //CSDL_App* mSdlApp;
         CPlanet* gErde;
         CPlanet* gSonne1;
         //CGL_EllipsoidPatched* gErdeSmall;

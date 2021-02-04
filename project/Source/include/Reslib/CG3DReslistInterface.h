@@ -3,6 +3,7 @@
 
 #include "EG3DInterfaceCommand.h"
 #include "SG3DcomData.h"
+#include "CG3DGlobals.h"
 
 /*
  * typedef void (CALLBACK* DLLFUNC_charP)(char*);
@@ -13,6 +14,7 @@
  */
 
 #ifdef _WIN32
+#include <windows.h>
 typedef void (CALLBACK* DLLFUNC_intvoidP)(int, void*);
 #else
 //typedef void (*DLLFUNC_intvoidP)(int void*);

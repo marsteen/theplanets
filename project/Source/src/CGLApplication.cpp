@@ -96,8 +96,122 @@ CGLApplication::CGLApplication()
     mShowInterface = true;
     mShowOrbits = true;
     mScale = 1.0;
+    
+    gG3Dinterface = new CG3DReslistInterface;
+    gResGlobals = new CG3DGlobals;
+    mCamera.mStandort.z = -80.0;
+
 }
 
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : InitGame
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::InitGame()    
+{
+    cout << "CGLApplication::InitGame" << endl;
+    SetResolution(mXres, mYres);
+    
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : GameLoop
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::GameLoop()
+{
+    
+    
+    
+    GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
+
+    glClearColor(0, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    //StartProjectionView();
+    //gApp.Draw2DObjects();
+
+
+    StartModelView(0.1 / mScale, 30.0 / mScale);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, weiss);
+
+
+    if (mAnaglyph)
+    {
+#define S_XV	2
+#define V_XV	0.3
+
+
+        float StandOrtX = mCamera.mStandort.x;
+        float VispointX = mCamera.mVispoint.x;
+
+        mCamera.mStandort.x -= S_XV;
+        mCamera.mVispoint.x -= V_XV;
+
+        for (int v = 0; v < 2; v++)
+        {
+            glLoadIdentity();
+            glClear(GL_DEPTH_BUFFER_BIT);
+
+            mCamera.LookAt();
+            mCamera.mStandort.x += S_XV*2;
+            mCamera.mVispoint.x += V_XV*2;
+
+            glDisable(GL_BLEND);
+
+            if (v == 1)
+            {
+                float rot[] = { 1.0, 0.0, 0.0, 1.0 };
+
+                glColor3f(1.0, 0.0, 0.0);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, rot);
+                glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+            }
+            else
+            {
+                float cyan[] = { 0.0, 1.0, 1.0, 1.0 };
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, cyan);
+                glColorMask(GL_FALSE, GL_TRUE, GL_TRUE, GL_FALSE);
+            }
+            Draw3DObjects();
+        }
+        mCamera.mStandort.x = StandOrtX;
+        mCamera.mVispoint.x = VispointX;
+    }
+    else
+    {
+        glLoadIdentity();
+        glClear(GL_DEPTH_BUFFER_BIT);
+        mCamera.LookAt();
+        glDisable(GL_BLEND);
+        Draw3DObjects();
+    }
+    Animate();
+
+
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    StartProjectionView();
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
+
+    ManageInterface(&mMouse);
+
+    // glutSwapBuffers();
+    
+    SDL_GL_SwapWindow(mSdlWindow);
+    
+}
 
 // ---------------------------------------------------------------------------
 //
@@ -1051,7 +1165,7 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
     gSonne1->SetMultiTextures(gSonne1->mSunTexHandles, sx, sy);
     gSonne1->InitDisplayList();
 
-    mSdlApp->mCamera.mStandort.z = -80.0;
+    mCamera.mStandort.z = -80.0;
 
     gErde = gSonne1;
 #if 1
@@ -1067,12 +1181,12 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
 
         thing->CreateEllipsoid(sx * 10, 20.0 * PlanetDesc[i].mSize, sy * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
 
-        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, sx, sy, mSdlApp->mAnaglyph);
+        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, sx, sy, mAnaglyph);
 
         mond.InitOrbit(PlanetDesc[i].mDistance);
         thing->SetMultiTextures(ErdeTexHandles, sx, sy);
         thing->InitDisplayList();
-        mSdlApp->mCamera.mStandort.z = -80.0;
+        mCamera.mStandort.z = -80.0;
 
         if (i > 0)
         {
@@ -1165,7 +1279,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         }
                 
         thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
-        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, mSdlApp->mAnaglyph);
+        unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, mAnaglyph);
 
         if (i > 0)
         {
@@ -1173,7 +1287,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         }
         thing->SetMultiTextures(ErdeTexHandles, xsegs, ysegs);
         thing->InitDisplayList();
-        mSdlApp->mCamera.mStandort.z = -80.0;
+        mCamera.mStandort.z = -80.0;
 
         if (i > 0)
         {
@@ -1212,54 +1326,6 @@ void CGLApplication::SetResolution(int w, int h)
     }
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       :
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::InitApplication(int argc, char* argv[])
-{
-    mSdlApp = new CSDL_App;
-    gG3Dinterface = new CG3DReslistInterface;
-    gResGlobals = new CG3DGlobals;
-    
-    
-    cout << "InitApplication START" << endl;
-
-    /*
-     * int ScreenWidth =  glutGet(GLUT_WINDOW_WIDTH);
-     * int ScreenHeight = glutGet(GLUT_WINDOW_HEIGHT);
-     *
-     * cout << "ScreenW=" << ScreenWidth << endl;
-     * cout << "ScreenH=" << ScreenHeight << endl;
-     */
-
-    if (mLame)
-    {
-        CGL_Texture tex;
-        tex.SetScaleMode(GL_NEAREST);
-    }
-
-
-    //mSdlApp->InitWindowGLUT(argc, argv, APP_NAME, 1024, 768, mFullscreen);
-    //mSdlApp->InitGLUTCallback(10);
-    //cout << "InitWindowGLUT OK" << endl;
-    
-    glewInit();
-    mSdlApp->Init();
-    mSdlApp->InitScreen();
-    mSdlApp->MainLoop();
-    
-    
-    
-
-    mSdlApp->mCamera.mStandort.z = -80.0;
-}
 
 
 // ---------------------------------------------------------------------------
@@ -1483,18 +1549,18 @@ void CGLApplication::InitResources()
             exit(0);
         }
 
-        mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mSdlApp->mAnaglyph);
+        mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mAnaglyph);
         mSaturnRing.mSegments = 256;
         mSaturnRing.mRadius = 60.0 * Scale;
         mSaturnRing.Init();
 
-        mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mSdlApp->mAnaglyph);
+        mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mAnaglyph);
         mUranusRing.mSegments = 256;
         mUranusRing.mRadius = 2 * 20;
         mUranusRing.Init();
 
 
-        mSonneHalo.LoadTextureTga2D(SonneHaloFile, SonneHaloMask, false, mSdlApp->mAnaglyph);
+        mSonneHalo.LoadTextureTga2D(SonneHaloFile, SonneHaloMask, false, mAnaglyph);
         mSonneHalo.mSegments = 256;
         mSonneHalo.mRadius = 2 * 13;
         mSonneHalo.Init();
@@ -1879,7 +1945,7 @@ void CGLApplication::Draw3DObjects()
             glDisable(GL_BLEND);
             glDisable(GL_LIGHTING);
 
-            if (mSdlApp->mAnaglyph)
+            if (mAnaglyph)
             {
                 float SunMaterial[] = { 0.8, 0.8, 0.8, 1.0 };
                 glColor3fv(SunMaterial);
@@ -2406,7 +2472,7 @@ void CGLApplication::LoadSaturnRing()
     const char* SaturnRingFile = "planeten/saturnring.tga";
     const char* SaturnRingMask = "planeten/A_saturnring.tga";
 
-    mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mSdlApp->mAnaglyph);
+    mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mAnaglyph);
 }
 
 
@@ -2424,7 +2490,7 @@ void CGLApplication::LoadUranusRing()
     const char* UranusRingFile = "planeten/uranusring.tga";
     const char* UranusRingMask = "planeten/A_uranusring.tga";
 
-    mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mSdlApp->mAnaglyph);
+    mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mAnaglyph);
 }
 
 
@@ -2580,7 +2646,7 @@ void CGLApplication::LeftMouseButtonDown()
         else
         if (scom.mName == "AnaglyphBt")
         {
-            mSdlApp->mAnaglyph = scom.mFlags;
+            mAnaglyph = scom.mFlags;
             ActivatePlanet(mPlanet);
             LoadSaturnRing();
             LoadUranusRing();

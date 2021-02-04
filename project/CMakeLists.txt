@@ -36,7 +36,8 @@ include_directories(
     ${INCBASE}/CGL
     ${INCBASE}/Graflib
     ${INCBASE}/Reslib
-    ${INCBASE}/Tools   
+    ${INCBASE}/Tools
+    ${INCBASE}/ThePlanets
 )
 
 
@@ -79,6 +80,7 @@ add_executable(theplanets
     ${LIBBASE}/CGL/CGL_MatObject.cpp
     ${LIBBASE}/CGL/CGL_Patch.cpp
     ${LIBBASE}/CGL/CGL_Ellipsoid.cpp
+    ${LIBBASE}/CGL/CGL_EllipsoidPatched.cpp
     ${LIBBASE}/CGL/CGL_Texture.cpp           
     ${LIBBASE}/CGL/CGL_Camera.cpp
     ${LIBBASE}/CGL/CGL_Object.cpp
@@ -129,3 +131,4 @@ endif()
 add_definitions(-DSDL_MAIN_HANDLED)
 
 file(MAKE_DIRECTORY ${BINDIR})
+set_target_properties(theplanets PROPERTIES OUTPUT_NAME ../${BINDIR}/theplanets)    

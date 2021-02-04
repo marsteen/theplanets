@@ -266,6 +266,8 @@ void CSDL_App::ParseArgs(int argc, char* argv[])
 
 void CSDL_App::ParseWinArgs(const char* Commandline)
 {
+  cout << "CSDL_App::ParseWinArgs START Commandline=" << Commandline << endl;
+    
   vector<string> SplitResult;
 
   mFullscreen = true;
@@ -289,6 +291,8 @@ void CSDL_App::ParseWinArgs(const char* Commandline)
 		ParseArg(SplitResult[i]);
   }
   */
+  
+  cout << "CSDL_App::ParseWinArgs OK" << endl;
 }
 
 
@@ -361,7 +365,7 @@ void CSDL_App::SetResolution(int w, int h)
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CSDL_App
-// METHODE       :
+// METHODE       : InitGame
 //
 //
 //
@@ -369,7 +373,7 @@ void CSDL_App::SetResolution(int w, int h)
 
 void CSDL_App::InitGame()
 {
-
+    cout << "CSDL_App::InitGame" << endl;
 }
 
 // ---------------------------------------------------------------------------
@@ -398,26 +402,18 @@ void CSDL_App::FinishGame()
 
 bool CSDL_App::Init()
 {
-  bool r = true;
-
-
-  //if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0)
-
-  if (SDL_Init(SDL_INIT_VIDEO) < 0)
-  {
-    //GlobalDebug("***** SDL konnte nicht initialisiert werden", DBG_INIT);
-    r = false;
-  }
-
-  SDL_ShowCursor(false); // Mousecursor verstecken
-
-
-
-
-
-
-
-  return r;
+    cout << "CSDL_App::Init Start" << endl;
+    bool r = true;
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        //GlobalDebug("***** SDL konnte nicht initialisiert werden", DBG_INIT);
+        r = false;
+    }
+    //    SDL_ShowCursor(false); // Mousecursor verstecken
+    
+    cout << "CSDL_App::Init OK" << endl;
+    
+    return r;
 }
 
 
@@ -451,6 +447,71 @@ void CSDL_App::SetViewport(int w, int h)
 
 
 
+//---------------------------------------------------------------------------
+//
+// Klasse:    COpenGL
+// Methode:   StartProjectionView
+//
+//
+//---------------------------------------------------------------------------
+
+void CSDL_App::StartProjectionView()
+{
+    glViewport(0, 0, mXres, mYres);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, mXres, 0.0, mYres);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+}
+
+//---------------------------------------------------------------------------
+//
+// Klasse:    CSDL_App
+// Methode:   StartModelView
+//
+//
+//---------------------------------------------------------------------------
+
+void CSDL_App::StartModelView()
+{
+    mAspect = (float) mXres / mYres;
+    glViewport(0, 0, mXres, mYres);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, mAspect, 0.1, 2000.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+}
+
+//---------------------------------------------------------------------------
+//
+// Klasse:    CSDL_App
+// Methode:   StartModelView
+//
+//
+//---------------------------------------------------------------------------
+
+void CSDL_App::StartModelView(float near, float far)
+{
+    mAspect = (float) mXres / mYres;
+    glViewport(0, 0, mXres, mYres);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, mAspect, 0.1, 2000.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+}
+
 
 // ---------------------------------------------------------------------------
 //
@@ -463,24 +524,32 @@ void CSDL_App::SetViewport(int w, int h)
 
 bool CSDL_App::InitScreen()
 {
-  bool r = true;
+    
+    cout << "CSDL_App::InitScreen START" << endl;
+    
+    bool r = true;
 
-
-
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
-
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	mXres = 1920;
 	mYres = 1080;
 
+/*
 	mSdlWindow = SDL_CreateWindow("theplanets",
                           0,
                           0,
-                          0, 0,
+                          mXres, 
+                          mYres,
                           SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
+*/
 
+	mSdlWindow = SDL_CreateWindow("theplanets",
+                          0,
+                          0,
+                          mXres, 
+                          mYres,
+                          SDL_WINDOW_OPENGL);
 
 
 	SDL_GLContext maincontext = SDL_GL_CreateContext(mSdlWindow);
@@ -494,29 +563,26 @@ bool CSDL_App::InitScreen()
 	}
 
 
+    if (mSdlWindow == NULL)
+    {
+        //GlobalDebug("***** mSdlWindow == NULL", DBG_INIT);
+    }
+    SDL_GL_SetSwapInterval(1);
 
+    SetViewport(mXres, mYres);
+    mInitFlag = true;
 
+    if (mSdlWindow == NULL)
+    {
+        //GlobalDebugT("Fehler beim Umschalten der Aufloesung ", SDL_GetError(), DBG_INIT);
+        r = false;
+    }
+    InitGame();
+    //mTimer = SDL_AddTimer(100, sTimerCallback, this);
+    
+    cout << "CSDL_App::InitScreen OK" << endl;
 
-
-
-  if (mSdlWindow == NULL)
-  {
-		//GlobalDebug("***** mSdlWindow == NULL", DBG_INIT);
-  }
-  SDL_GL_SetSwapInterval(1);
-
-  SetViewport(mXres, mYres);
-  mInitFlag = true;
-
-  if (mSdlWindow == NULL)
-  {
-    //GlobalDebugT("Fehler beim Umschalten der Aufloesung ", SDL_GetError(), DBG_INIT);
-    r = false;
-  }
-  InitGame();
-  //mTimer = SDL_AddTimer(100, sTimerCallback, this);
-
-  return r;
+    return r;
 }
 
 // ---------------------------------------------------------------------------
@@ -568,8 +634,8 @@ void CSDL_App::MainLoop()
     int DelayTime = 20 - (EndTime - StartTime);
     if (DelayTime > 0)
     {
-      //cout << "DelayTime=" << DelayTime << endl;
-      SDL_Delay(DelayTime);
+        //cout << "DelayTime=" << DelayTime << endl;
+        SDL_Delay(DelayTime);
     }
   }
 }
