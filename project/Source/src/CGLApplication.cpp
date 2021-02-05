@@ -112,10 +112,51 @@ CGLApplication::CGLApplication()
 //
 // ---------------------------------------------------------------------------
 
+const char* CGLApplication::AppName() const
+{
+    return "the planets";
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : InitGame
+//
+//
+//
+// ---------------------------------------------------------------------------
+
 void CGLApplication::InitGame()    
 {
     cout << "CGLApplication::InitGame" << endl;
-    SetResolution(mXres, mYres);
+    SetResolution(mXres, mYres);    
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : CGLApplication
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
+{
+    //sOpenGL->mMouse.mButton = Button;
+    //sOpenGL->mMouse.mState[Button] = State;
+    mMouse.x = xabs;
+    mMouse.y = yabs;
+    
+    if (mLeftMouseButton)
+    {
+        MouseMotionLeft(-xrel, -yrel);
+    }
+    if (mRightMouseButton)
+    {
+        MouseMotionRight(-xrel, -yrel);
+    }
+    
     
 }
 
@@ -129,30 +170,21 @@ void CGLApplication::InitGame()
 // ---------------------------------------------------------------------------
 
 void CGLApplication::GameLoop()
-{
-    
-    
-    
+{   
     GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
 
     glClearColor(0, 0, 0, 0);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     glClear(GL_COLOR_BUFFER_BIT);
-
-    //StartProjectionView();
-    //gApp.Draw2DObjects();
-
 
     StartModelView(0.1 / mScale, 30.0 / mScale);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, weiss);
+    SetupLighting();
 
 
     if (mAnaglyph)
     {
-#define S_XV	2
-#define V_XV	0.3
-
+        #define S_XV	2
+        #define V_XV	0.3
 
         float StandOrtX = mCamera.mStandort.x;
         float VispointX = mCamera.mVispoint.x;
@@ -206,12 +238,32 @@ void CGLApplication::GameLoop()
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
 
     ManageInterface(&mMouse);
-
-    // glutSwapBuffers();
     
     SDL_GL_SwapWindow(mSdlWindow);
     
 }
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : MouseWheel
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::MouseWheel(bool up)
+{ 
+    if (up)
+    {
+        Zoom(0.03f);
+    }
+    else
+    {
+        Zoom(-0.03f);
+    }
+}
+
 
 // ---------------------------------------------------------------------------
 //
@@ -2412,29 +2464,6 @@ void CGLApplication::ActivatePlanet(EPlanet p)
     //cout << "ActivatePlanet OK" << endl;
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : MouseWheel
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::MouseWheel(int d)
-{
-    if (d == 0)
-    {
-        Zoom(0.01);
-    }
-    else
-    {
-        Zoom(-0.01);
-    }
-}
-
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2493,6 +2522,27 @@ void CGLApplication::LoadUranusRing()
     mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mAnaglyph);
 }
 
+
+
+
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : LeftMouseButtonAction
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::LeftMouseButtonAction(bool pressed)
+{
+    cout << "CGLApplication::LeftMouseButtonAction pressed=" << pressed << endl;
+    if (pressed)
+    {
+        LeftMouseButtonDown();
+    }
+}
 
 // ---------------------------------------------------------------------------
 //
@@ -2651,6 +2701,10 @@ void CGLApplication::LeftMouseButtonDown()
             LoadSaturnRing();
             LoadUranusRing();
         }
+    }
+    else
+    {
+        cout << "EG3DcomLeftMouseClick failed" << endl;
     }
 }
 

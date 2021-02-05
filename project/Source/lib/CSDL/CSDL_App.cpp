@@ -242,16 +242,15 @@ void CSDL_App::ParseArgVec(const vector<string>& ArgStr)
 
 void CSDL_App::ParseArgs(int argc, char* argv[])
 {
-	mFullscreen = true;
+	mFullscreen = false;
 	vector<string> ArgVec;
 
-
-  for (int i = 1; i < argc; i++)
-  {
-		string ArgStr = string(argv[i]);
-		ArgVec.push_back(ArgStr);
-  }
-  ParseArgVec(ArgVec);
+    for (int i = 1; i < argc; i++)
+    {
+        string ArgStr = string(argv[i]);
+        ArgVec.push_back(ArgStr);
+    }
+    ParseArgVec(ArgVec);
 }
 
 
@@ -270,7 +269,7 @@ void CSDL_App::ParseWinArgs(const char* Commandline)
     
   vector<string> SplitResult;
 
-  mFullscreen = true;
+  mFullscreen = false;
 
   NStringTool::Split(Commandline, &SplitResult, ' ');
 
@@ -512,6 +511,18 @@ void CSDL_App::StartModelView(float near, float far)
     glEnable(GL_LIGHTING);
 }
 
+//---------------------------------------------------------------------------
+//
+// Klasse:    CSDL_App
+// Methode:   AppName
+//
+//
+//---------------------------------------------------------------------------
+
+const char* CSDL_App::AppName() const
+{
+    return "SDL2 application";
+}
 
 // ---------------------------------------------------------------------------
 //
@@ -532,36 +543,39 @@ bool CSDL_App::InitScreen()
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-	mXres = 1920;
-	mYres = 1080;
-
-/*
-	mSdlWindow = SDL_CreateWindow("theplanets",
-                          0,
-                          0,
-                          mXres, 
-                          mYres,
-                          SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
-*/
-
-	mSdlWindow = SDL_CreateWindow("theplanets",
-                          0,
-                          0,
-                          mXres, 
-                          mYres,
-                          SDL_WINDOW_OPENGL);
+    SDL_DisplayMode DisplayMode;
+    SDL_GetCurrentDisplayMode(0, &DisplayMode);
 
 
-	SDL_GLContext maincontext = SDL_GL_CreateContext(mSdlWindow);
-
-	{
-		SDL_DisplayMode DisplayMode;
-		SDL_GetCurrentDisplayMode(0, &DisplayMode);
-
+    if (mFullscreen)
+    {
 		mXres = DisplayMode.w;
 		mYres = DisplayMode.h;
-	}
+        mSdlWindow = SDL_CreateWindow(
+            AppName(),
+            0,
+            0,
+            mXres, 
+            mYres,
+            SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
 
+    }
+    else
+    {
+   		mXres = DisplayMode.w * 0.75f;
+		mYres = DisplayMode.h * 0.75f;       
+
+        
+        mSdlWindow = SDL_CreateWindow(
+            AppName(),
+            100,
+            100,
+            mXres, 
+            mYres,
+            SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+    }
+
+	SDL_GLContext maincontext = SDL_GL_CreateContext(mSdlWindow);
 
     if (mSdlWindow == NULL)
     {
@@ -640,18 +654,6 @@ void CSDL_App::MainLoop()
   }
 }
 
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CSDL_App
-// METHODE       : ParseMouseRel
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CSDL_App::ParseMouseRel(int xrel, int yrel)
-{
-}
 
 // ---------------------------------------------------------------------------
 //
@@ -664,107 +666,174 @@ void CSDL_App::ParseMouseRel(int xrel, int yrel)
 
 void CSDL_App::EventLoop()
 {
-  SDL_Event event;
+    SDL_Event event;
 
 
-  while (SDL_PollEvent(&event))
-  {
-    switch(event.type)
+    while (SDL_PollEvent(&event))
     {
-      case SDL_USEREVENT:
+        switch(event.type)
+        {
+            case SDL_USEREVENT:
 
-        //HandleUserEvents(&event);
-        break;
+                //HandleUserEvents(&event);
+                break;
 
-      case SDL_KEYDOWN:
+            case SDL_KEYDOWN:
 
-    		if (!ParseKeys(event.key.keysym.sym, true))
-    		{
-				  FinishGame();
-					SDL_Quit();
-					exit(0);
-        }
-        break;
+                if (!ParseKeys(event.key.keysym.sym, true))
+                {
+                    FinishGame();
+                    SDL_Quit();
+                    exit(0);
+                }
+                break;
 
-      case SDL_KEYUP:
+            case SDL_KEYUP:
 
-        ParseKeys(event.key.keysym.sym, false);
-        break;
+                ParseKeys(event.key.keysym.sym, false);
+                break;
 
-			case SDL_MOUSEMOTION:
-			{
-				int xrel = event.motion.xrel;
-				int yrel = event.motion.yrel;
-				ParseMouseRel(xrel, yrel);
+            case SDL_MOUSEMOTION:
+            {
+                MouseMotion(
+                    event.motion.x,
+                    event.motion.y, 
+                    event.motion.xrel, 
+                    event.motion.yrel);
+            }
+            break;
+
+            case SDL_MOUSEWHEEL:
+
+                MouseWheel(event.wheel.y < 0);
+                break;
 
 
-			}
-			break;
+            case SDL_MOUSEBUTTONDOWN:
 
-			case SDL_MOUSEWHEEL:
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    mLeftMouseButton = true;
+                    LeftMouseButtonAction(true);
+                }
+                else
+                if (event.button.button == SDL_BUTTON_RIGHT)
+                {
+                    mRightMouseButton = true;
+                    RightMouseButtonAction(true);
+                }
+                else
+                if (event.button.button == SDL_BUTTON_MIDDLE)
+                {
+                    mMiddleMouseButton = true;
+                    MiddleMouseButtonAction(true);
+                }
 
-				MouseWheel(event.wheel.y < 0);
-				break;
+                // Handle mouse clicks here.
+                break;
 
+            case SDL_MOUSEBUTTONUP:
 
-      case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    mLeftMouseButton = false;
+                    LeftMouseButtonAction(false);
+                }
+                else
+                if (event.button.button == SDL_BUTTON_RIGHT)
+                {
+                    mRightMouseButton = false;
+                    RightMouseButtonAction(false);
+                }
+                else
+                if (event.button.button == SDL_BUTTON_MIDDLE)
+                {
+                    mMiddleMouseButton = false;
+                    MiddleMouseButtonAction(false);
+                }
+                break;
+                
+            case SDL_WINDOWEVENT:
+            
+                if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) //SDL_WINDOWEVENT_RESIZED) 
+                {
+                    mXres = event.window.data1;
+                    mYres = event.window.data2;
+                    SetViewport(mXres, mYres);
+                    SetResolution(mXres, mYres);
 
-			  if (event.button.button == SDL_BUTTON_LEFT)
-				{
-					mLeftMouseButton = true;
-					LeftMouseButtonAction(true);
-				}
-				else
-			  if (event.button.button == SDL_BUTTON_RIGHT)
-				{
-					mRightMouseButton = true;
-					RightMouseButtonAction(true);
-			  }
-				else
-			  if (event.button.button == SDL_BUTTON_MIDDLE)
-				{
-					mMiddleMouseButton = true;
-					MiddleMouseButtonAction(true);
-			  }
+                    //logFileStderr("MESSAGE:Resizing window...\n");
+                    //resizeWindow(m_event.window.data1, m_event.window.data2);
+                }
+                break;
 
-          // Handle mouse clicks here.
-       	break;
+            case SDL_QUIT:
 
-      case SDL_MOUSEBUTTONUP:
+                FinishGame();
+                SDL_Quit();
+                exit(0);
+                //done = true;
+                break;
 
-			  if (event.button.button == SDL_BUTTON_LEFT)
-				{
-					mLeftMouseButton = false;
-					LeftMouseButtonAction(false);
-			  }
-				else
-			  if (event.button.button == SDL_BUTTON_RIGHT)
-			  {
-					mRightMouseButton = false;
-					RightMouseButtonAction(false);
-				}
-				else
-			  if (event.button.button == SDL_BUTTON_MIDDLE)
-				{
-					mMiddleMouseButton = false;
-					MiddleMouseButtonAction(false);
-			  }
-				break;
+            default:
 
-      case SDL_QUIT:
-
-          FinishGame();
-          SDL_Quit();
-          exit(0);
-          //done = true;
-          break;
-
-      default:
-
-        break;
-    }   // End switch
-  }   // End while
+            break;
+        }   // End switch
+    }   // End while
 }
 
 
 
+// ---------------------------------------------------------------------------
+//
+// METHODE       : SetupLighting
+//
+// KLASSE        : CSDL_App
+//
+// ---------------------------------------------------------------------------
+
+void CSDL_App::SetupLighting()
+{
+    GLfloat Position1[] = { -3000.0, 0.0, 6000.0, 0, 0 };
+
+    GLfloat matSpecular[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat matShininess[] = { 30.0 };
+
+/*
+ *
+ *  GLfloat BlueLight[]    = {0.0, 0.0, 1.0, 1.0};
+ *  GLfloat OrangeLight[]  = {1.0, 0.5, 0.0, 1.0};
+ *  GLfloat BlackLight[]   = {0,0,0, 1.0};
+ *  GLfloat DarkLight[]    = { 0.5, 0.5, 0.5, 1.0 };
+ */
+    GLfloat WhiteLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat LightAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
+
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glShadeModel(GL_SMOOTH);
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, matShininess);
+
+    mLightPosition.Set(Position1[0], Position1[1], Position1[2]);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, Position1);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, WhiteLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, WhiteLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+    glEnable(GL_NORMALIZE);
+
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightAmbient);
+
+
+    //glEnable(GL_DEPTH_TEST);
+
+    // Rueckseiten der Polygone nicht zeichnen
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+
+    //glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+}

@@ -33,19 +33,24 @@ class CGLApplication : public CSDL_App
 
         CGLApplication();
 
-        const char* Name() { return "theplanets"; }
+        const char* Name()    { return "theplanets"; }
         const char* Version() { return "2.0.0"; }
         
+        // virtual from CSDL_App:
         void InitGame();
         void GameLoop();
-        
+        void MouseMotion(int xabs, int yabs, int xrel, int yrel);
+        void LeftMouseButtonAction(bool pressed);
+        void MouseWheel(bool up);
+        const char* AppName() const;
 
+    protected:
+    
         void Draw3DObjects();
         void Draw2DObjects();
         void ManageInterface(CGL_Mouse* Mouse);
         void LeftMouseButtonDown();
         void RightMouseButtonDown();
-        void MouseWheel(int d);
         void Animate();
 
         void MouseMotionLeft(int x, int y);
@@ -56,9 +61,7 @@ class CGLApplication : public CSDL_App
 
         bool mFullscreen;       // Fullscreen-Modus
         bool mLame;             // fuer lahme Maschinen
-        bool mShowInterface;    // Interface anzeigen
-
-    protected:
+        bool mShowInterface;    // Interface anzeigen    
 
         void ActivatePlanet(EPlanet p);
         void InitPlanet(const SPlanetDesc* PlanetDesc);

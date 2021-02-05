@@ -21,9 +21,6 @@ message("System: ${CMAKE_SYSTEM_NAME}")
 # for 
 
 
-
-
-
 set(CMAKE_C_LINK_EXECUTABLE "g++")
 set(SRCBASE "Source/src")
 set(INCBASE "Source/include")
@@ -99,7 +96,7 @@ if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
     # Windows
     #
     SET(SYSTEM_NAME "windows")
-    target_link_libraries(theplanets
+    target_link_libraries(${CMAKE_PROJECT_NAME}
         glu32        
         opengl32
         gdi32
@@ -113,7 +110,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # Linux
     #
     SET(SYSTEM_NAME "linux")
-    target_link_libraries(theplanets
+    target_link_libraries(${CMAKE_PROJECT_NAME}
         GL
         GLU
         glut
@@ -131,4 +128,5 @@ endif()
 add_definitions(-DSDL_MAIN_HANDLED)
 
 file(MAKE_DIRECTORY ${BINDIR})
-set_target_properties(theplanets PROPERTIES OUTPUT_NAME ../${BINDIR}/theplanets)    
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ../distribution/${CMAKE_PROJECT_NAME}/${CMAKE_PROJECT_NAME})
+

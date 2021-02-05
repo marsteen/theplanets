@@ -47,6 +47,8 @@ class CSDL_App
         virtual void GameLoop();
         virtual void InitGame();
         virtual void FinishGame();
+        virtual const char* AppName() const;
+        
 
         static void ShowOpenGLError(const char* Titel);
         
@@ -62,18 +64,20 @@ class CSDL_App
         void StartModelView();
         void StartModelView(float width, float height);
         void SetViewport(int w, int h);
-        void SetupLight();
+        void SetupLighting();
         void DrawGeodaesic();
 
         virtual void ParseArgVec(const std::vector<std::string>& ArgStr);
         void DisableKeyRepeat();
         bool GetVideoModes(int* FirstW, int* FirstH, int n);
+        
+        
         virtual bool ParseKeys(int key, bool down);
-        virtual void ParseMouseRel(int xrel, int yrel);
+        virtual void MouseMotion(int xabs, int yabs, int xrel, int yrel) { };
         virtual void SetResolution(int w, int h);
         virtual void LeftMouseButtonAction(bool pressed) { }
         virtual void RightMouseButtonAction(bool pressed) { }
-        virtual void MiddleMouseButtonAction(bool pressed) { }
+        virtual void MiddleMouseButtonAction(bool pressed) { } 
         virtual void MouseWheel(bool up) { };
 
         void InitOpenGL(int w, int h);
