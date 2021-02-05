@@ -330,13 +330,13 @@ $INCLUDE	IoInfoBox.r3d
 #
 #------------------------------------------------------------------
 NAME	FONT	Verdana14
-FILES	Fonts2/verdana48	verdana_48
+FILES	Fonts3	verdana_32
 #
 NAME	FONT	Verdana13
-FILES	Fonts2/verdana48	verdana_48
+FILES	Fonts3	verdana_32
 #
 NAME	FONT	Verdana12
-FILES	Fonts2/verdana36	verdana_36
+FILES	Fonts3	verdana_32
 #
 
 

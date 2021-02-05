@@ -28,6 +28,7 @@
 #include <CPixel24.h>
 #include <CPixel8.h>
 #include <CGL_Texture.h>
+#include <mvlib/png/mv_graphics_png.h>
 
 using namespace std;
 
@@ -88,6 +89,101 @@ CGL_Texture::~CGL_Texture()
 //	DeleteTexture();
 }
 
+
+//---------------------------------------------------------------------------
+//
+// Klasse:      CGL_Texture
+// Methode:		LoadTexturePng
+//
+// Parameter:
+//
+// Return:
+//
+//---------------------------------------------------------------------------
+
+bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
+{
+    bool Status = false;
+    CDataRect rect;
+
+    cout << "CGL_Texture::LoadTextureTga START: " << TextureFilename << endl;
+
+
+    if (mv_graphics_png_read(TextureFilename, (char**) &rect.mData, &rect.mWidth, &rect.mHeight, &rect.mBits, 0))
+    {
+        
+        cout << "  width :" << rect.mWidth << endl;
+        cout << "  height:" << rect.mHeight << endl;
+        cout << "  bits  :" << rect.mBits << endl;
+        
+        int imageType = 0;
+        if (rect.mBits == 24)
+        {
+          imageType = GL_RGB;
+        }
+        else
+        if (rect.mBits == 32)
+        {
+          imageType = GL_RGBA;
+        }
+        
+        if (imageType == 0)
+        {
+            cout << "CGL_Texture::LoadTexturePng unsupported bit depth:" << rect.mBits << endl;
+        }
+        else
+        {
+            glGenTextures(1, &mTexHandle);  // Create One Texture
+            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+            glBindTexture(GL_TEXTURE_2D, (int) mTexHandle);
+            
+
+            if (CreateMipmap)
+            {
+                //cout << "Creating Texture with mipmap" << endl;
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);    //
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);    //
+
+
+                gluBuild2DMipmaps(GL_TEXTURE_2D, 3,
+                    rect.mWidth,
+                    rect.mHeight,
+                    imageType, GL_UNSIGNED_BYTE,
+                    rect.mData);
+            }
+            else
+            {
+                //       GL_LINEAR
+                // oder  GL_NEAREST
+
+                //cout << "Creating Texture without mipmap" << endl;
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTexScaleMode);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTexScaleMode);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   // GL_CLAMP_TO_EDGE); //
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);   //GL_CLAMP_TO_EDGE); //
+
+                glTexImage2D(GL_TEXTURE_2D, 0, imageType, rect.mWidth, rect.mHeight, 0, imageType, GL_UNSIGNED_BYTE, rect.mData);
+            }
+
+            mTexWidth    = rect.mWidth;
+            mTexHeight   = rect.mHeight;
+            mTexBitDepth = rect.mBits;
+            Status = true;
+        }
+
+        delete[] rect.mData;
+
+
+    }
+    cout << "CGL_Texture::LoadTextureTga OK, status=" << Status << endl;
+    return Status;                                  // Return The Status
+}
 
 //---------------------------------------------------------------------------
 //

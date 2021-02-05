@@ -24,6 +24,7 @@ class CGL_FontTableau : public CGL_Texture
 
         bool Load(const char* Folder, const char* FileBase, int wh);
         bool Load(const char* TabFile, const char* AlphaFile, const char* RectFile, int wh);
+        bool LoadPng(const char* PngFile32, const char* RectFile, int wh);
         void DrawString(const char* Text, int x, int y);
         void DrawStringRaw(const char* Text, float x, float y);
         int FontWidth(const char* tx);

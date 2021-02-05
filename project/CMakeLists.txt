@@ -88,6 +88,7 @@ add_executable(theplanets
     ${LIBBASE}/CGL/CGL_Circle.cpp
     ${LIBBASE}/CGL/CGL_StarField.cpp
     ${LIBBASE}/CSDL/CSDL_App.cpp
+    ${LIBBASE}/mvlib/png/mv_graphics_png.c
 )
 
 
@@ -104,6 +105,7 @@ if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
         jpeg62
         SDL2
         glew32
+        png
     )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     #
@@ -128,5 +130,5 @@ endif()
 add_definitions(-DSDL_MAIN_HANDLED)
 
 file(MAKE_DIRECTORY ${BINDIR})
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ../distribution/${CMAKE_PROJECT_NAME}/${CMAKE_PROJECT_NAME})
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ../distribution/${CMAKE_PROJECT_NAME}/${CMAKE_PROJECT_NAME}) 
 

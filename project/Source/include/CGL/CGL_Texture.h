@@ -34,6 +34,7 @@ class CGL_Texture
         bool LoadTextureTga(const char* TextureFilename, bool CreateMipmap = false);
         bool LoadTextureTga2D(const char* TextureFilename, const char* AlphaFilename, bool CreateMipmap = false, bool GreyScale = false);
         bool LoadTextureTga8Bit2D(const char* TextureFilename);
+        bool LoadTexturePng(const char* TextureFilename, bool CreateMipmap);
 
 
         bool LoadTextureTga1D(const char* TextureFilename, const char* AlphaFilename, bool CreateMipmap = false);
