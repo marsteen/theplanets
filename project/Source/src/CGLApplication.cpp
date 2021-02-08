@@ -155,9 +155,7 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
     if (mRightMouseButton)
     {
         MouseMotionRight(-xrel, -yrel);
-    }
-    
-    
+    }     
 }
 
 // ---------------------------------------------------------------------------
@@ -2722,6 +2720,54 @@ void CGLApplication::RightMouseButtonDown()
 {
 }
 
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : ParseKeys
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+
+bool CGLApplication::ParseKeys(int key, bool down)
+{
+    if (down)
+    {
+        KeyboardAction(key);
+    }
+    return true;
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : PositionLoad
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::PositionLoad(int pos)
+{
+    sXrot = mPositions[pos].mXrot;
+    sYrot = mPositions[pos].mYrot;
+    mScale = mPositions[pos].mScale;
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : PositionSave
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::PositionSave(int pos)
+{
+    mPositions[pos].mXrot  = sXrot;
+    mPositions[pos].mYrot  = sYrot;
+    mPositions[pos].mScale = mScale;
+}
+
 
 // ---------------------------------------------------------------------------
 //
@@ -2764,6 +2810,32 @@ void CGLApplication::KeyboardAction(unsigned char key)
                 gResGlobals->mLanguage = ELANG_GERMAN;
                 gG3Dinterface->SendCommand(EG3DcomAdjust);
                 break;
+
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            {
+                int pos = key - '0';
+                if (mKeyState & EKeyFlag::CTRL_L_OR_R)
+                {
+                    cout << "PositionSave:" << pos << endl;
+                    PositionSave(key - '0');
+                }
+                else
+                {
+                    cout << "PositionLoad:" << pos << endl;
+                    PositionLoad(key - '0');
+                }
+            }
+            break;
+
         }
     }
 }

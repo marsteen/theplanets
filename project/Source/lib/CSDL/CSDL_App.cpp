@@ -18,6 +18,11 @@
 #include <vector>
 #include <string>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+
 #include <GLinclude.h>
 #include <SDL2/SDL.h>
 #include <NStringTool.h>
@@ -44,6 +49,7 @@ CSDL_App::CSDL_App()
 	mLeftMouseButton   = false;
 	mRightMouseButton  = false;
 	mMiddleMouseButton = false;
+    mKeyState = 0;
 }
 
 
@@ -539,6 +545,10 @@ bool CSDL_App::InitScreen()
     cout << "CSDL_App::InitScreen START" << endl;
     
     bool r = true;
+    
+    #ifdef _WIN32
+    SetProcessDPIAware();
+    #endif
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -624,7 +634,7 @@ void CSDL_App::DisableKeyRepeat()
 
 bool CSDL_App::ParseKeys(int key, bool down)
 {
-	return true;
+    return true;
 }
 
 // ---------------------------------------------------------------------------
@@ -658,6 +668,36 @@ void CSDL_App::MainLoop()
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CSDL_App
+// METHODE       : CheckCtrlKeys
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CSDL_App::CheckCtrlKeys(int keysym, bool down)
+{
+    switch (keysym)
+    {
+        case SDLK_RCTRL:  
+
+            if (down) mKeyState |=  EKeyFlag::CTRL_RIGHT; 
+            else      mKeyState &= ~EKeyFlag::CTRL_RIGHT;
+            break;
+
+        case SDLK_LCTRL:
+
+            if (down) mKeyState |=  EKeyFlag::CTRL_LEFT; 
+            else      mKeyState &= ~EKeyFlag::CTRL_LEFT;
+            break;
+
+    }
+}
+
+
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CSDL_App
 // METHODE       : EventLoop
 //
 //
@@ -686,11 +726,13 @@ void CSDL_App::EventLoop()
                     SDL_Quit();
                     exit(0);
                 }
+                CheckCtrlKeys(event.key.keysym.sym, true);
                 break;
 
             case SDL_KEYUP:
 
                 ParseKeys(event.key.keysym.sym, false);
+                CheckCtrlKeys(event.key.keysym.sym, false);
                 break;
 
             case SDL_MOUSEMOTION:

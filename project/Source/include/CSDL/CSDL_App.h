@@ -24,6 +24,12 @@
 #include <CGL_Mouse.h>
 #include <CGL_Camera.h>
 
+enum EKeyFlag : int
+{
+    CTRL_LEFT   = 1,  // left ctrl key
+    CTRL_RIGHT  = 2,  // right ctrl key
+    CTRL_L_OR_R = 3   // right OR left ctrl key
+};
 
 // ---------------------------------------------------------------------------
 //
@@ -66,11 +72,11 @@ class CSDL_App
         void SetViewport(int w, int h);
         void SetupLighting();
         void DrawGeodaesic();
+        void CheckCtrlKeys(int keysm, bool down);
 
         virtual void ParseArgVec(const std::vector<std::string>& ArgStr);
         void DisableKeyRepeat();
-        bool GetVideoModes(int* FirstW, int* FirstH, int n);
-        
+        bool GetVideoModes(int* FirstW, int* FirstH, int n);        
         
         virtual bool ParseKeys(int key, bool down);
         virtual void MouseMotion(int xabs, int yabs, int xrel, int yrel) { };
@@ -83,7 +89,6 @@ class CSDL_App
         void InitOpenGL(int w, int h);
         void HandleUserEvents(SDL_Event* event);
 
-
         SDL_Window*  mSdlWindow;
         bool         mFullscreen;
         int          mXres;
@@ -95,6 +100,8 @@ class CSDL_App
         bool         mLeftMouseButton;
         bool         mRightMouseButton;
         bool         mMiddleMouseButton;
+        unsigned int mKeyState;
+        
 
 };
 

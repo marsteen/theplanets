@@ -33,7 +33,7 @@
 using namespace std;
 
 
-static int mTexScaleMode = GL_LINEAR; // GL_NEAREST oder GL_LINEAR
+static int mTexScaleMode = GL_NEAREST; // GL_NEAREST oder GL_LINEAR
 
 //---------------------------------------------------------------------------
 //
@@ -106,7 +106,7 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
     bool Status = false;
     CDataRect rect;
 
-    cout << "CGL_Texture::LoadTextureTga START: " << TextureFilename << endl;
+    cout << "CGL_Texture::LoadTexturePng START: " << TextureFilename << endl;
 
 
     if (mv_graphics_png_read(TextureFilename, (char**) &rect.mData, &rect.mWidth, &rect.mHeight, &rect.mBits, 0))
@@ -134,7 +134,7 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
         else
         {
             glGenTextures(1, &mTexHandle);  // Create One Texture
-            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+            glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); //GL_MODULATE
             glBindTexture(GL_TEXTURE_2D, (int) mTexHandle);
             
 
@@ -162,8 +162,10 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
 
                 //cout << "Creating Texture without mipmap" << endl;
 
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTexScaleMode);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTexScaleMode);
+                //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mTexScaleMode);
+                //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mTexScaleMode);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   // GL_CLAMP_TO_EDGE); //
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);   //GL_CLAMP_TO_EDGE); //
@@ -181,7 +183,7 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
 
 
     }
-    cout << "CGL_Texture::LoadTextureTga OK, status=" << Status << endl;
+    cout << "CGL_Texture::LoadTexturePng OK, status=" << Status << endl;
     return Status;                                  // Return The Status
 }
 

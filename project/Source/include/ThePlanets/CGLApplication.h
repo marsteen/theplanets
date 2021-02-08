@@ -27,6 +27,13 @@
 #include <CPlanet.h>
 #include <CSDL/CSDL_App.h>
 
+struct SPosition
+{
+    float mXrot;
+    float mYrot;
+    float mScale;
+};
+
 class CGLApplication : public CSDL_App   
 {
     public:
@@ -42,6 +49,7 @@ class CGLApplication : public CSDL_App
         void MouseMotion(int xabs, int yabs, int xrel, int yrel);
         void LeftMouseButtonAction(bool pressed);
         void MouseWheel(bool up);
+        bool ParseKeys(int key, bool down);
         const char* AppName() const;
 
     protected:
@@ -90,6 +98,8 @@ class CGLApplication : public CSDL_App
         void DrawTriangle(float xc, float yc);
 
 
+        void PositionLoad(int pos);
+        void PositionSave(int pos);
         void ReadSettings(void);
         void WriteSettings(void);
 
@@ -129,7 +139,7 @@ class CGLApplication : public CSDL_App
         int mViewport[4];
 
 
-
+        SPosition mPositions[10];
         SG3DcomData mMondName;
         SG3DcomData mLabelName;
 };

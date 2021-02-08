@@ -277,8 +277,10 @@ void CGL_FontTableau::DrawString(const char* Text, int x, int y)
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    //glMaterialfv(GL_FRONT, GL_DIFFUSE, WhiteMaterial);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                //glMaterialfv(GL_FRONT, GL_DIFFUSE, WhiteMaterial);
 
     y = mWindowHeight - y - mCharRect[' '].Height();
     DrawStringRaw(Text, x, y);
@@ -307,12 +309,21 @@ void CGL_FontTableau::DrawStringRaw(const char* Text, float x, float y)
         //unsigned char  index = (unsigned char) *c;
         unsigned char index = (unsigned char)*c;
 
+        glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+        glDisable(GL_MULTISAMPLE);
 
         CRectT<float>* trc = mTexRect + index;
         CRectT<int>* crc = mCharRect + index;
+        
+        glShadeModel(GL_FLAT);
 
         glBindTexture(GL_TEXTURE_2D, mTexHandle);
-        glBegin(GL_TRIANGLE_STRIP);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        
+        
+        glBegin(GL_TRIANGLE_STRIP);     
 
         Vertex.x = x;
         Vertex.y = y;
