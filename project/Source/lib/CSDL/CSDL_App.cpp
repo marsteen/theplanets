@@ -226,6 +226,12 @@ void CSDL_App::ParseArgVec(const vector<string>& ArgStr)
 {
 	for (int i = 0; i < ArgStr.size(); i++)
 	{
+
+		if (ArgStr[i] == "-fullscreen")
+		{
+			mFullscreen = true;
+		}
+
 	  /*
 		if (ArgStr[i] == "-w800x600")
 		{

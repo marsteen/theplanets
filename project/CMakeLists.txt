@@ -46,6 +46,8 @@ add_executable(theplanets
     ${SRCBASE}/mainSdl.cpp 
     ${SRCBASE}/CGLApplication.cpp
     ${SRCBASE}/COpenGLAction.cpp
+    ${SRCBASE}/CMond.cpp
+    ${SRCBASE}/NPlanets.cpp
     ${LIBBASE}/Resource/CG3DReslistInterface.cpp
     ${LIBBASE}/Resource/CG3DResource.cpp
     ${LIBBASE}/Resource/CG3DResourceImgRef.cpp
@@ -86,6 +88,7 @@ add_executable(theplanets
     ${LIBBASE}/CGL/CGL_GLU_Sphere.cpp
     ${LIBBASE}/CGL/CGL_FontTableau.cpp
     ${LIBBASE}/CGL/CGL_Circle.cpp
+    ${LIBBASE}/CGL/CGL_Ellipse.cpp
     ${LIBBASE}/CGL/CGL_StarField.cpp
     ${LIBBASE}/CSDL/CSDL_App.cpp
     ${LIBBASE}/mvlib/png/mv_graphics_png.c

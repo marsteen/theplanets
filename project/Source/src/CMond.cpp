@@ -1,75 +1,72 @@
-#ifndef CMond_H
-#define CMond_h
 
-#include <CGL_EllipsoidPatched.h>
+#include <CMond.h>
 
-class CMond : public CGL_EllipsoidPatched
+
+CMond::CMond()
 {
-    public:
+    mUmlauf = 0.0; //rand() % 360;
+    mRotation = rand() % 360;
+}
 
-        const SPlanetDesc* mPlanetDesc;
 
-        float mUmlauf;
-        float mRotation;
-        CVector3<double> mScreenKoor;
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CMond
+// METHODE       : InitOrbit
+//
+//
+//
+// ---------------------------------------------------------------------------
 
-        void SaveMatrixes(void);
-        void GetScreenKoor(CVector3<float>* Vert);
-        void InitOrbit(float Radius);
+void CMond::InitOrbit(float radiusX, float radiusY)
+{
+    mOrbit.mRadiusX = radiusX;
+    mOrbit.mRadiusY = radiusY;
+    mOrbit.mSegments = 256;
+    mOrbit.mOrigin.Set(0, 0, 0);
+    mOrbit.Init();
+}
 
-        void Delete()
+
+
+void CMond::Delete()
+{
+    CGL_EllipsoidPatched::Delete();
+    mOrbit.DeleteDisplayList();
+}
+
+
+void CMond::Umlauf(bool r, bool Retrograd)
+{
+    glRotatef(mUmlauf, 0.0, 1.0, 0.0);
+    if (r)
+    {
+        if (Retrograd)
         {
-            CGL_EllipsoidPatched::Delete();
-            mOrbit.DeleteDisplayList();
+            mUmlauf -= mPlanetDesc->mOrbitSpeed * 25;
         }
-
-
-        void Umlauf(bool r, bool Retrograd)
+        else
         {
-            glRotatef(mUmlauf, 0.0, 1.0, 0.0);
-            if (r)
-            {
-                if (Retrograd)
-                {
-                    mUmlauf -= mPlanetDesc->mOrbitSpeed;
-                }
-                else
-                {
-                    mUmlauf += mPlanetDesc->mOrbitSpeed;
-                }
-            }
+            mUmlauf += mPlanetDesc->mOrbitSpeed * 25;
         }
+    }
+}
 
 
-        void Rotation(bool r, bool Retrograd)
+void CMond::Rotation(bool r, bool Retrograd)
+{
+    glRotatef(mRotation, 0.0, 1.0, 0.0);
+    if (r)
+    {
+        if (Retrograd)
         {
-            glRotatef(mRotation, 0.0, 1.0, 0.0);
-            if (r)
-            {
-                if (Retrograd)
-                {
-                    mRotation -= mPlanetDesc->mRotSpeed;
-                }
-                else
-                {
-                    mRotation += mPlanetDesc->mRotSpeed;
-                }
-            }
+            mRotation -= mPlanetDesc->mRotSpeed;
         }
-
-
-        CMond()
+        else
         {
-            mUmlauf = rand() % 360;
-            mRotation = rand() % 360;
+            mRotation += mPlanetDesc->mRotSpeed;
         }
+    }
+}
 
-
-        double mModelMatrix[16];
-        double mProjectionMatrix[16];
-        int mViewport[4];
-        CGL_Circle mOrbit;
-};
-
-#endif
 

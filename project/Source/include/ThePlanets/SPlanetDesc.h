@@ -20,7 +20,8 @@ struct SPlanetDesc
     const char* mTextur;        // Textur-Dateiname
     const char* mNameGer;       // Deutscher Name
     const char* mNameEng;       // Englischer Name
-    float		mDistance;      // Abstand zu Planeten
+    float		mDistanceMin;   // Min. Abstand zu Planeten
+    float		mDistanceMax;   // Max. Abstand zu Planeten
     float		mSize;          // Groesse relativ zum Planeten
     float		mRotSpeed;      // Umdrehungsgeschwindigkeit
     float		mOrbitSpeed;    // Umlaufgeschwindigkeit
