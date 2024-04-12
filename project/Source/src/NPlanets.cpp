@@ -54,7 +54,7 @@ namespace NPlanets
     SPlanetDesc ErdeDesc[] =
     {
         {
-            "planeten/8k/erde.jpg",
+            "planeten/erde.jpg",
             "Erde",
             "Earth",
             1.0, 1.0, 1.0, 1.0, 1.0

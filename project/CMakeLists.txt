@@ -91,7 +91,7 @@ add_executable(theplanets
     ${LIBBASE}/CGL/CGL_Ellipse.cpp
     ${LIBBASE}/CGL/CGL_StarField.cpp
     ${LIBBASE}/CSDL/CSDL_App.cpp
-    ${LIBBASE}/mvlib/png/mv_graphics_png.c
+    ${LIBBASE}/mvlib/mvpng/mv_graphics_png.c
 )
 
 
@@ -105,7 +105,7 @@ if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
         opengl32
         gdi32
         winmm
-        jpeg62
+        jpeg-turbo
         SDL2
         glew32
         png

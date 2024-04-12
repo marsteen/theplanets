@@ -565,7 +565,7 @@ unsigned int* CGL_Texture::CreateSplitTextures(const char* TextureFile, int XPat
     CGraflib* glib = CreateGlib(TextureFile);
     unsigned int* TextureHandles = NULL;
 
-    if (glib > 0)
+    if (glib != nullptr)
     {
         TextureHandles = new unsigned int[XPatches * YPatches];
 
