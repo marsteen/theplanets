@@ -20,13 +20,10 @@
 #include <CFileIO.h>
 #include <CGraphicsJpeg.h>
 
-using namespace std;
-
 extern "C"
 {
-	#include <jpeglib/jpeglib.h>
+	#include <jpeglib.h>
 };
-
 
 struct my_error_mgr
 {
@@ -266,17 +263,16 @@ bool CGraphicsJpeg::GetJpegSize(const char* fname, int* xsize, int* ysize, int* 
     SJpegParams jp;
     bool r;
 
-    jp.infile = (FILE*)OpenJpegFile(fname);
+    jp.infile = (FILE*) OpenJpegFile(fname);
 
     if (jp.infile != NULL)
     {
+        //cout << ""
         jp.cinfo.err = jpeg_std_error(&jp.jerr.pub);
-        jp.jerr.pub.error_exit = my_error_exit;
+        //jp.jerr.pub.error_exit = my_error_exit;
 
         jpeg_create_decompress(&jp.cinfo);
-
         jpeg_stdio_src(&(jp.cinfo), jp.infile);
-
         jpeg_read_header(&(jp.cinfo), TRUE);
 
         *xsize = jp.cinfo.image_width;

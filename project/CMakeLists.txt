@@ -105,7 +105,7 @@ if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
         opengl32
         gdi32
         winmm
-        jpeg-turbo
+        jpeg
         SDL2
         glew32
         png
