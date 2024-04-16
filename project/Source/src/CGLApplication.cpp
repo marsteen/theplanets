@@ -28,9 +28,7 @@
 
 
 #include <GLinclude.h>
-
 #include <Math/CVector3T.h>
-//#include <COpenGL.h>
 #include <CGL_GLU_Sphere.h>
 #include <CGL_Object.h>
 #include <CGL_Disk.h>
@@ -91,12 +89,13 @@ CGLApplication::CGLApplication()
     mActInfobox = "";
     mInitFlag = false;
     mAutoScale = false;
-    mAutoRotate = true;
+    mAutoRotate = false;
     mFullscreen = false;
     mLame = false;
     mShowInterface = true;
     mShowOrbits = true;
     mScale = 1.0;
+    mAnaglyph = false;
 
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
@@ -1525,6 +1524,10 @@ void CGLApplication::GetScreenKoor(SLabel& Label)
 
 void CGLApplication::GetLabelsScreenKoor()
 {
+    glPushMatrix();
+    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
+    glRotatef(sYrot, 0.0, 1.0, 0.0);    
+
     for (list<SLabel>::iterator it = mAktLabelList.begin();
         it != mAktLabelList.end();
         ++it)
@@ -1532,6 +1535,8 @@ void CGLApplication::GetLabelsScreenKoor()
         GetScreenKoor(*it);
         //cout << "GetLabelsScreenKoor:" << it->mLabel << endl;
     }
+    glPopMatrix();
+
 }
 
 
@@ -1561,7 +1566,7 @@ void CMond::GetScreenKoor(CVector3<float>* Vert)
 
     if (Zval < mScreenKoor.z - 0.0001)
     {
-        mScreenKoor.z = 2;
+       mScreenKoor.z = 2;
     }
 }
 

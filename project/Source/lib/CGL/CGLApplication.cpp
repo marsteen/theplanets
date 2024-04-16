@@ -12,7 +12,7 @@
 //
 //***************************************************************************
 
-#define APP_NAME    "Die Planeten"
+#define APP_NAME "Die Planeten"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -22,9 +22,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
-using namespace std;
-
 #include <GLinclude.h>
 #include <math.h>
 #include <CVector3T.h>
@@ -37,6 +34,8 @@ using namespace std;
 #include "CG3DGlobals.h"
 #include "CG3DReslistInterface.h"
 #include "CGLApplication.h"
+
+using namespace std;
 
 static float sYrot;
 static float sZrot;
