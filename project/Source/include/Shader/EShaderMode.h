@@ -23,14 +23,15 @@
 
 enum
 {
-	/* 00 */ ESHADER_MODE_MAPS,        // Nur Textur
-	/* 01 */ ESHADER_MODE_SHADOW,      // Schatten
-	/* 02 */ ESHADER_MODE_TEXT,        // Freetype-Text
-	/* 03 */ ESHADER_MODE_ANTS,        // gestrichelte Linie ("Ameisenkolonne")
-	/* 04 */ ESHADER_MODE_COLOR,       // Farbe
-	/* 05 */ ESHADER_MODE_COLOR_OPA,   // Farbe opaque
-	/* 06 */ ESHADER_MODE_FB_TEXT,     // Framebuffer Freetype Text
-	/* 07 */ ESHADER_MODE_DARK_TEXTURE // Abgedunkelte Textur
+    /* 00 */
+    ESHADER_MODE_MAPS,                  // Nur Textur
+    /* 01 */ ESHADER_MODE_SHADOW,       // Schatten
+    /* 02 */ ESHADER_MODE_TEXT,         // Freetype-Text
+    /* 03 */ ESHADER_MODE_ANTS,         // gestrichelte Linie ("Ameisenkolonne")
+    /* 04 */ ESHADER_MODE_COLOR,        // Farbe
+    /* 05 */ ESHADER_MODE_COLOR_OPA,    // Farbe opaque
+    /* 06 */ ESHADER_MODE_FB_TEXT,      // Framebuffer Freetype Text
+    /* 07 */ ESHADER_MODE_DARK_TEXTURE  // Abgedunkelte Textur
 };
 
 #endif

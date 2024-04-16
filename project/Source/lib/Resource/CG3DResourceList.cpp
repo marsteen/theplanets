@@ -77,7 +77,7 @@ int gSendCommand(int Cmd, void* val)
         //
         case EG3DcomRollover:
         {
-            CVector2<int>* Mouse = (CVector2<int>*)val;
+            CVector2<int>* Mouse = (CVector2<int>*) val;
             retval = gResourceList->Rollover(Mouse);
         }
         break;
@@ -362,10 +362,11 @@ int WINAPI DllMain(HINSTANCE hInstance, DWORD fdwReason, PVOID pvReserved)
 //
 //---------------------------------------------------------------------------
 
-template <typename T>
+template<typename T>
 static T readScaled(const std::string& str)
 {
     CStringTool stconv;
+
     return stconv.StringTo<T>(str) * 2.0f;
 }
 
@@ -562,6 +563,7 @@ void CG3DResourceList::ExtractBasePath(string& FilePath)
     strcpy(BasePathBuffer, FilePath.c_str());
 
     char* p = strrchr(BasePathBuffer, '/');
+
     if (p != NULL)
     {
         mFilename = p + 1;
@@ -1328,7 +1330,7 @@ bool CG3DResourceList::Read(string& Filepath)
                         {
                             string FontPath = mBasePath + (*dr)[1];
 
-							cout << "Load font path:" << FontPath.c_str() << " file:" << (*dr)[2] << endl;
+                            cout << "Load font path:" << FontPath.c_str() << " file:" << (*dr)[2] << endl;
                             FntRes->Load(FontPath.c_str(), (*dr)[2].c_str(), gGlobals->mWindowHeight);
                             cout << "Load font OK:" << (*dr)[2] << endl;
                         }

@@ -197,7 +197,7 @@ void COpenGL::MouseButtonAction()
             }
             break;
     }
-#endif    
+#endif
 }
 
 
@@ -259,4 +259,6 @@ void COpenGL::KeyboardAction(unsigned char key)
 {
     gApp.KeyboardAction(key);
 }
+
+
 #endif

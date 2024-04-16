@@ -210,7 +210,7 @@ void COpenGL::SaveGLStrings(char* filename)
 
 bool COpenGL::InitWindowGLUT(int argc, char** argv, const char* WindowName, int Width, int Height, bool Fullscreen)
 {
-    #if 0
+#if 0
     glutInit(&argc, argv);
     glutInitWindowSize(Width, Height);
     glutInitWindowPosition(0, 0);

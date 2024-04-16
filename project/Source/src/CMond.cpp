@@ -1,4 +1,3 @@
-
 #include <CMond.h>
 
 
@@ -26,7 +25,6 @@ void CMond::InitOrbit(float radiusX, float radiusY)
     mOrbit.mOrigin.Set(0, 0, 0);
     mOrbit.Init();
 }
-
 
 
 void CMond::Delete()
@@ -68,5 +66,3 @@ void CMond::Rotation(bool r, bool Retrograd)
         }
     }
 }
-
-

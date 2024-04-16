@@ -25,7 +25,7 @@
 
 using namespace std;
 
-#if 1
+
 void CGL_Disk::MakeObject()
 {
     CVector3<float> CirclePoint;
@@ -61,5 +61,3 @@ void CGL_Disk::MakeObject()
     glEnd();
 }
 
-
-#endif

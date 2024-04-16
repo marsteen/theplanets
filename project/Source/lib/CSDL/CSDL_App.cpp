@@ -42,16 +42,15 @@ using namespace std;
 
 CSDL_App::CSDL_App()
 {
-    mFullscreen        = false;
-	//mMouseFaktor       = 10.0;
-	mInitFlag          = false;
-	mSdlWindow         = NULL;
-	mLeftMouseButton   = false;
-	mRightMouseButton  = false;
-	mMiddleMouseButton = false;
+    mFullscreen = false;
+    //mMouseFaktor       = 10.0;
+    mInitFlag = false;
+    mSdlWindow = NULL;
+    mLeftMouseButton = false;
+    mRightMouseButton = false;
+    mMiddleMouseButton = false;
     mKeyState = 0;
 }
-
 
 //---------------------------------------------------------------------------
 //
@@ -61,76 +60,60 @@ CSDL_App::CSDL_App()
 //
 //---------------------------------------------------------------------------
 
-
 void GlobalShowOpenGLError(const char* Titel)
 {
-	int GlError = glGetError();
+    int GlError = glGetError();
 
-	if (GlError != GL_NO_ERROR)
-	{
-		std::string ErrString;
-		const char* ErrText = "?";
-
-
-		switch (GlError)
-		{
-
-			case GL_INVALID_ENUM:
-
-				ErrText = "OpenGL Error: GL_INVALID_ENUM";
-				break;
+    if (GlError != GL_NO_ERROR)
+    {
+        std::string ErrString;
+        const char* ErrText = "?";
 
 
-			case GL_INVALID_VALUE:
+        switch (GlError)
+        {
+            case GL_INVALID_ENUM:
 
-				ErrText = "OpenGL Error: GL_INVALID_VALUE";
-				break;
+                ErrText = "OpenGL Error: GL_INVALID_ENUM";
+                break;
 
-			case GL_INVALID_OPERATION:
 
-				ErrText = "OpenGL Error: GL_INVALID_OPERATION";
-				break;
+            case GL_INVALID_VALUE:
 
-			case GL_STACK_OVERFLOW:
+                ErrText = "OpenGL Error: GL_INVALID_VALUE";
+                break;
 
-				ErrText = "OpenGL Error: GL_STACK_OVERFLOW";
-				break;
+            case GL_INVALID_OPERATION:
 
-			case GL_STACK_UNDERFLOW:
+                ErrText = "OpenGL Error: GL_INVALID_OPERATION";
+                break;
 
-				ErrText = "OpenGL Error: GL_STACK_UNDERFLOW";
-				break;
+            case GL_STACK_OVERFLOW:
 
-			case GL_OUT_OF_MEMORY:
+                ErrText = "OpenGL Error: GL_STACK_OVERFLOW";
+                break;
 
-				ErrText = "OpenGL Error: GL_OUT_OF_MEMORY";
-				break;
+            case GL_STACK_UNDERFLOW:
 
-/*
-			case GL_TABLE_TOO_LARGE:
+                ErrText = "OpenGL Error: GL_STACK_UNDERFLOW";
+                break;
 
-				ErrText = "OpenGL Error: GL_TABLE_TOO_LARGE";
-				break;
-*/
-		}
-		if (Titel != NULL)
-		{
-			ErrString = string(Titel) + " " + ErrText;
-		}
-		else
-		{
-			ErrString = ErrText;
-		}
+            case GL_OUT_OF_MEMORY:
 
-/*
-		GlobalDebug("**********************************************************", DBG_INIT);
-    GlobalDebug(ErrString.c_str(), DBG_INIT);
-    GlobalDebug("**********************************************************", DBG_INIT);
-*/
+                ErrText = "OpenGL Error: GL_OUT_OF_MEMORY";
+                break;
 
-	}
+        }
+        if (Titel != NULL)
+        {
+            ErrString = string(Titel) + " " + ErrText;
+        }
+        else
+        {
+            ErrString = ErrText;
+        }
+    }
 }
-
 
 //---------------------------------------------------------------------------
 //
@@ -140,77 +123,60 @@ void GlobalShowOpenGLError(const char* Titel)
 //
 //---------------------------------------------------------------------------
 
-
 void CSDL_App::ShowOpenGLError(const char* Titel)
 {
-	int GlError = glGetError();
+    int GlError = glGetError();
 
-	if (GlError != GL_NO_ERROR)
-	{
-		std::string ErrString;
-		const char* ErrText = "?";
-
-
-		switch (GlError)
-		{
-
-			case GL_INVALID_ENUM:
-
-				ErrText = "OpenGL Error: GL_INVALID_ENUM";
-				break;
+    if (GlError != GL_NO_ERROR)
+    {
+        std::string ErrString;
+        const char* ErrText = "?";
 
 
-			case GL_INVALID_VALUE:
+        switch (GlError)
+        {
+            case GL_INVALID_ENUM:
 
-				ErrText = "OpenGL Error: GL_INVALID_VALUE";
-				break;
+                ErrText = "OpenGL Error: GL_INVALID_ENUM";
+                break;
 
-			case GL_INVALID_OPERATION:
 
-				ErrText = "OpenGL Error: GL_INVALID_OPERATION";
-				break;
+            case GL_INVALID_VALUE:
 
-			case GL_STACK_OVERFLOW:
+                ErrText = "OpenGL Error: GL_INVALID_VALUE";
+                break;
 
-				ErrText = "OpenGL Error: GL_STACK_OVERFLOW";
-				break;
+            case GL_INVALID_OPERATION:
 
-			case GL_STACK_UNDERFLOW:
+                ErrText = "OpenGL Error: GL_INVALID_OPERATION";
+                break;
 
-				ErrText = "OpenGL Error: GL_STACK_UNDERFLOW";
-				break;
+            case GL_STACK_OVERFLOW:
 
-			case GL_OUT_OF_MEMORY:
+                ErrText = "OpenGL Error: GL_STACK_OVERFLOW";
+                break;
 
-				ErrText = "OpenGL Error: GL_OUT_OF_MEMORY";
-				break;
+            case GL_STACK_UNDERFLOW:
 
-/*
-			case GL_TABLE_TOO_LARGE:
+                ErrText = "OpenGL Error: GL_STACK_UNDERFLOW";
+                break;
 
-				ErrText = "OpenGL Error: GL_TABLE_TOO_LARGE";
-				break;
-*/
-		}
-		if (Titel != NULL)
-		{
-			ErrString = string(Titel) + " " + ErrText;
-		}
-		else
-		{
-			ErrString = ErrText;
-		}
-/*
-		GlobalDebug("**********************************************************", DBG_INIT);
-    GlobalDebug(ErrString.c_str(), DBG_INIT);
-    GlobalDebug("**********************************************************", DBG_INIT);
-*/
+            case GL_OUT_OF_MEMORY:
 
-	}
+                ErrText = "OpenGL Error: GL_OUT_OF_MEMORY";
+                break;
+
+        }
+        if (Titel != NULL)
+        {
+            ErrString = string(Titel) + " " + ErrText;
+        }
+        else
+        {
+            ErrString = ErrText;
+        }
+    }
 }
-
-
-
 
 
 // ---------------------------------------------------------------------------
@@ -224,24 +190,24 @@ void CSDL_App::ShowOpenGLError(const char* Titel)
 
 void CSDL_App::ParseArgVec(const vector<string>& ArgStr)
 {
-	for (int i = 0; i < ArgStr.size(); i++)
-	{
+    for (int i = 0; i < ArgStr.size(); i++)
+    {
+        if (ArgStr[i] == "-fullscreen")
+        {
+            mFullscreen = true;
+        }
 
-		if (ArgStr[i] == "-fullscreen")
-		{
-			mFullscreen = true;
-		}
-
-	  /*
-		if (ArgStr[i] == "-w800x600")
-		{
-			mFullscreen = false;
-			mXres = 800;
-			mYres = 600;
-		}
-		*/
-	}
+        /*
+         * if (ArgStr[i] == "-w800x600")
+         * {
+         *    mFullscreen = false;
+         *    mXres = 800;
+         *    mYres = 600;
+         * }
+         */
+    }
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -254,8 +220,8 @@ void CSDL_App::ParseArgVec(const vector<string>& ArgStr)
 
 void CSDL_App::ParseArgs(int argc, char* argv[])
 {
-	mFullscreen = false;
-	vector<string> ArgVec;
+    mFullscreen = false;
+    vector<string> ArgVec;
 
     for (int i = 1; i < argc; i++)
     {
@@ -277,35 +243,18 @@ void CSDL_App::ParseArgs(int argc, char* argv[])
 
 void CSDL_App::ParseWinArgs(const char* Commandline)
 {
-  cout << "CSDL_App::ParseWinArgs START Commandline=" << Commandline << endl;
-    
-  vector<string> SplitResult;
+    vector<string> SplitResult;
 
-  mFullscreen = false;
+    mFullscreen = false;
+    NStringTool::Split(Commandline, &SplitResult, ' ');
 
-  NStringTool::Split(Commandline, &SplitResult, ' ');
+    if (SplitResult.size() == 0)
+    {
+        SplitResult.push_back(Commandline);
+    }
 
-  if (SplitResult.size() == 0)
-  {
-		SplitResult.push_back(Commandline);
-	}
-
-  //GlobalDebugT("Commandline=", Commandline, DBG_INIT);
-  //GlobalDebugT("args=", SplitResult.size(), DBG_INIT);
-
-
-
-	ParseArgVec(SplitResult);
-	/*
-  for (int i = 0; i < SplitResult.size(); i++)
-  {
-		ParseArg(SplitResult[i]);
-  }
-  */
-  
-  cout << "CSDL_App::ParseWinArgs OK" << endl;
+    ParseArgVec(SplitResult);
 }
-
 
 // ---------------------------------------------------------------------------
 //
@@ -318,7 +267,6 @@ void CSDL_App::ParseWinArgs(const char* Commandline)
 
 void CSDL_App::GameLoop()
 {
-
 }
 
 // ---------------------------------------------------------------------------
@@ -332,10 +280,9 @@ void CSDL_App::GameLoop()
 
 static Uint32 sTimerCallback(Uint32 interval, void* param)
 {
-  CSDL_App* SdlApp = (CSDL_App*) param;
-  SdlApp->Timer();
-
-  return interval;
+    CSDL_App* SdlApp = (CSDL_App*) param;
+    SdlApp->Timer();
+    return interval;
 }
 
 // ---------------------------------------------------------------------------
@@ -349,15 +296,9 @@ static Uint32 sTimerCallback(Uint32 interval, void* param)
 
 void CSDL_App::Timer()
 {
-/*
-  static int t;
-  cout << "timer:"  << t << endl;
-  t++;
-*/
-
-  GameLoop();
-
+    GameLoop();
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -370,7 +311,6 @@ void CSDL_App::Timer()
 
 void CSDL_App::SetResolution(int w, int h)
 {
-
 }
 
 // ---------------------------------------------------------------------------
@@ -384,7 +324,6 @@ void CSDL_App::SetResolution(int w, int h)
 
 void CSDL_App::InitGame()
 {
-    cout << "CSDL_App::InitGame" << endl;
 }
 
 // ---------------------------------------------------------------------------
@@ -398,7 +337,7 @@ void CSDL_App::InitGame()
 
 void CSDL_App::FinishGame()
 {
-	SDL_ShowCursor(true);
+    SDL_ShowCursor(true);
 }
 
 
@@ -413,20 +352,16 @@ void CSDL_App::FinishGame()
 
 bool CSDL_App::Init()
 {
-    cout << "CSDL_App::Init Start" << endl;
     bool r = true;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        //GlobalDebug("***** SDL konnte nicht initialisiert werden", DBG_INIT);
+        std::cout << "***** SDL konnte nicht initialisiert werden" << endl;
         r = false;
     }
     //    SDL_ShowCursor(false); // Mousecursor verstecken
-    
-    cout << "CSDL_App::Init OK" << endl;
-    
     return r;
 }
-
 
 
 // ---------------------------------------------------------------------------
@@ -440,22 +375,21 @@ bool CSDL_App::Init()
 
 void CSDL_App::SetViewport(int w, int h)
 {
-	mWindowWidth  = w;
-	mWindowHeight = h;
+    mWindowWidth = w;
+    mWindowHeight = h;
 
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	//glViewport(0, 0, mWindowWidth, mWindowHeight);
-	mAspect = ((float) mWindowWidth) / mWindowHeight;
+    //glViewport(0, 0, mWindowWidth, mWindowHeight);
+    mAspect = ((float)mWindowWidth) / mWindowHeight;
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f );
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
-
 
 
 //---------------------------------------------------------------------------
@@ -479,6 +413,7 @@ void CSDL_App::StartProjectionView()
     glDisable(GL_LIGHTING);
 }
 
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CSDL_App
@@ -489,7 +424,7 @@ void CSDL_App::StartProjectionView()
 
 void CSDL_App::StartModelView()
 {
-    mAspect = (float) mXres / mYres;
+    mAspect = (float)mXres / mYres;
     glViewport(0, 0, mXres, mYres);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -500,6 +435,7 @@ void CSDL_App::StartModelView()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -511,7 +447,7 @@ void CSDL_App::StartModelView()
 
 void CSDL_App::StartModelView(float near, float far)
 {
-    mAspect = (float) mXres / mYres;
+    mAspect = (float)mXres / mYres;
     glViewport(0, 0, mXres, mYres);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -523,6 +459,7 @@ void CSDL_App::StartModelView(float near, float far)
     glEnable(GL_LIGHTING);
 }
 
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CSDL_App
@@ -533,7 +470,7 @@ void CSDL_App::StartModelView(float near, float far)
 
 const char* CSDL_App::AppName() const
 {
-    return "SDL2 application";
+    return "The Planets";
 }
 
 // ---------------------------------------------------------------------------
@@ -547,14 +484,11 @@ const char* CSDL_App::AppName() const
 
 bool CSDL_App::InitScreen()
 {
-    
-    cout << "CSDL_App::InitScreen START" << endl;
-    
     bool r = true;
-    
-    #ifdef _WIN32
+
+#ifdef _WIN32
     SetProcessDPIAware();
-    #endif
+#endif
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -562,40 +496,38 @@ bool CSDL_App::InitScreen()
     SDL_DisplayMode DisplayMode;
     SDL_GetCurrentDisplayMode(0, &DisplayMode);
 
-
     if (mFullscreen)
     {
-		mXres = DisplayMode.w;
-		mYres = DisplayMode.h;
+        mXres = DisplayMode.w;
+        mYres = DisplayMode.h;
         mSdlWindow = SDL_CreateWindow(
             AppName(),
             0,
             0,
-            mXres, 
+            mXres,
             mYres,
             SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
-
     }
     else
     {
-   		mXres = DisplayMode.w * 0.75f;
-		mYres = DisplayMode.h * 0.75f;       
+        mXres = DisplayMode.w * 0.75f;
+        mYres = DisplayMode.h * 0.75f;
 
-        
+
         mSdlWindow = SDL_CreateWindow(
             AppName(),
             100,
             100,
-            mXres, 
+            mXres,
             mYres,
             SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     }
 
-	SDL_GLContext maincontext = SDL_GL_CreateContext(mSdlWindow);
+    SDL_GLContext maincontext = SDL_GL_CreateContext(mSdlWindow);
 
     if (mSdlWindow == NULL)
     {
-        //GlobalDebug("***** mSdlWindow == NULL", DBG_INIT);
+        std::cout << "***** mSdlWindow == NULL" << std::endl;
     }
     SDL_GL_SetSwapInterval(1);
 
@@ -604,16 +536,14 @@ bool CSDL_App::InitScreen()
 
     if (mSdlWindow == NULL)
     {
-        //GlobalDebugT("Fehler beim Umschalten der Aufloesung ", SDL_GetError(), DBG_INIT);
+        std::cout << "***** Fehler beim Umschalten der Aufloesung " << SDL_GetError() << std::endl;
         r = false;
     }
     InitGame();
-    //mTimer = SDL_AddTimer(100, sTimerCallback, this);
-    
-    cout << "CSDL_App::InitScreen OK" << endl;
 
     return r;
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -626,7 +556,7 @@ bool CSDL_App::InitScreen()
 
 void CSDL_App::DisableKeyRepeat()
 {
-  //SDL_EnableKeyRepeat(0, 0);
+    //SDL_EnableKeyRepeat(0, 0);
 }
 
 // ---------------------------------------------------------------------------
@@ -654,22 +584,21 @@ bool CSDL_App::ParseKeys(int key, bool down)
 
 void CSDL_App::MainLoop()
 {
-  while (1)
-  {
-    Uint32 StartTime = SDL_GetTicks();
-    EventLoop();
-    GameLoop();
-
-    Uint32 EndTime = SDL_GetTicks();
-    int DelayTime = 20 - (EndTime - StartTime);
-    if (DelayTime > 0)
+    while (1)
     {
-        //cout << "DelayTime=" << DelayTime << endl;
-        SDL_Delay(DelayTime);
-    }
-  }
-}
+        Uint32 StartTime = SDL_GetTicks();
+        EventLoop();
+        GameLoop();
 
+        Uint32 EndTime = SDL_GetTicks();
+        int DelayTime = 20 - (EndTime - StartTime);
+        if (DelayTime > 0)
+        {
+            //cout << "DelayTime=" << DelayTime << endl;
+            SDL_Delay(DelayTime);
+        }
+    }
+}
 
 // ---------------------------------------------------------------------------
 //
@@ -684,22 +613,31 @@ void CSDL_App::CheckCtrlKeys(int keysym, bool down)
 {
     switch (keysym)
     {
-        case SDLK_RCTRL:  
+        case SDLK_RCTRL:
 
-            if (down) mKeyState |=  EKeyFlag::CTRL_RIGHT; 
-            else      mKeyState &= ~EKeyFlag::CTRL_RIGHT;
+            if (down)
+            {
+                mKeyState |= EKeyFlag::CTRL_RIGHT;
+            }
+            else
+            {
+                mKeyState &= ~EKeyFlag::CTRL_RIGHT;
+            }
             break;
 
         case SDLK_LCTRL:
 
-            if (down) mKeyState |=  EKeyFlag::CTRL_LEFT; 
-            else      mKeyState &= ~EKeyFlag::CTRL_LEFT;
+            if (down)
+            {
+                mKeyState |= EKeyFlag::CTRL_LEFT;
+            }
+            else
+            {
+                mKeyState &= ~EKeyFlag::CTRL_LEFT;
+            }
             break;
-
     }
 }
-
-
 
 // ---------------------------------------------------------------------------
 //
@@ -713,11 +651,9 @@ void CSDL_App::CheckCtrlKeys(int keysym, bool down)
 void CSDL_App::EventLoop()
 {
     SDL_Event event;
-
-
     while (SDL_PollEvent(&event))
     {
-        switch(event.type)
+        switch (event.type)
         {
             case SDL_USEREVENT:
 
@@ -742,14 +678,12 @@ void CSDL_App::EventLoop()
                 break;
 
             case SDL_MOUSEMOTION:
-            {
                 MouseMotion(
                     event.motion.x,
-                    event.motion.y, 
-                    event.motion.xrel, 
+                    event.motion.y,
+                    event.motion.xrel,
                     event.motion.yrel);
-            }
-            break;
+                break;
 
             case SDL_MOUSEWHEEL:
 
@@ -800,10 +734,10 @@ void CSDL_App::EventLoop()
                     MiddleMouseButtonAction(false);
                 }
                 break;
-                
+
             case SDL_WINDOWEVENT:
-            
-                if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) //SDL_WINDOWEVENT_RESIZED) 
+
+                if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) //SDL_WINDOWEVENT_RESIZED)
                 {
                     mXres = event.window.data1;
                     mYres = event.window.data2;
@@ -825,11 +759,10 @@ void CSDL_App::EventLoop()
 
             default:
 
-            break;
+                break;
         }   // End switch
-    }   // End while
+    }       // End while
 }
-
 
 
 // ---------------------------------------------------------------------------
@@ -847,13 +780,6 @@ void CSDL_App::SetupLighting()
     GLfloat matSpecular[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat matShininess[] = { 30.0 };
 
-/*
- *
- *  GLfloat BlueLight[]    = {0.0, 0.0, 1.0, 1.0};
- *  GLfloat OrangeLight[]  = {1.0, 0.5, 0.0, 1.0};
- *  GLfloat BlackLight[]   = {0,0,0, 1.0};
- *  GLfloat DarkLight[]    = { 0.5, 0.5, 0.5, 1.0 };
- */
     GLfloat WhiteLight[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat LightAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
 

@@ -22,8 +22,6 @@ namespace NPlanets
     extern SPlanetDesc RheaDesc[];
     extern SPlanetDesc TritonDesc[];
     extern SPlanetDesc IoDesc[];
-    
 }
 
 #endif
-

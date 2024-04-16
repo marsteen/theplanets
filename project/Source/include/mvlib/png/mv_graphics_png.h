@@ -1,7 +1,6 @@
-
 #ifndef mv_graphics_png_H
 #define mv_graphics_png_H
-    
+
 #ifdef __cplusplus
 extern "C" {
 #endif

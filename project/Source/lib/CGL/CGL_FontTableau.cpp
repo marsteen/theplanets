@@ -40,16 +40,15 @@ using namespace std;
 
 bool CGL_FontTableau::Load(const char* TabFile, const char* AlphaFile, const char* RectFile, int wh)
 {
-	cout << "Load Font" << endl;
-	cout << "  File =" << TabFile << endl;
-	cout << "  Alpha=" << AlphaFile << endl;
-	cout << "  Rect =" << RectFile << endl;
-	
+    cout << "Load Font" << endl;
+    cout << "  File =" << TabFile << endl;
+    cout << "  Alpha=" << AlphaFile << endl;
+    cout << "  Rect =" << RectFile << endl;
+
     if (LoadTextureTga2D(TabFile, AlphaFile, false, false))
     {
-    
-    	cout << "mTexWidth=" << mTexWidth << endl;
-    
+        cout << "mTexWidth=" << mTexWidth << endl;
+
         ifstream fin(RectFile, ios::binary);
 
         mWindowHeight = wh;
@@ -109,6 +108,7 @@ bool CGL_FontTableau::Load(const char* TabFile, const char* AlphaFile, const cha
     return false;
 }
 
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGL_FontTableau
@@ -119,15 +119,14 @@ bool CGL_FontTableau::Load(const char* TabFile, const char* AlphaFile, const cha
 
 bool CGL_FontTableau::LoadPng(const char* PngFile32, const char* RectFile, int wh)
 {
-	cout << "LoadPng32 Font File=" << PngFile32 << endl;
-	 
+    cout << "LoadPng32 Font File=" << PngFile32 << endl;
+
     if (LoadTexturePng(PngFile32, false))
     {
-    
-    	cout << "mTexWidth =" << mTexWidth << endl;
+        cout << "mTexWidth =" << mTexWidth << endl;
         cout << "mTexHeight=" << mTexHeight << endl;
-        
-    
+
+
         ifstream fin(RectFile, ios::binary);
 
         mWindowHeight = wh;
@@ -158,13 +157,13 @@ bool CGL_FontTableau::LoadPng(const char* PngFile32, const char* RectFile, int w
 
                 if ((i >= 'A') && (i <= 'Z'))
                 {
-                   cout << (char) i
-                        << " " << trect->left
-                        << " " << trect->top
-                        << " " << trect->right
-                        << " " << trect->bottom << endl;
+                    cout	<< (char)i
+                            << " " << trect->left
+                            << " " << trect->top
+                            << " " << trect->right
+                            << " " << trect->bottom << endl;
                 }
-                 
+
 
                 /*
                  *      trect->left  = 0;
@@ -200,20 +199,20 @@ bool CGL_FontTableau::LoadPng(const char* PngFile32, const char* RectFile, int w
 
 bool CGL_FontTableau::Load(const char* Folder, const char* FileBase, int wh)
 {
-    string TabFile  = string(Folder) + "/" + FileBase + ".png";
+    string TabFile = string(Folder) + "/" + FileBase + ".png";
     string RectFile = string(Folder) + "/" + FileBase + ".bin";
- 
+
 
     return LoadPng(TabFile.c_str(), RectFile.c_str(), wh);
-    
-    
-    /*
-    string TabFile = string(Folder) + "/"   + FileBase + ".tga";
-    string RectFile = string(Folder) + "/R_" + FileBase + string(".bin");
-    string AlphaFile = string(Folder) + "/A_" + FileBase + string(".tga");
 
-    return Load(TabFile.c_str(), AlphaFile.c_str(), RectFile.c_str(), wh);
-    */
+
+    /*
+     * string TabFile = string(Folder) + "/"   + FileBase + ".tga";
+     * string RectFile = string(Folder) + "/R_" + FileBase + string(".bin");
+     * string AlphaFile = string(Folder) + "/A_" + FileBase + string(".tga");
+     *
+     * return Load(TabFile.c_str(), AlphaFile.c_str(), RectFile.c_str(), wh);
+     */
 }
 
 
@@ -277,10 +276,10 @@ void CGL_FontTableau::DrawString(const char* Text, int x, int y)
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-                //glMaterialfv(GL_FRONT, GL_DIFFUSE, WhiteMaterial);
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, WhiteMaterial);
 
     y = mWindowHeight - y - mCharRect[' '].Height();
     DrawStringRaw(Text, x, y);
@@ -314,16 +313,16 @@ void CGL_FontTableau::DrawStringRaw(const char* Text, float x, float y)
 
         CRectT<float>* trc = mTexRect + index;
         CRectT<int>* crc = mCharRect + index;
-        
+
         glShadeModel(GL_FLAT);
 
         glBindTexture(GL_TEXTURE_2D, mTexHandle);
-        
+
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        
-        
-        glBegin(GL_TRIANGLE_STRIP);     
+
+
+        glBegin(GL_TRIANGLE_STRIP);
 
         Vertex.x = x;
         Vertex.y = y;

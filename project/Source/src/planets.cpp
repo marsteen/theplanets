@@ -1,11 +1,6 @@
-
-
-
 namespace
 {
     SPlanetDesc MerkurDesc[];
-    
-    
 }
 
 #include <SPlanetDesc.h>
@@ -18,14 +13,14 @@ namespace NPlanets
     //
     // ---------------------------------------------------------------------------
 
-    #define SIZE_MERKUR    4809.0
+#define SIZE_MERKUR    4809.0
     SPlanetDesc MerkurDesc[] =
     {
         {
             "planeten/4k/merkur.jpg",
             "Merkur",
             "Mercury",
-            0.0, 0.0,         
+            0.0, 0.0,
             1.0, 1.0, 1.0
         },
         { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
@@ -37,7 +32,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_VENUS    12103.0
+#define SIZE_VENUS    12103.0
     SPlanetDesc VenusDesc[] =
     {
         {
@@ -56,7 +51,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_ERDE    12756.0
+#define SIZE_ERDE    12756.0
     SPlanetDesc ErdeDesc[] =
     {
         {
@@ -83,7 +78,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_MARS    6794.0
+#define SIZE_MARS    6794.0
     SPlanetDesc MarsDesc[] =
     {
         {
@@ -102,7 +97,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_JUPITER    142984.0
+#define SIZE_JUPITER    142984.0
     SPlanetDesc JupiterDesc[] =
     {
         {
@@ -234,7 +229,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_GANYMED    6794.0
+#define SIZE_GANYMED    6794.0
     SPlanetDesc GanymedDesc[] =
     {
         {

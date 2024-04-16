@@ -20,12 +20,12 @@ class CMond : public CGL_EllipsoidPatched
         void SaveMatrixes(void);
         void GetScreenKoor(CVector3<float>* Vert);
         void InitOrbit(float radiusX, float radiusY);
-        
+
 
         void Delete();
         void Umlauf(bool r, bool Retrograd);
         void Rotation(bool r, bool Retrograd);
-        
+
 
 
         double mModelMatrix[16];
@@ -35,4 +35,3 @@ class CMond : public CGL_EllipsoidPatched
 };
 
 #endif
-

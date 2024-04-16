@@ -1,4 +1,3 @@
-
 #ifndef CG3DGlobals_H
 #define CG3DGlobals_H
 

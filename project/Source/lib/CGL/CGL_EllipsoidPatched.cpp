@@ -1,4 +1,3 @@
-
 #include <CGL_EllipsoidPatched.h>
 
 

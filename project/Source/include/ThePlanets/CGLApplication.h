@@ -29,12 +29,12 @@
 
 struct SPosition
 {
-    float mXrot;
-    float mYrot;
-    float mScale;
+    float	mXrot;
+    float	mYrot;
+    float	mScale;
 };
 
-class CGLApplication : public CSDL_App   
+class CGLApplication : public CSDL_App
 {
     public:
 
@@ -42,7 +42,7 @@ class CGLApplication : public CSDL_App
 
         const char* Name()    { return "theplanets"; }
         const char* Version() { return "2.0.0"; }
-        
+
         // virtual from CSDL_App:
         void InitGame();
         void GameLoop();
@@ -53,7 +53,7 @@ class CGLApplication : public CSDL_App
         const char* AppName() const;
 
     protected:
-    
+
         void Draw3DObjects();
         void Draw2DObjects();
         void ManageInterface(CGL_Mouse* Mouse);
@@ -69,7 +69,7 @@ class CGLApplication : public CSDL_App
 
         bool mFullscreen;       // Fullscreen-Modus
         bool mLame;             // fuer lahme Maschinen
-        bool mShowInterface;    // Interface anzeigen    
+        bool mShowInterface;    // Interface anzeigen
 
         void ActivatePlanet(EPlanet p);
         void InitPlanet(const SPlanetDesc* PlanetDesc);
@@ -118,9 +118,9 @@ class CGLApplication : public CSDL_App
         SG3DcomData gSlider;
         EPlanet mPlanet;
         float mPlanetSize;
-        
-    public: 
-    
+
+    public:
+
         float mScale;
         const char* mActInfobox;
         bool mInitFlag;

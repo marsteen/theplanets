@@ -1,4 +1,3 @@
-
 #ifndef CPlanet_H
 #define CPlanet_H
 

@@ -49,4 +49,5 @@ void CGL_Ring::MakeObject()
     glEnd();
 }
 
+
 #endif

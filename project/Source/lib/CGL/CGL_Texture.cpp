@@ -109,34 +109,33 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
     cout << "CGL_Texture::LoadTexturePng START: " << TextureFilename << endl;
 
 
-    if (mv_graphics_png_read(TextureFilename, (char**) &rect.mData, &rect.mWidth, &rect.mHeight, &rect.mBits, 0))
+    if (mv_graphics_png_read(TextureFilename, (char**)&rect.mData, &rect.mWidth, &rect.mHeight, &rect.mBits, 0))
     {
-        
         cout << "  width :" << rect.mWidth << endl;
         cout << "  height:" << rect.mHeight << endl;
         cout << "  bits  :" << rect.mBits << endl;
-        
+
         int imageType = 0;
         if (rect.mBits == 24)
         {
-          imageType = GL_RGB;
+            imageType = GL_RGB;
         }
         else
         if (rect.mBits == 32)
         {
-          imageType = GL_RGBA;
+            imageType = GL_RGBA;
         }
-        
+
         if (imageType == 0)
         {
             cout << "CGL_Texture::LoadTexturePng unsupported bit depth:" << rect.mBits << endl;
         }
         else
         {
-            glGenTextures(1, &mTexHandle);  // Create One Texture
+            glGenTextures(1, &mTexHandle);                              // Create One Texture
             glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); //GL_MODULATE
-            glBindTexture(GL_TEXTURE_2D, (int) mTexHandle);
-            
+            glBindTexture(GL_TEXTURE_2D, (int)mTexHandle);
+
 
             if (CreateMipmap)
             {
@@ -173,19 +172,18 @@ bool CGL_Texture::LoadTexturePng(const char* TextureFilename, bool CreateMipmap)
                 glTexImage2D(GL_TEXTURE_2D, 0, imageType, rect.mWidth, rect.mHeight, 0, imageType, GL_UNSIGNED_BYTE, rect.mData);
             }
 
-            mTexWidth    = rect.mWidth;
-            mTexHeight   = rect.mHeight;
+            mTexWidth = rect.mWidth;
+            mTexHeight = rect.mHeight;
             mTexBitDepth = rect.mBits;
             Status = true;
         }
 
         delete[] rect.mData;
-
-
     }
     cout << "CGL_Texture::LoadTexturePng OK, status=" << Status << endl;
     return Status;                                  // Return The Status
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -279,7 +277,7 @@ bool CGL_Texture::LoadTextureTga2D(const char* TextureFilename, const char* Alph
     CGraflibTga tga;
     CGraflibTga tgaAlpha;
 
-	cout << "CGL_Texture::LoadTextureTga ALPHA START: " << TextureFilename << " Alpha=" << AlphaFilename << endl;
+    cout << "CGL_Texture::LoadTextureTga ALPHA START: " << TextureFilename << " Alpha=" << AlphaFilename << endl;
 
     tga.Read(TextureFilename);
     tga.SwapRedBlue();

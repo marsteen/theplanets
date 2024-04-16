@@ -30,7 +30,6 @@ using namespace std;
 #define MAXSTAR		1.2
 void CGL_StarField::MakeObject()
 {
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_POINT_SMOOTH);
@@ -72,6 +71,4 @@ void CGL_StarField::MakeObject()
     glPointSize(1.0);
     glColor3f(1.0, 1.0, 1.0);
     glDisable(GL_BLEND);
-
-    
 }

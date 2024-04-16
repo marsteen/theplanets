@@ -1,6 +1,3 @@
-
-
-
 #include <cstdio>
 #include <SPlanetDesc.h>
 
@@ -12,14 +9,14 @@ namespace NPlanets
     //
     // ---------------------------------------------------------------------------
 
-    #define SIZE_MERKUR    4809.0
+#define SIZE_MERKUR    4809.0
     SPlanetDesc MerkurDesc[] =
     {
         {
             "planeten/4k/merkur.jpg",
             "Merkur",
             "Mercury",
-            0.0, 0.0,         
+            0.0, 0.0,
             1.0, 1.0, 1.0
         },
         { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
@@ -31,7 +28,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_VENUS    12103.0
+#define SIZE_VENUS    12103.0
     SPlanetDesc VenusDesc[] =
     {
         {
@@ -50,7 +47,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_ERDE    12756.0
+#define SIZE_ERDE    12756.0
     SPlanetDesc ErdeDesc[] =
     {
         {
@@ -77,7 +74,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_MARS    6794.0
+#define SIZE_MARS    6794.0
     SPlanetDesc MarsDesc[] =
     {
         {
@@ -96,7 +93,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_JUPITER    142984.0
+#define SIZE_JUPITER    142984.0
     SPlanetDesc JupiterDesc[] =
     {
         {
@@ -228,7 +225,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_GANYMED    6794.0
+#define SIZE_GANYMED    6794.0
     SPlanetDesc GanymedDesc[] =
     {
         {
@@ -239,14 +236,14 @@ namespace NPlanets
         },
         { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
     };
-    
+
     //---------------------------------------------------------------------------
     //
     // MOND Europa (Jupiter)
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_EUROPA    6794.0
+#define SIZE_EUROPA    6794.0
     SPlanetDesc EuropaDesc[] =
     {
         {
@@ -264,7 +261,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_KALLISTO    6794.0
+#define SIZE_KALLISTO    6794.0
     SPlanetDesc KallistoDesc[] =
     {
         {
@@ -276,14 +273,14 @@ namespace NPlanets
         { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
     };
 
-    
+
     //---------------------------------------------------------------------------
     //
     // MOND Io (Jupiter)
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_IO    6794.0
+#define SIZE_IO    6794.0
     SPlanetDesc IoDesc[] =
     {
         {
@@ -301,7 +298,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_SATURN    120536.0
+#define SIZE_SATURN    120536.0
     SPlanetDesc SaturnDesc[] =
     {
         {
@@ -364,8 +361,8 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define USE_MOONS
-    #define SIZE_URANUS    51118.0
+#define USE_MOONS
+#define SIZE_URANUS    51118.0
     SPlanetDesc UranusDesc[] =
     {
         {
@@ -374,7 +371,7 @@ namespace NPlanets
             "Uranus",
             0.0, 0.0, 1.0, 1.0, 1.0
         },
-        #ifdef USE_MOONS
+#ifdef USE_MOONS
         {
             "planeten/monde/titan.jpg",
             "Oberon",
@@ -420,8 +417,10 @@ namespace NPlanets
             472.0 / SIZE_URANUS,
             0.2, 1.0 / 60
         },
-        #endif
-        { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+#endif
+        {
+            NULL, NULL, NULL, 0, 0, 0, 0, 0
+        }
     };
 
     //---------------------------------------------------------------------------
@@ -430,7 +429,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SIZE_NEPTUN    49528.0
+#define SIZE_NEPTUN    49528.0
     SPlanetDesc NeptunDesc[] =
     {
         {
@@ -439,7 +438,7 @@ namespace NPlanets
             "Neptune",
             0.0, 1.0, 1.0, 1.0
         },
-        #ifdef USE_MOONS
+#ifdef USE_MOONS
         {
             "planeten/monde/dummy.jpg",
             "Triton",
@@ -456,8 +455,10 @@ namespace NPlanets
             340.0 / SIZE_NEPTUN,
             0.2, 1.0 / 60
         },
-        #endif
-        { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+#endif
+        {
+            NULL, NULL, NULL, 0, 0, 0, 0, 0
+        }
     };
 
     //---------------------------------------------------------------------------
@@ -466,8 +467,8 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    #define SUN_SCALE		20
-    #define SIZE_SONNE		1391400.0
+#define SUN_SCALE		20
+#define SIZE_SONNE		1391400.0
     SPlanetDesc SonneDesc[] =
     {
         {
@@ -561,6 +562,5 @@ namespace NPlanets
             1.0 / 3840.0
         },
         { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-    };   
-    
+    };
 }

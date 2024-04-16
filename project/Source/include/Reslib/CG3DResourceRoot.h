@@ -19,13 +19,14 @@
 class CG3DResourceRoot : public CG3DResource
 {
     public:
-        
-        
+
+
         CG3DResourceRoot()
         {
             mDrawParams.mScale.x = 2.0f;
             mDrawParams.mScale.y = 2.0f;
         }
+
 
         void Rollover(CVector2<int>* Mouse)
         {
@@ -67,7 +68,7 @@ class CG3DResourceRoot : public CG3DResource
             mDrawParams.mParentWidth = UnscaledWidth();
             mDrawParams.mParentHeight = UnscaledHeight();
             mDrawParams.mScale.x = 2.0f;
-            mDrawParams.mScale.y = 2.0f;            
+            mDrawParams.mScale.y = 2.0f;
         }
 
 

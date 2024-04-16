@@ -87,9 +87,16 @@ void CGraflib::Yflip()
 bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
 {
     bool r = false;
-	int alphaPixelSize = 0;
-	if (Alpha->mBits ==  8) alphaPixelSize = 1;
-	if (Alpha->mBits == 32) alphaPixelSize = 4;
+    int alphaPixelSize = 0;
+
+    if (Alpha->mBits == 8)
+    {
+        alphaPixelSize = 1;
+    }
+    if (Alpha->mBits == 32)
+    {
+        alphaPixelSize = 4;
+    }
 
 
     if (alphaPixelSize > 0)
@@ -142,7 +149,6 @@ bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
     return r;
 }
 
-
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGraflib
@@ -156,11 +162,6 @@ bool CGraflib::InterleaveAlpha(CGraflib* Alpha)
 
 void CGraflib::DownScaleLine2(void* LineBuffer, void* ErgBuffer, int LineOffset)
 {
-/*
- * cout << "Width=" << mWidth << endl;
- * cout << "Height=" << mHeight << endl;
- *  cout << "LineOffset=" << LineOffset << endl;
- */
     int k = (mBits == 24) ? 3 : 1;
 
     for (int b = 0; b < k; b++)
@@ -170,7 +171,6 @@ void CGraflib::DownScaleLine2(void* LineBuffer, void* ErgBuffer, int LineOffset)
         DownScaleLine2(LineBuffer, ErgBuffer, mWidth, LineOffset, b);
     }
 }
-
 
 //---------------------------------------------------------------------------
 //

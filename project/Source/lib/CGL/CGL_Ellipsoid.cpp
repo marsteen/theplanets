@@ -192,5 +192,3 @@ void CGL_Ellipsoid::MakeObject()
 
     glPopMatrix();
 }
-
-

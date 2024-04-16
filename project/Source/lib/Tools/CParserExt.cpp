@@ -171,6 +171,7 @@ char** CParserExt::ResolveWildCards(char* WildCardString, int* nFiles)
     }
 
     char** FileList = new char*[1];
+
     FileList[0] = NULL;
 
     if (nFiles != NULL)

@@ -51,7 +51,7 @@ static float sZrot;
 static float sXrot;
 static float sYrotAuto;
 
-#define NUMBER_OF_STARS 10000
+#define NUMBER_OF_STARS    10000
 
 struct SMoonColor
 {
@@ -97,12 +97,12 @@ CGLApplication::CGLApplication()
     mShowInterface = true;
     mShowOrbits = true;
     mScale = 1.0;
-    
+
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
     mCamera.mStandort.z = -80.0;
-
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -118,6 +118,7 @@ const char* CGLApplication::AppName() const
     return "the planets";
 }
 
+
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -127,11 +128,12 @@ const char* CGLApplication::AppName() const
 //
 // ---------------------------------------------------------------------------
 
-void CGLApplication::InitGame()    
+void CGLApplication::InitGame()
 {
     cout << "CGLApplication::InitGame" << endl;
-    SetResolution(mXres, mYres);    
+    SetResolution(mXres, mYres);
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -148,7 +150,7 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
     //sOpenGL->mMouse.mState[Button] = State;
     mMouse.x = xabs;
     mMouse.y = yabs;
-    
+
     if (mLeftMouseButton)
     {
         MouseMotionLeft(-xrel, -yrel);
@@ -156,8 +158,9 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
     if (mRightMouseButton)
     {
         MouseMotionRight(-xrel, -yrel);
-    }     
+    }
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -169,7 +172,7 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
 // ---------------------------------------------------------------------------
 
 void CGLApplication::GameLoop()
-{   
+{
     GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
 
     glClearColor(0, 0, 0, 0);
@@ -182,8 +185,8 @@ void CGLApplication::GameLoop()
 
     if (mAnaglyph)
     {
-        #define S_XV	2
-        #define V_XV	0.3
+#define S_XV	2
+#define V_XV	0.3
 
         float StandOrtX = mCamera.mStandort.x;
         float VispointX = mCamera.mVispoint.x;
@@ -237,10 +240,10 @@ void CGLApplication::GameLoop()
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
 
     ManageInterface(&mMouse);
-    
+
     SDL_GL_SwapWindow(mSdlWindow);
-    
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -252,7 +255,7 @@ void CGLApplication::GameLoop()
 // ---------------------------------------------------------------------------
 
 void CGLApplication::MouseWheel(bool up)
-{ 
+{
     if (up)
     {
         Zoom(0.03f);
@@ -576,6 +579,7 @@ void CPlanet::Delete()
     mMonde.clear();
 }
 
+
 #if 0
 // ---------------------------------------------------------------------------
 //
@@ -590,7 +594,7 @@ static SPlanetDesc sMerkurDesc[] =
         "planeten/4k/merkur.jpg",
         "Merkur",
         "Mercury",
-        0.0, 0.0,         
+        0.0, 0.0,
         1.0, 1.0, 1.0
     },
     { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
@@ -944,7 +948,7 @@ static SPlanetDesc sUranusDesc[] =
         "Uranus",
         0.0, 0.0, 1.0, 1.0, 1.0
     },
-    #ifdef USE_MOONS
+#ifdef USE_MOONS
     {
         "planeten/monde/titan.jpg",
         "Oberon",
@@ -990,8 +994,10 @@ static SPlanetDesc sUranusDesc[] =
         472.0 / SIZE_URANUS,
         0.2, 1.0 / 60
     },
-    #endif
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+#endif
+    {
+        NULL, NULL, NULL, 0, 0, 0, 0, 0
+    }
 };
 
 //---------------------------------------------------------------------------
@@ -1009,7 +1015,7 @@ static SPlanetDesc sNeptunDesc[] =
         "Neptune",
         0.0, 1.0, 1.0, 1.0
     },
-    #ifdef USE_MOONS
+#ifdef USE_MOONS
     {
         "planeten/monde/dummy.jpg",
         "Triton",
@@ -1026,8 +1032,10 @@ static SPlanetDesc sNeptunDesc[] =
         340.0 / SIZE_NEPTUN,
         0.2, 1.0 / 60
     },
-    #endif
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
+#endif
+    {
+        NULL, NULL, NULL, 0, 0, 0, 0, 0
+    }
 };
 
 //---------------------------------------------------------------------------
@@ -1337,7 +1345,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         {
             thing = &mond;
         }
-                
+
         thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
         unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, mAnaglyph);
 
@@ -1385,7 +1393,6 @@ void CGLApplication::SetResolution(int w, int h)
         gG3Dinterface->SendCommand(EG3DcomAdjust);
     }
 }
-
 
 
 // ---------------------------------------------------------------------------
@@ -1624,7 +1631,7 @@ void CGLApplication::InitResources()
         mSonneHalo.mSegments = 256;
         mSonneHalo.mRadius = 2 * 13;
         mSonneHalo.Init();
-        
+
         mStarField = new CGL_StarField(NUMBER_OF_STARS);
         mStarField->Init();
 
@@ -1655,14 +1662,18 @@ void CGLApplication::InitResources()
 
 // ---------------------------------------------------------------------------
 //
-// KLASSE        : 
-// METHODE       : 
+// KLASSE        :
+// METHODE       :
 //
 //
 //
 // ---------------------------------------------------------------------------
 
-inline float sq2(float a) { return a * a; }
+inline float sq2(float a)
+{
+    return a * a;
+}
+
 
 float ellipseRadius(float rmax, float rmin, float angle)
 {
@@ -1702,10 +1713,10 @@ void CPlanet::DrawMonde(bool AutoRotate, bool ShowOrbits, bool Retrograd)
         im->Umlauf(AutoRotate, Retrograd);
         glColor3fv(sWhiteColor);
         glEnable(GL_LIGHTING);
-        
-        
+
+
         float f = ellipseRadius(im->mPlanetDesc->mDistanceMax, im->mPlanetDesc->mDistanceMin, DEG_TO_RAD(im->mUmlauf));
-        
+
         //cout << "f=" << f << endl;
         //glTranslatef(im->mPlanetDesc->mDistanceMin, 0, 0);
         glTranslatef(f, 0, 0);
@@ -1995,10 +2006,10 @@ void CGLApplication::Draw3DObjects()
     glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
     //glRotatef(sZrot, 0.0, 0.0, 1.0); // Rotation um Z-Achse (entfaellt)
     glRotatef(sYrot, 0.0, 1.0, 0.0);    // Rotation um Y-Achse
-    
+
 
     glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);    
+    glDisable(GL_DEPTH_TEST);
     mStarField->Draw();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
@@ -2014,7 +2025,7 @@ void CGLApplication::Draw3DObjects()
     glEnable(GL_CULL_FACE);
     //glCullFace(GL_BACK);
 
-    
+
 
 #if 1
     if (mPlanet == EPLANET_SONNE)
@@ -2101,7 +2112,7 @@ void CGLApplication::Draw3DObjects()
         glPopMatrix();
         glEnable(GL_CULL_FACE);
     }
-    
+
 
     glPopMatrix();
 
@@ -2178,8 +2189,8 @@ void CGLApplication::Draw3DObjects()
             sYrotAuto -= 360;
         }
     }
-    
-   
+
+
     //cout << "Draw3DObjects OK" << endl;
 }
 
@@ -2492,6 +2503,7 @@ void CGLApplication::ActivatePlanet(EPlanet p)
     //cout << "ActivatePlanet OK" << endl;
 }
 
+
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2551,9 +2563,6 @@ void CGLApplication::LoadUranusRing()
 }
 
 
-
-
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2571,6 +2580,7 @@ void CGLApplication::LeftMouseButtonAction(bool pressed)
         LeftMouseButtonDown();
     }
 }
+
 
 // ---------------------------------------------------------------------------
 //
@@ -2750,6 +2760,7 @@ void CGLApplication::RightMouseButtonDown()
 {
 }
 
+
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2784,6 +2795,7 @@ void CGLApplication::PositionLoad(int pos)
     mScale = mPositions[pos].mScale;
 }
 
+
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2793,8 +2805,8 @@ void CGLApplication::PositionLoad(int pos)
 
 void CGLApplication::PositionSave(int pos)
 {
-    mPositions[pos].mXrot  = sXrot;
-    mPositions[pos].mYrot  = sYrot;
+    mPositions[pos].mXrot = sXrot;
+    mPositions[pos].mYrot = sYrot;
     mPositions[pos].mScale = mScale;
 }
 
@@ -2865,7 +2877,6 @@ void CGLApplication::KeyboardAction(unsigned char key)
                 }
             }
             break;
-
         }
     }
 }
@@ -2914,7 +2925,7 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
         }
         else
         {
-            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage);            
+            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage);
         }
     }
 }

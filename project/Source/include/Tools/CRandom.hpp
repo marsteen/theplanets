@@ -11,11 +11,12 @@
 
 #include <cstdlib>
 
-template <typename T>
+template<typename T>
 T CRandom<T>::Get01()
 {
-	return T(rand()) / T(RAND_MAX);
+    return T(rand()) / T(RAND_MAX);
 }
+
 
 //---------------------------------------------------------------------------
 //
@@ -26,10 +27,10 @@ T CRandom<T>::Get01()
 //
 //---------------------------------------------------------------------------
 
-template <typename T>
+template<typename T>
 T CRandom<T>::Get(T Low, T High)
 {
-	 return (Get01() * (High - Low)) + Low;
+    return (Get01() * (High - Low)) + Low;
 }
 
 
@@ -42,9 +43,8 @@ T CRandom<T>::Get(T Low, T High)
 //
 //---------------------------------------------------------------------------
 
-template <typename T>
+template<typename T>
 int CRandom<T>::GetInt(int Low, int High)
 {
-	 return  (int) ((Get01() * (High - Low + 1)) + Low);
+    return (int)((Get01() * (High - Low + 1)) + Low);
 }
-

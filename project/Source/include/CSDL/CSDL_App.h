@@ -26,9 +26,9 @@
 
 enum EKeyFlag : int
 {
-    CTRL_LEFT   = 1,  // left ctrl key
-    CTRL_RIGHT  = 2,  // right ctrl key
-    CTRL_L_OR_R = 3   // right OR left ctrl key
+    CTRL_LEFT	= 1,    // left ctrl key
+    CTRL_RIGHT	= 2,    // right ctrl key
+    CTRL_L_OR_R = 3     // right OR left ctrl key
 };
 
 // ---------------------------------------------------------------------------
@@ -54,10 +54,10 @@ class CSDL_App
         virtual void InitGame();
         virtual void FinishGame();
         virtual const char* AppName() const;
-        
+
 
         static void ShowOpenGLError(const char* Titel);
-        
+
         int mActionFrequency;
         CGL_Mouse mMouse;
         CVector3<float> mLightPosition;
@@ -76,33 +76,33 @@ class CSDL_App
 
         virtual void ParseArgVec(const std::vector<std::string>& ArgStr);
         void DisableKeyRepeat();
-        bool GetVideoModes(int* FirstW, int* FirstH, int n);        
-        
+        bool GetVideoModes(int* FirstW, int* FirstH, int n);
+
         virtual bool ParseKeys(int key, bool down);
-        virtual void MouseMotion(int xabs, int yabs, int xrel, int yrel) { };
+
+        virtual void MouseMotion(int xabs, int yabs, int xrel, int yrel) { }
         virtual void SetResolution(int w, int h);
+
         virtual void LeftMouseButtonAction(bool pressed) { }
         virtual void RightMouseButtonAction(bool pressed) { }
-        virtual void MiddleMouseButtonAction(bool pressed) { } 
-        virtual void MouseWheel(bool up) { };
+        virtual void MiddleMouseButtonAction(bool pressed) { }
+        virtual void MouseWheel(bool up) { }
 
         void InitOpenGL(int w, int h);
         void HandleUserEvents(SDL_Event* event);
 
-        SDL_Window*  mSdlWindow;
-        bool         mFullscreen;
-        int          mXres;
-        int          mYres;
-        int          mWindowWidth;
-        int          mWindowHeight;
-        float        mAspect;
-        bool         mInitFlag;
-        bool         mLeftMouseButton;
-        bool         mRightMouseButton;
-        bool         mMiddleMouseButton;
+        SDL_Window* mSdlWindow;
+        bool mFullscreen;
+        int mXres;
+        int mYres;
+        int mWindowWidth;
+        int mWindowHeight;
+        float mAspect;
+        bool mInitFlag;
+        bool mLeftMouseButton;
+        bool mRightMouseButton;
+        bool mMiddleMouseButton;
         unsigned int mKeyState;
-        
-
 };
 
 #endif

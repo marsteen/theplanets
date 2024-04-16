@@ -22,7 +22,7 @@
 
 extern "C"
 {
-	#include <jpeglib.h>
+#include <jpeglib.h>
 };
 
 struct my_error_mgr
@@ -78,27 +78,9 @@ CGraphicsJpeg::~CGraphicsJpeg()
 }
 
 
-#if 0
-static JSAMPLE* image_buffer;   /* Points to large array of R,G,B-order data */
-static int image_height;        /* Number of rows in image */
-static int image_width;         /* Number of columns in image */
-static int soll_linesize;
-static unsigned char* GLbuffer;
-#endif
-
-
-//extern DxDebug Debug;
-
-
-/*
- * Here's the routine that will replace the standard error_exit method:
- */
-
-
 METHODDEF(void)
 my_error_exit(j_common_ptr cinfo)
 {
-#if 1
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_ptr myerr = (my_error_ptr)cinfo->err;
 
@@ -108,7 +90,6 @@ my_error_exit(j_common_ptr cinfo)
 
     /* Return control to the setjmp point */
     longjmp(myerr->setjmp_buffer, 1);
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -141,19 +122,13 @@ void* CGraphicsJpeg::OpenJpegFile(const char* filename)
 
 bool CGraphicsJpeg::OpenJpegRead(const char* filename, int* Width, int* Height, int* ByteProPixel)
 {
-    //Debug2 << "OpenJpegRead start " << filename << DBLF;
-
     memset(mJparams, 0, sizeof(SJpegParams));
     SJpegParams* jp = (SJpegParams*)mJparams;
-
-//  Debug.Print("CGraphicsJpeg::OpenJpegRead File=", filename);
 
     jp->infile = (FILE*)OpenJpegFile(filename);
 
     if (jp->infile == NULL)
     {
-        //Debug2 << "***** CGraphicsJpeg::OpenJpegRead Fehler:" << filename << DBLF;
-        //fprintf(stderr, "can't open %s\n", filename);
         *Width = 0;
         *Height = 0;
         return false;
@@ -162,7 +137,6 @@ bool CGraphicsJpeg::OpenJpegRead(const char* filename, int* Width, int* Height, 
 }
 
 
-#if 1
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGraphicsJpeg
@@ -199,19 +173,14 @@ bool CGraphicsJpeg::InitJpegRead(int* Width, int* Height, int* ByteProPixel)
     *ByteProPixel = jp->cinfo.output_components;
     mByteProPixel = jp->cinfo.output_components;
 
-    //Debug2 << "CGraphicsJpeg::InitJpegRead output_components   =" << jp->cinfo.output_components << DBLF;
-    //Debug2 << "CGraphicsJpeg::InitJpegRead out_color_components=" << jp->cinfo.out_color_components << DBLF;
-
     return true;
 }
 
 
-#endif
-
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGraphicsJpeg
-// Methode:
+// Methode:   ReadJpegLine
 //
 //
 //---------------------------------------------------------------------------
@@ -233,7 +202,7 @@ bool CGraphicsJpeg::ReadJpegLine()
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGraphicsJpeg
-// Methode:
+// Methode:   CloseJpeg
 //
 //
 //---------------------------------------------------------------------------
@@ -263,7 +232,7 @@ bool CGraphicsJpeg::GetJpegSize(const char* fname, int* xsize, int* ysize, int* 
     SJpegParams jp;
     bool r;
 
-    jp.infile = (FILE*) OpenJpegFile(fname);
+    jp.infile = (FILE*)OpenJpegFile(fname);
 
     if (jp.infile != NULL)
     {
@@ -277,7 +246,6 @@ bool CGraphicsJpeg::GetJpegSize(const char* fname, int* xsize, int* ysize, int* 
 
         *xsize = jp.cinfo.image_width;
         *ysize = jp.cinfo.image_height;
-
 
         if (channels != NULL)
         {
@@ -551,8 +519,6 @@ bool CGraphicsJpeg::OpenJpegWrite(const char* filename, int Width, int Height, i
 
     if (mAppendMode)
     {
-        //cout <<
-
         if ((jp->outfile = fopen(filename, "ab+")) == NULL)
         {
             return false;
@@ -586,24 +552,13 @@ bool CGraphicsJpeg::OpenJpegWrite(const char* filename, int Width, int Height, i
 //
 //---------------------------------------------------------------------------
 
-
 void CGraphicsJpeg::CloseJpegWrite()
 {
-    //cout << "CloseJpegWrite START" << endl;
-
     SJpegParams* jp = (SJpegParams*)mJparams;
 
     jpeg_finish_compress(&jp->cinfo2);
-
-    //cout << "1" << endl;
-
     fclose(jp->outfile);
-
-    //cout << "2" << endl;
-
     jpeg_destroy_compress(&jp->cinfo2);
-
-    //cout << "CloseJpegWrite OK" << endl;
 }
 
 
@@ -619,7 +574,6 @@ void CGraphicsJpeg::CloseJpegWrite()
 void CGraphicsJpeg::WriteJpegLine(void* LineBuffer)
 {
     SJpegParams* jp = (SJpegParams*)mJparams;
-
     JSAMPROW row_pointer[1];
 
     row_pointer[0] = (JSAMPROW)LineBuffer;

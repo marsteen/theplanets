@@ -157,7 +157,7 @@ TPixelType* CTgaKompressor<TPixelType>::Decompress(
 //---------------------------------------------------------------------------
 //
 // Klasse:    CTgaKompressor
-// Methode:		Compress
+// Methode:	  Compress
 //
 // CGraphicsTga::Comp8bit(byte *src, byte *dest, int xres, int yres, int LineOffset)
 //
@@ -247,8 +247,6 @@ unsigned int CTgaKompressor<TPixelType>::Compress(void* Pixels, unsigned char* d
 
 int CGraflibTga::Write(const char* Filename, bool bCompFlag, CFileIO* fio)
 {
-    cout << "CGraflibTga::Write " << Filename << endl;
-
     CFileIO fioRead;
     CFileIO* fioPtr;
     STgaHeader TgaHeader;
@@ -275,9 +273,6 @@ int CGraflibTga::Write(const char* Filename, bool bCompFlag, CFileIO* fio)
     TgaHeader.mHeight = mHeight;
     TgaHeader.mPsize = mBits;
     TgaHeader.mIbyte = 0x20;
-
-    //cout << "W=" << mWidth << " H=" << mHeight << " Bits=" << mBits << endl;
-
 
     if (bCompFlag)
     {
@@ -594,56 +589,20 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
         GsysSwapWord(&TgaHeader.mHeight);
     }
 
-   cout << "OK " << FileSize << endl;
+    cout << "OK " << FileSize << endl;
 
     mWidth = TgaHeader.mWidth;
     mHeight = TgaHeader.mHeight;
     mBits = TgaHeader.mPsize;
 
-
     int PicSize = mWidth * mHeight;
-
-
     unsigned int DataLenght = FileSize - sizeof(STgaHeader);
-
-    //cout << " sizeof(STgaHeader)=" << sizeof(STgaHeader) << endl;
-
-
-
-   cout   << " CGraflibTga::Read Bits=" << (int) TgaHeader.mPsize << '\n'
-          << " Ident=" << (int) TgaHeader.mIdent << '\n'
-          << " Ctype=" << (int) TgaHeader.mCtype << '\n'
-          << " Itype=" << (int) TgaHeader.mItype << '\n'
-          << " Width=" << mWidth << '\n'
-          << " Height=" << mHeight << '\n'
-          << " Bits=" << mBits << '\n'
-          << " Datalength=" << DataLenght << endl;
- 
-
-    if (fri != NULL)
-    {
-        /*
-         * cout << " Filepos=" << (int) fri->mFilePosition << '\n'
-         * << " Filesize=" << (int) fri->mFileSize << endl;
-         */
-    }
-
-/*
- *  Debug3 << " CGraflibTga::Read Bits=" << (int) TgaHeader.mPsize
- *         << " Itype=" << (int) TgaHeader.mItype << '\n'
- *         << " Width=" << mWidth << '\n'
- *         << " Height=" << mHeight << '\n'
- *         << " Filepos=" << (int) fri->mFilePosition << '\n'
- *         << " Filesize=" << (int) fri->mFileSize << DBLF;
- */
 
     switch (mBits)
     {
         // 8 Bit Graustufen oder Farbpaletten-Pixeldaten
 
         case 8:
-
-            cout << "reading 8 Bit" << endl;
 
             if (TgaHeader.mCtype == 1) // Farbpalette vorhanden
             {
@@ -657,20 +616,9 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
                     GsysSwapWord(mCmapLenght);
                 }
 
-                /*
-                 *      cout << "  Colorpal origin: " << *mCmapOrigin << endl;
-                 *    cout << "  Colorpal entries:" << *mCmapLenght << endl;
-                 *    cout << "  Colorpal entry size:" << (int) *mCmapEntrysize << endl;
-                 */
-
                 int CpalSize = *mCmapLenght * (*mCmapEntrysize/8);
-
-                //cout << "CpalSize=" << CpalSize << endl;
-
                 mPalette = fioPtr->ReadBytes(CpalSize);
                 DataLenght -= CpalSize;
-
-                cout << "Read Palette OK (" << CpalSize << " bytes)" << endl;
             }
             switch (TgaHeader.mItype)
             {
@@ -696,8 +644,6 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
 
         case 16:
 
-            //cout << "reading 16 Bit" << endl;
-
             switch (TgaHeader.mItype)
             {
                 case ETGA_ITYPE_RGB_UNCOMPRESSED:
@@ -709,12 +655,8 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
                 {
                     unsigned char* CompressedData = (unsigned char*)fioPtr->ReadBytes(DataLenght);
 
-                    //cout << "CompressedData=" << (int) CompressedData << endl;
-
                     CTgaKompressor<unsigned short> Decomp16;
                     mData = (unsigned char*)Decomp16.Decompress(CompressedData, DstData, PicSize, NULL);
-
-                    //Debug3 << " CGraflibTga::Read mData=" << (int) mData << DBLF;
 
                     delete[] CompressedData;
                 }
@@ -726,27 +668,19 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
 
         case 24:
 
-           cout << "reading 24 Bit" << endl;
-
             switch (TgaHeader.mItype)
             {
                 case ETGA_ITYPE_RGB_UNCOMPRESSED:
 
-                    cout << "  Reading uncompressed data.." << endl;
-                    //mData = fioPtr->ReadBytes(DataLenght);
-                    mData = (unsigned char*)fio.ReadBytes(DataLenght);  //
-
-                    //memset(mData, 0x7F, DataLenght);
+                    mData = (unsigned char*) fio.ReadBytes(DataLenght);  //
                     break;
 
                 case ETGA_ITYPE_RGB_COMPRESSED:
                 {
-                    //cout << "  Decompressing 24 Bit Data" << endl;
-
                     unsigned char* CompressedData = (unsigned char*)fioPtr->ReadBytes(DataLenght);
 
                     CTgaKompressor<CPixel24> Decomp24;
-                    mData = (unsigned char*)Decomp24.Decompress(CompressedData, DstData, PicSize, NULL);
+                    mData = (unsigned char*) Decomp24.Decompress(CompressedData, DstData, PicSize, NULL);
                     delete[] CompressedData;
                 }
                 break;
@@ -760,25 +694,16 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
 
         case 32:
 
-           cout << "reading 32 Bit" << endl;
-
             switch (TgaHeader.mItype)
             {
                 case ETGA_ITYPE_RGB_UNCOMPRESSED:
 
-                    cout << "  Reading uncompressed data.." << endl;
-                    //mData = fioPtr->ReadBytes(DataLenght);
                     mData = (unsigned char*)fio.ReadBytes(DataLenght);  //
-
-                    //memset(mData, 0x7F, DataLenght);
                     break;
 
                 case ETGA_ITYPE_RGB_COMPRESSED:
                 {
-                    //cout << "  Decompressing 24 Bit Data" << endl;
-
                     unsigned char* CompressedData = (unsigned char*)fioPtr->ReadBytes(DataLenght);
-
                     CTgaKompressor<CPixel32> Decomp32;
                     mData = (unsigned char*)Decomp32.Decompress(CompressedData, DstData, PicSize, NULL);
                     delete[] CompressedData;
@@ -791,8 +716,6 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
                     break;
             }
             break;
-
-
     }
 
     if ((TgaHeader.mIbyte & 0x30) == 0) // Ursprung der Grafik unten links?
@@ -805,7 +728,5 @@ bool CGraflibTga::Read(const char* Filename, SFileReadInfo* fri)
     {
         fioPtr->CloseFile();
     }
-
-    cout << "CGraflibTga::Read OK" << endl;
     return true;
 }

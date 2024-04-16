@@ -42,6 +42,7 @@ bool CGraflibJpeg::GetJpegSize(const char* fname)
     return r;
 }
 
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGraflibJpeg
@@ -238,6 +239,6 @@ void CGraflibJpeg::CloseWriteLine()
     CGraphicsJpeg* jpeg = (CGraphicsJpeg*)mJpegInterface;
 
     jpeg->CloseJpegWrite();
-//	delete[] jpeg;
-//	mJpegInterface = NULL;
+    delete jpeg;
+    mJpegInterface = NULL;
 }
