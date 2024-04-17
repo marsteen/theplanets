@@ -66,3 +66,9 @@ void CMond::Rotation(bool r, bool Retrograd)
         }
     }
 }
+
+
+void CMond::Rotation()
+{
+    glRotatef(mRotation, 0.0, 1.0, 0.0);
+}

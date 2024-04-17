@@ -33,7 +33,7 @@ namespace NPlanets
     //---------------------------------------------------------------------------
 
 #define SIZE_VENUS    12103.0
-    SPlanetDesc VenusDesc[] =
+    const SPlanetDesc VenusDesc[] =
     {
         {
             "planeten/venus.jpg",
@@ -52,7 +52,7 @@ namespace NPlanets
     //---------------------------------------------------------------------------
 
 #define SIZE_ERDE    12756.0
-    SPlanetDesc ErdeDesc[] =
+    const SPlanetDesc ErdeDesc[] =
     {
         {
             "planeten/4k/erde.jpg",
@@ -79,7 +79,7 @@ namespace NPlanets
     //---------------------------------------------------------------------------
 
 #define SIZE_MARS    6794.0
-    SPlanetDesc MarsDesc[] =
+    const SPlanetDesc MarsDesc[] =
     {
         {
             "planeten/4k/mars.jpg",
@@ -98,7 +98,7 @@ namespace NPlanets
     //---------------------------------------------------------------------------
 
 #define SIZE_JUPITER    142984.0
-    SPlanetDesc JupiterDesc[] =
+    const SPlanetDesc JupiterDesc[] =
     {
         {
             "planeten/4k/jupiter.jpg",
@@ -156,14 +156,15 @@ namespace NPlanets
 
     //---------------------------------------------------------------------------
     //
-    //	MOMD Mond (Erde)
+    //	MOND Mond (Erde)
     //
     //---------------------------------------------------------------------------
 
-    SPlanetDesc MondDesc[] =
+    const SPlanetDesc MondDesc[] =
     {
         {
-            "planeten/monde_gross/Moon5120x2560.jpg",
+            //"planeten/monde_gross/Moon5120x2560.jpg",
+            "planeten/monde_gross/moon_8k.jpg"
             "Mond",
             "Moon",
             0.0, 0.0,
@@ -178,7 +179,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    SPlanetDesc TitanDesc[] =
+    const  SPlanetDesc TitanDesc[] =
     {
         {
             "planeten/monde_gross/titan.jpg",
@@ -195,7 +196,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    SPlanetDesc RheaDesc[] =
+    const  SPlanetDesc RheaDesc[] =
     {
         {
             "planeten/monde_gross/rhea.jpg",
@@ -212,7 +213,7 @@ namespace NPlanets
     //
     //---------------------------------------------------------------------------
 
-    SPlanetDesc TritonDesc[] =
+    const  SPlanetDesc TritonDesc[] =
     {
         {
             "planeten/monde_gross/triton.jpg",

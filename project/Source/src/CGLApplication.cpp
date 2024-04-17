@@ -1525,8 +1525,8 @@ void CGLApplication::GetScreenKoor(SLabel& Label)
 void CGLApplication::GetLabelsScreenKoor()
 {
     glPushMatrix();
-    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
-    glRotatef(sYrot, 0.0, 1.0, 0.0);    
+    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse,,,
+    glRotatef(sYrot +  sYrotAuto, 0.0, 1.0, 0.0);    
 
     for (list<SLabel>::iterator it = mAktLabelList.begin();
         it != mAktLabelList.end();
@@ -1553,6 +1553,9 @@ void CMond::GetScreenKoor(CVector3<float>* Vert)
 {
     float Zval;
 
+    glPushMatrix();
+    Rotation();
+
     gluProject(
         Vert->x, Vert->y, Vert->z,
         mModelMatrix,
@@ -1568,6 +1571,7 @@ void CMond::GetScreenKoor(CVector3<float>* Vert)
     {
        mScreenKoor.z = 2;
     }
+    glPopMatrix();
 }
 
 

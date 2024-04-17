@@ -118,7 +118,6 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries(${CMAKE_PROJECT_NAME}
         GL
         GLU
-        glut
         libjpeg.so.62)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #

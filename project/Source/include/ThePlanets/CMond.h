@@ -25,8 +25,7 @@ class CMond : public CGL_EllipsoidPatched
         void Delete();
         void Umlauf(bool r, bool Retrograd);
         void Rotation(bool r, bool Retrograd);
-
-
+        void Rotation();
 
         double mModelMatrix[16];
         double mProjectionMatrix[16];

@@ -33,7 +33,8 @@
 using namespace std;
 
 
-static int mTexScaleMode = GL_NEAREST; // GL_NEAREST oder GL_LINEAR
+static int mTexScaleMode = GL_LINEAR; // GL_NEAREST oder GL_LINEAR oder GL_LINEAR_MIPMAP_LINEAR
+
 
 //---------------------------------------------------------------------------
 //
