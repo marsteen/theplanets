@@ -76,7 +76,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 int main(int argc, char* argv[])
 {
-    CSdlApp* SdlApp = new CSDLhello;
+    CSDL_App* SdlApp = new CGLApplication;
 
     GlobalArg0 = argv[0];
 

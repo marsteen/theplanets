@@ -95,7 +95,7 @@ add_executable(theplanets
 )
 
 
-if (1) #(CMAKE_SYSTEM_NAME STREQUAL "MSYS")
+if (CMAKE_SYSTEM_NAME STREQUAL "MSYS")
     #
     # Windows
     #
@@ -118,7 +118,10 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries(${CMAKE_PROJECT_NAME}
         GL
         GLU
-        libjpeg.so.62)
+        SDL2
+        GLEW
+        jpeg
+        png)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #
     # Mac OS

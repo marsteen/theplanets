@@ -15,7 +15,7 @@
 #ifndef CGL_ELLIPSOID_H
 #define CGL_ELLIPSOID_H
 
-#include <Math/cvector3T.h>
+#include <Math/CVector3T.h>
 #include <CGL_Patch.h>
 
 class CGL_Ellipsoid : public CGL_Patch
@@ -23,11 +23,8 @@ class CGL_Ellipsoid : public CGL_Patch
     public:
 
         void CreateEllipsoid(int Sseg, float Srad, int Tseg, float Trad, float* DiffuseMaterial);
-
         void DrawWireFrame(void);
-
         void MakeObject(void);
-
         CGL_Ellipsoid(void);
 
         float mXrot;
