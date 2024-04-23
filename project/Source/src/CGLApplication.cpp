@@ -1525,8 +1525,8 @@ void CGLApplication::GetScreenKoor(SLabel& Label)
 void CGLApplication::GetLabelsScreenKoor()
 {
     glPushMatrix();
-    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse,,,
-    glRotatef(sYrot +  sYrotAuto, 0.0, 1.0, 0.0);    
+    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
+    glRotatef(sYrot, 0.0, 1.0, 0.0);    
 
     for (list<SLabel>::iterator it = mAktLabelList.begin();
         it != mAktLabelList.end();
@@ -2009,8 +2009,8 @@ void CGLApplication::Draw3DObjects()
 
     mSinXrot = sin(DEG_TO_RAD(sXrot));
     mCosXrot = cos(DEG_TO_RAD(sXrot));
-    mSinYrot = sin(DEG_TO_RAD(-sYrot));
-    mCosYrot = cos(DEG_TO_RAD(-sYrot));
+    mSinYrot = sin(DEG_TO_RAD(-(sYrot + sYrotAuto)));
+    mCosYrot = cos(DEG_TO_RAD(-(sYrot + sYrotAuto)));
 
     glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
     //glRotatef(sZrot, 0.0, 0.0, 1.0); // Rotation um Z-Achse (entfaellt)

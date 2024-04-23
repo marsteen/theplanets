@@ -1,9 +1,5 @@
 #
 #
-# Windows (MSYS):
-# use generator cmake -G "Unix Makefiles" 
-#
-#
 
 cmake_minimum_required(VERSION 3.10)
 project("theplanets")
