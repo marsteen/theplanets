@@ -25,9 +25,7 @@
 const char* GlobalArg0;
 const char* GlobalWindowName = "Die Planeten";
 
-
 using namespace std;
-
 
 // ---------------------------------------------------------------------------
 //

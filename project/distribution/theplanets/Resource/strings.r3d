@@ -237,7 +237,7 @@ TEXT	DE	MondName
 TEXT	EN	MondName
 #
 NAME	STRING	LabelName
-REF	Verdana13
+REF	Verdana14
 TEXT	DE	Label
 TEXT	EN	Label
 #

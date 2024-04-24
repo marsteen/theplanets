@@ -1860,7 +1860,7 @@ void CGLApplication::DrawLabels(CG3DReslistInterface* gi)
 
                 case ELABELTYPE_KRATER:
                     glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.8, 0.8, 0.2, 1.0);
+                    glColor4f(0.8, 0.8, 1.0, 1.0);
                     DrawCross(il->mScreenKoor.x, il->mScreenKoor.y);
                     glEnable(GL_TEXTURE_2D);
                     break;
@@ -1871,7 +1871,6 @@ void CGLApplication::DrawLabels(CG3DReslistInterface* gi)
                     DrawTriangle(il->mScreenKoor.x, il->mScreenKoor.y);
                     glEnable(GL_TEXTURE_2D);
                     break;
-
 
                 default:
 
