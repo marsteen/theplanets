@@ -7,6 +7,55 @@ CMond::CMond()
     mRotation = rand() % 360;
 }
 
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CMond
+// METHODE       : GetScreenKoor
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CMond::GetScreenKoor(CVector3<float>* Vert)
+{
+    float Zval;
+
+    glPushMatrix();
+    Rotation();
+
+    gluProject(
+        Vert->x, Vert->y, Vert->z,
+        mModelMatrix,
+        mProjectionMatrix,
+        mViewport,
+        &mScreenKoor.x, &mScreenKoor.y, &mScreenKoor.z);
+
+    glReadPixels((int)mScreenKoor.x, (int)mScreenKoor.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &Zval);
+
+    //cout << "Zval=" << Zval << " ScreenKoor->z=" << mScreenKoor.z << endl;
+
+    if (Zval < mScreenKoor.z - 0.0001)
+    {
+       mScreenKoor.z = 2;
+    }
+    glPopMatrix();
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : SaveMatrixes
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CMond::SaveMatrixes()
+{
+    glGetDoublev(GL_MODELVIEW_MATRIX, mModelMatrix);
+    glGetDoublev(GL_PROJECTION_MATRIX, mProjectionMatrix);
+    glGetIntegerv(GL_VIEWPORT, mViewport);
+}
 
 // ---------------------------------------------------------------------------
 //

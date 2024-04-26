@@ -60,6 +60,7 @@ class CGLApplication : public CSDL_App
         void LeftMouseButtonDown();
         void RightMouseButtonDown();
         void Animate();
+        void DrawGradnetz();
 
         void MouseMotionLeft(int x, int y);
         void MouseMotionRight(int x, int y);

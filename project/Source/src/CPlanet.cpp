@@ -1,18 +1,28 @@
+//***************************************************************************
+//
+//
+// @PROJECT  :  The Planets
+// @VERSION  :  2.0
+// @FILENAME :  CGLApplication.cpp
+// @DATE     :  13.1.2021
+//
+// @AUTHOR   :  Martin Steen
+// @EMAIL    :  martin@martin-steen.de
+//
+//
+//***************************************************************************
 
 #include <CPlanet.h>
-
 
 static inline float sq2(float a)
 {
     return a * a;
 }
 
-
 static float ellipseRadius(float rmax, float rmin, float angle)
 {
     return (rmax * rmin) / sqrt(sq2(rmin) * sq2(sin(angle)) + sq2(rmax) * sq2(cos(angle)));
 }
-
 
 // ---------------------------------------------------------------------------
 //
@@ -84,6 +94,28 @@ void CPlanet::GetMondScreenKoor()
     {
         im->GetScreenKoor(&Origin);
     }
+}
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CPlanet
+// METHODE       : Delete
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CPlanet::Delete()
+{
+    for (std::vector<CMond>::iterator im = mMonde.begin();
+        im != mMonde.end();
+        ++im)
+    {
+        im->Delete();
+    }
+    CGL_EllipsoidPatched::Delete();
+    DeleteDisplayList();
+    mMonde.clear();
 }
 
 // ---------------------------------------------------------------------------

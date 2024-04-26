@@ -25,12 +25,25 @@
 
 using namespace std;
 
+
+void CGL_Circle::SetCircleSegment(float alphaStart, float alphaEnd)
+{
+    mAlphaStart = alphaStart;
+    mAlphaEnd   = alphaEnd;
+}
+
+CGL_Circle::CGL_Circle()
+{
+    mAlphaStart = 0.0f;
+    mAlphaEnd = 360.0f;
+}
+
 void CGL_Circle::MakeObject()
 {
     CVector3<float> CirclePoint;
     CVector3<float> Normal;
-    float Alpha = 0;
-    float AlphaPlus = DEG_TO_RAD(360.0 / mSegments);
+    float Alpha = DEG_TO_RAD(mAlphaStart);
+    const float AlphaPlus = DEG_TO_RAD(fabs(mAlphaEnd - mAlphaStart) / mSegments);
 
     CirclePoint.x = mRadius + mOrigin.x;
     CirclePoint.y = 0;
@@ -51,7 +64,6 @@ void CGL_Circle::MakeObject()
     {
         CirclePoint.x = (cos(Alpha) * mRadius) + mOrigin.x;
         CirclePoint.y = (sin(Alpha) * mRadius) + mOrigin.y;
-
         glVertex3fv(CirclePoint.v());
         Alpha += AlphaPlus;
     }

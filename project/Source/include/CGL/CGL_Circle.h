@@ -22,11 +22,16 @@ class CGL_Circle : public CGL_Object
 {
     public:
 
-        void MakeObject(void);
+        CGL_Circle();
+
+        void SetCircleSegment(float alphaStart, float alphaEnd);
+        void MakeObject() override;
 
         CVector3<float> mOrigin;
         int mSegments;
         float mRadius;
+        float mAlphaStart;
+        float mAlphaEnd;
 };
 
 #endif

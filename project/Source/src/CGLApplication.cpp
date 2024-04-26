@@ -239,7 +239,6 @@ void CGLApplication::GameLoop()
     SDL_GL_SwapWindow(mSdlWindow);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -551,594 +550,6 @@ void CGLApplication::WriteSettings()
     }
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CPlanet
-// METHODE       : Delete
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CPlanet::Delete()
-{
-    for (vector<CMond>::iterator im = mMonde.begin();
-        im != mMonde.end();
-        ++im)
-    {
-        im->Delete();
-    }
-    CGL_EllipsoidPatched::Delete();
-    DeleteDisplayList();
-    mMonde.clear();
-}
-
-
-#if 0
-// ---------------------------------------------------------------------------
-//
-//	PLANET Merkur
-//
-// ---------------------------------------------------------------------------
-
-#define SIZE_MERKUR    4809.0
-static SPlanetDesc sMerkurDesc[] =
-{
-    {
-        "planeten/4k/merkur.jpg",
-        "Merkur",
-        "Mercury",
-        0.0, 0.0,
-        1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	PLANET Venus
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_VENUS    12103.0
-static SPlanetDesc sVenusDesc[] =
-{
-    {
-        "planeten/venus.jpg",
-        "Venus",
-        "Venus",
-        0.0, 0.0,
-        1.0, -1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	PLANET Erde
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_ERDE    12756.0
-static SPlanetDesc sErdeDesc[] =
-{
-    {
-        "planeten/erde.jpg",
-        "Erde",
-        "Earth",
-        1.0, 1.0, 1.0, 1.0, 1.0
-    },
-    {
-        "planeten/monde/mond.jpg",
-        "Mond",
-        "Moon",
-        (384400.0 / SIZE_ERDE) * 20,
-        (363300.0 / SIZE_ERDE) * 20,
-        3476.0 / SIZE_ERDE,
-        0, 0.1 / 30.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	Planet Mars
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_MARS    6794.0
-static SPlanetDesc sMarsDesc[] =
-{
-    {
-        "planeten/4k/mars.jpg",
-        "Mars",
-        "Mars",
-        0.0, 0.0,
-        1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	Planet Jupiter
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_JUPITER    142984.0
-static SPlanetDesc sJupiterDesc[] =
-{
-    {
-        "planeten/4k/jupiter.jpg",
-        "Jupiter",
-        "Jupiter",
-        0.0, 0.0,
-        1.0, 1.0, 1.0
-    },
-    {
-        // IO
-        "planeten/monde/io.jpg",
-        "Io",
-        "Io",
-        (420100.0 / SIZE_JUPITER) * 20,
-        (420100.0 / SIZE_JUPITER) * 20,
-        3643.0 / SIZE_JUPITER,
-        2.1,
-        0.12
-    },
-    {
-        // Europa
-        "planeten/monde/europa.jpg",
-        "Europa",
-        "Europa",
-        (664100.0 / SIZE_JUPITER) * 20,
-        (664100.0 / SIZE_JUPITER) * 20,
-        3121.0 / SIZE_JUPITER,
-        1.2,
-        0.06
-    },
-    {
-        // Ganymed
-        "planeten/monde/ganymed.jpg",
-        "Ganymed",
-        "Ganymede",
-        (1069000.0 / SIZE_JUPITER) * 20,
-        (1069000.0 / SIZE_JUPITER) * 20,
-        5264.0 / SIZE_JUPITER,
-        1.8,
-        0.03
-    },
-    {
-        // Kallisto
-        "planeten/monde/kallisto.jpg",
-        "Kallisto",
-        "Callisto",
-        (1869500.0 / SIZE_JUPITER) * 20,
-        (1869500.0 / SIZE_JUPITER) * 20,
-        4820.0 / SIZE_JUPITER,
-        1.2,
-        0.02
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOMD Mond (Erde)
-//
-//---------------------------------------------------------------------------
-
-static SPlanetDesc sMondDesc[] =
-{
-    {
-        "planeten/monde_gross/Moon5120x2560.jpg",
-        "Mond",
-        "Moon",
-        0.0, 0.0,
-        1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOND Titan (Saturn)
-//
-//---------------------------------------------------------------------------
-
-static SPlanetDesc sTitanDesc[] =
-{
-    {
-        "planeten/monde_gross/titan.jpg",
-        "Titan",
-        "Titan",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOND Rhea (Saturn)
-//
-//---------------------------------------------------------------------------
-
-static SPlanetDesc sRheaDesc[] =
-{
-    {
-        "planeten/monde_gross/rhea.jpg",
-        "Rhea",
-        "Rhea",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOND Triton (Saturn)
-//
-//---------------------------------------------------------------------------
-
-static SPlanetDesc sTritonDesc[] =
-{
-    {
-        "planeten/monde_gross/triton.jpg",
-        "Triton",
-        "Triton",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOND Ganymed (Jupiter)
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_GANYMED    6794.0
-static SPlanetDesc sGanymedDesc[] =
-{
-    {
-        "planeten/monde_gross/ganymed.jpg",
-        "Ganymed",
-        "Ganymede",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-// MOND Europa (Jupiter)
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_EUROPA    6794.0
-static SPlanetDesc sEuropaDesc[] =
-{
-    {
-        "planeten/monde_gross/europa.jpg",
-        "Europa",
-        "Europa",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	MOND Kallisto (Jupiter)
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_KALLISTO    6794.0
-static SPlanetDesc sKallistoDesc[] =
-{
-    {
-        "planeten/monde_gross/kallisto.jpg",
-        "Europa",
-        "Europa",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-// MOND Io (Jupiter)
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_IO    6794.0
-static SPlanetDesc sIoDesc[] =
-{
-    {
-        "planeten/monde_gross/io.jpg",
-        "Europa",
-        "Europa",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	PLANET Saturn
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_SATURN    120536.0
-static SPlanetDesc sSaturnDesc[] =
-{
-    {
-        "planeten/4k/saturn.jpg",
-        "Saturn",
-        "Saturn",
-        1.0, 1.0, 1.0, 1.0, 1.0
-    },
-    {
-        "planeten/monde/titan.jpg",
-        "Titan",
-        "Titan",
-        (1221830.0 / SIZE_SATURN) * 20,
-        (1221830.0 / SIZE_SATURN) * 20,
-        5150.0 / SIZE_SATURN,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/rhea.jpg",
-        "Rhea",
-        "Rhea",
-        (527040.0 / SIZE_SATURN) * 20,
-        (527040.0 / SIZE_SATURN) * 20,
-        1528.0 / SIZE_SATURN,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dione.jpg",
-        "Dione",
-        "Dione",
-        (377420.0 / SIZE_SATURN) * 20,
-        (377420.0 / SIZE_SATURN) * 20,
-        1118.0 / SIZE_SATURN,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/tethys.jpg",
-        "Tethys",
-        "Tethys",
-        (294670.0 / SIZE_SATURN) * 20,
-        (294670.0 / SIZE_SATURN) * 20,
-        1060.0 / SIZE_SATURN,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/iapetus.jpg",
-        "Iapetus",
-        "Iapetus",
-        (3561300.0 / SIZE_SATURN) * 20,
-        (3561300.0 / SIZE_SATURN) * 20,
-        1436.0 / SIZE_SATURN,
-        0.2, 1.0 / 60
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-//---------------------------------------------------------------------------
-//
-//	Planet Uranus
-//
-//---------------------------------------------------------------------------
-
-#define USE_MOONS
-#define SIZE_URANUS    51118.0
-static SPlanetDesc sUranusDesc[] =
-{
-    {
-        "planeten/uranus.jpg",
-        "Uranus",
-        "Uranus",
-        0.0, 0.0, 1.0, 1.0, 1.0
-    },
-#ifdef USE_MOONS
-    {
-        "planeten/monde/titan.jpg",
-        "Oberon",
-        "Oberon",
-        (583519.0 / SIZE_URANUS) * 20,
-        (583519.0 / SIZE_URANUS) * 20,
-        1523.0 / SIZE_URANUS,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dummy.jpg",
-        "Titania",
-        "Titania",
-        (463300.0 / SIZE_URANUS) * 20,
-        (463300.0 / SIZE_URANUS) * 20,
-        1578.0 / SIZE_URANUS,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dummy.jpg",
-        "Umbriel",
-        "Umbriel",
-        (266300.0 / SIZE_URANUS) * 20,
-        (266300.0 / SIZE_URANUS) * 20,
-        1169.0 / SIZE_URANUS,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dummy.jpg",
-        "Ariel",
-        "Ariel",
-        (191020.0 / SIZE_URANUS) * 20,
-        (191020.0 / SIZE_URANUS) * 20,
-        1158.0 / SIZE_URANUS,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dummy.jpg",
-        "Miranda",
-        "Miranda",
-        (129872.0 / SIZE_URANUS) * 20,
-        (129872.0 / SIZE_URANUS) * 20,
-        472.0 / SIZE_URANUS,
-        0.2, 1.0 / 60
-    },
-#endif
-    {
-        NULL, NULL, NULL, 0, 0, 0, 0, 0
-    }
-};
-
-//---------------------------------------------------------------------------
-//
-//	Planet Neptun
-//
-//---------------------------------------------------------------------------
-
-#define SIZE_NEPTUN    49528.0
-static SPlanetDesc sNeptunDesc[] =
-{
-    {
-        "planeten/neptun.jpg",
-        "Neptun",
-        "Neptune",
-        0.0, 1.0, 1.0, 1.0
-    },
-#ifdef USE_MOONS
-    {
-        "planeten/monde/dummy.jpg",
-        "Triton",
-        "Triton",
-        (354800.0 / SIZE_NEPTUN) * 20,
-        2707.0 / SIZE_NEPTUN,
-        0.2, 1.0 / 60
-    },
-    {
-        "planeten/monde/dummy.jpg",
-        "Nereid",
-        "Nereid",
-        (5513400.0 / SIZE_NEPTUN) * 20,
-        340.0 / SIZE_NEPTUN,
-        0.2, 1.0 / 60
-    },
-#endif
-    {
-        NULL, NULL, NULL, 0, 0, 0, 0, 0
-    }
-};
-
-//---------------------------------------------------------------------------
-//
-// SONNE Sol
-//
-//---------------------------------------------------------------------------
-
-#define SUN_SCALE		20
-#define SIZE_SONNE		1391400.0
-static SPlanetDesc sSonneDesc[] =
-{
-    {
-        "planeten/sonnensystem/sonne1.jpg",
-        "Sonne",
-        "Sun",
-        1.0, 1.0, 1.0, 1.0, 1.0
-    },
-    {
-        "planeten/sonnensystem/merkurk.jpg",
-        "Merkur",
-        "Mercury",
-        (57909175.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,   // Abstand zu Sonne  * 20
-        (57909175.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,   // Abstand zu Sonne  * 20
-        SIZE_MERKUR / SIZE_SONNE,                       // Groesse im Verhaeltnis zu Sonne
-        0,
-        1.0 / 30.0
-    },
-    {
-        "planeten/sonnensystem/venusk.jpg",
-        "Venus",
-        "Venus",
-        (108208930.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        (108208930.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        SIZE_VENUS / SIZE_SONNE,                        // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 30.0
-    },
-    {
-        "planeten/sonnensystem/erdek.jpg",
-        "Erde",
-        "Earth",
-        (149597890.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        (149597890.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        SIZE_ERDE / SIZE_SONNE,                         // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 120.0
-    },
-    {
-        "planeten/sonnensystem/marsk.jpg",
-        "Mars",
-        "Mars",
-        (227936640.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        (227936640.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        SIZE_MARS / SIZE_SONNE,                         // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 240.0
-    },
-    {
-        "planeten/sonnensystem/jupiterk.jpg",
-        "Jupiter",
-        "Jupiter",
-        (778412020.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        (778412020.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
-        //28.0,
-        SIZE_JUPITER / SIZE_SONNE,                      // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 480.0
-    },
-    {
-        "planeten/sonnensystem/saturnk.jpg",
-        "Saturn",
-        "Saturn",
-        (1426725400.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        (1426725400.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        //33.0,
-        SIZE_SATURN / SIZE_SONNE,                       // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 960.0
-    },
-    {
-        "planeten/sonnensystem/uranusk.jpg",
-        "Uranus",
-        "Uranus",
-        (2870972200.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        (2870972200.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        //37.0,
-        SIZE_URANUS / SIZE_SONNE,                       // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 1920.0
-    },
-    {
-        "planeten/sonnensystem/neptunk.jpg",
-        "Neptun",
-        "Neptune",
-        //41.0,
-        (4498252900.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        (4498252900.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
-        SIZE_NEPTUN / SIZE_SONNE,                       // Groesse im Verhaeltnis zu Sonne
-        3.0,
-        1.0 / 3840.0
-    },
-    { NULL, NULL, NULL, 0, 0, 0, 0, 0 }
-};
-
-
-#endif
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -1389,64 +800,6 @@ void CGLApplication::SetResolution(int w, int h)
     }
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : SaveMatrixes
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CMond::SaveMatrixes()
-{
-    glGetDoublev(GL_MODELVIEW_MATRIX, mModelMatrix);
-    glGetDoublev(GL_PROJECTION_MATRIX, mProjectionMatrix);
-    glGetIntegerv(GL_VIEWPORT, mViewport);
-}
-
-
-/*
- * // ---------------------------------------------------------------------------
- * //
- * // KLASSE        : CGLApplication
- * // METHODE       : GetScreenKoor
- * //
- * //
- * //
- * // ---------------------------------------------------------------------------
- *
- * void CPlanet::GetScreenKoor(CVector3<float>* Vert, CVector3<double>* ScreenKoor)
- * {
- *  double ModelMatrix[16];
- *  double ProjectionMatrix[16];
- *  int    Viewport[4];
- *  double dx, dy, dz;
- *  float  Zval;
- *
- *  glGetDoublev(GL_MODELVIEW_MATRIX,  ModelMatrix);
- *  glGetDoublev(GL_PROJECTION_MATRIX, ProjectionMatrix);
- *  glGetIntegerv(GL_VIEWPORT,         Viewport);
- *
- *  gluProject(
- *       Vert->x, Vert->y, Vert->z,
- *       ModelMatrix,
- *       ProjectionMatrix,
- *       Viewport,
- *       &ScreenKoor->x, &ScreenKoor->y, &ScreenKoor->z);
- *
- *  glReadPixels(ScreenKoor->x, ScreenKoor->y, 1, 1, GL_DEPTH_COMPONENT,GL_FLOAT, &Zval);
- *
- *  cout << "Zval=" << Zval << " ScreenKoor->z=" << ScreenKoor->z << endl;
- *
- *  if (Zval > ScreenKoor->z)
- *  {
- *      ScreenKoor->x	= 0;
- *  }
- * }
- */
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -1491,7 +844,7 @@ void CGLApplication::GetScreenKoor(SLabel& Label)
 
     //cout << "TestVec.z=" << TestVec.z << endl;
 
-    if (TestVec.z > -5.0)
+    if (TestVec.z > -10.0)
     {
         Label.mScreenKoor.z = 2;
     }
@@ -1533,41 +886,6 @@ void CGLApplication::GetLabelsScreenKoor()
     }
     glPopMatrix();
 
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CMond
-// METHODE       : GetScreenKoor
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CMond::GetScreenKoor(CVector3<float>* Vert)
-{
-    float Zval;
-
-    glPushMatrix();
-    Rotation();
-
-    gluProject(
-        Vert->x, Vert->y, Vert->z,
-        mModelMatrix,
-        mProjectionMatrix,
-        mViewport,
-        &mScreenKoor.x, &mScreenKoor.y, &mScreenKoor.z);
-
-    glReadPixels((int)mScreenKoor.x, (int)mScreenKoor.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &Zval);
-
-    //cout << "Zval=" << Zval << " ScreenKoor->z=" << mScreenKoor.z << endl;
-
-    if (Zval < mScreenKoor.z - 0.0001)
-    {
-       mScreenKoor.z = 2;
-    }
-    glPopMatrix();
 }
 
 
@@ -1821,6 +1139,51 @@ void CGLApplication::SaveMatrices()
     glGetIntegerv(GL_VIEWPORT, mViewport);
 }
 
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : DrawGradnetz
+//
+//
+//
+// ---------------------------------------------------------------------------
+
+void CGLApplication::DrawGradnetz()
+{    
+    static CGL_Circle gradring;
+    static bool isInit = false;
+    if (!isInit)
+    {        
+        gradring.mOrigin.Set(0.0, 0.0, 0.0);
+        gradring.mRadius = 20.02;
+        gradring.mSegments = 100;
+        gradring.SetCircleSegment(5.0, 175.0);
+        gradring.Init();
+        isInit = true;
+    }
+    glDisable(GL_LIGHTING);
+    glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+    
+    
+
+    for (int i = 0; i < 18; i++)
+    {
+        if (i == 0)
+        {
+            glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+        }
+        else
+        {
+            glColor4f(0.0f, 0.2f, 1.0f, 1.0f);
+        }
+        glPushMatrix();
+        glRotatef(180 + 20.0f * i, 0.0f, 1.0f, 0.0f);
+        glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
+        gradring.Draw();
+        glPopMatrix();
+    }
+}
+
 
 // ---------------------------------------------------------------------------
 //
@@ -1856,12 +1219,11 @@ void CGLApplication::Draw3DObjects()
 
     glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
-    mStarField->Draw();
+    mStarField->Draw();    
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-
-
+    
     glScalef(mScale, mScale, mScale);
+    
 
     if ((mPlanet == EPLANET_VENUS) ||
         (mPlanet == EPLANET_URANUS))
@@ -1869,6 +1231,7 @@ void CGLApplication::Draw3DObjects()
         bRetrograd = true;
     }
     glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
     //glCullFace(GL_BACK);
 
 
@@ -1911,6 +1274,7 @@ void CGLApplication::Draw3DObjects()
         glColor3f(0.2f, 0.2f, 0.2f);
         gErde->DrawDisplayList();
         GetLabelsScreenKoor();
+        DrawGradnetz();
 
         glPopMatrix();
     }
