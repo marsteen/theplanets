@@ -43,6 +43,7 @@ add_executable(theplanets
     ${SRCBASE}/CGLApplication.cpp
     ${SRCBASE}/COpenGLAction.cpp
     ${SRCBASE}/CMond.cpp
+    ${SRCBASE}/CPlanet.cpp
     ${SRCBASE}/NPlanets.cpp
     ${LIBBASE}/Resource/CG3DReslistInterface.cpp
     ${LIBBASE}/Resource/CG3DResource.cpp
@@ -91,7 +92,7 @@ add_executable(theplanets
 )
 
 
-if (CMAKE_SYSTEM_NAME STREQUAL "MSYS")
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     #
     # Windows
     #

@@ -1,9 +1,14 @@
-#ifndef CMond_H
+#ifndef CMond_h
 #define CMond_h
 
 #include <CGL_Ellipse.h>
 #include <CGL_EllipsoidPatched.h>
 #include <SPlanetDesc.h>
+
+struct SMoonColor
+{
+    const float mColor[3];
+};
 
 class CMond : public CGL_EllipsoidPatched
 {

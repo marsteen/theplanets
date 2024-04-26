@@ -338,6 +338,8 @@ FILES	Fonts3	verdana_32
 NAME	FONT	Verdana12
 FILES	Fonts3	verdana_32
 #
+NAME	FONT	arialbd_64
+FILES	Fonts3	arialbd_64
 
 
 

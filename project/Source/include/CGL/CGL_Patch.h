@@ -29,13 +29,10 @@ class CGL_Patch : public CGL_Object, public CGL_MatObject
         void MakePatchNotTexture(float StartS, float StartT, float StepS, float StepT, int PsegS, int PsegT);
         void MakePatchPoints(float StartS, float StartT, float StepS, float StepT, int PsegS, int PsegT);
 
-
-
     protected:
 
         void SetVertex(CVector3<float>* Origin, CVector3<float>* cf);
         void SetSphereVertex(CVector3<float>* Origin, CVector3<float>* cf);
-
 
         float mSCircleRad;
         float mTCircleRad;

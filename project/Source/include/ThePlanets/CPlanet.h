@@ -1,8 +1,10 @@
 #ifndef CPlanet_H
 #define CPlanet_H
 
+#include <vector>
 #include <CGL_EllipsoidPatched.h>
 #include <CG3DReslistInterface.h>
+#include <CMond.h>
 
 
 class CPlanet : public CGL_EllipsoidPatched
@@ -17,8 +19,8 @@ class CPlanet : public CGL_EllipsoidPatched
 
         void LadeMonde(char** Monde);
         void Delete();
-        void DrawMonde(bool AutoRotate, bool ShowOrbits, bool Retrograd);
-        void DrawMondeNames(CG3DReslistInterface* gi, SG3DcomData* MondName, int Language);
+        void DrawMonde(bool AutoRotate, bool ShowOrbits, bool Retrograd, const SMoonColor* moonColorTable);
+        void DrawMondeNames(CG3DReslistInterface* gi, SG3DcomData* MondName, int Language, const SMoonColor* moonColorTable);
         void GetMondScreenKoor();
 
         std::vector<CMond> mMonde;

@@ -49,12 +49,7 @@ static float sZrot;
 static float sXrot;
 static float sYrotAuto;
 
-#define NUMBER_OF_STARS    10000
-
-struct SMoonColor
-{
-    const float mColor[3];
-};
+#define NUMBER_OF_STARS 10000
 
 static const SMoonColor sMoonColorTable[] =
 {
@@ -172,13 +167,14 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
 
 void CGLApplication::GameLoop()
 {
-    GLfloat weiss[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat planetMaterialLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     StartModelView(0.1 / mScale, 30.0 / mScale);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, weiss);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, planetMaterialLight);
     SetupLighting();
 
 
@@ -236,7 +232,7 @@ void CGLApplication::GameLoop()
 
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     StartProjectionView();
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, weiss);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
 
     ManageInterface(&mMouse);
 
@@ -1668,101 +1664,6 @@ void CGLApplication::InitResources()
     }
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        :
-// METHODE       :
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-inline float sq2(float a)
-{
-    return a * a;
-}
-
-
-float ellipseRadius(float rmax, float rmin, float angle)
-{
-    return (rmax * rmin) / sqrt(sq2(rmin) * sq2(sin(angle)) + sq2(rmax) * sq2(cos(angle)));
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CPlanet
-// METHODE       : DrawMonde
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CPlanet::DrawMonde(bool AutoRotate, bool ShowOrbits, bool Retrograd)
-{
-    float sWhiteColor[3] = { 1.0, 1.0, 1.0 };
-    CVector3<float> Origin;
-
-    Origin.Set(0, 0, 0);
-    int m = 0;
-
-
-    for (auto im = mMonde.begin(); im != mMonde.end(); ++im)
-    {
-        glDisable(GL_LIGHTING);
-        glColor3fv(sMoonColorTable[m++].mColor);
-
-        glPushMatrix();
-
-        if (ShowOrbits)
-        {
-            im->mOrbit.Draw();
-        }
-        im->Umlauf(AutoRotate, Retrograd);
-        glColor3fv(sWhiteColor);
-        glEnable(GL_LIGHTING);
-
-
-        float f = ellipseRadius(im->mPlanetDesc->mDistanceMax, im->mPlanetDesc->mDistanceMin, DEG_TO_RAD(im->mUmlauf));
-
-        //cout << "f=" << f << endl;
-        //glTranslatef(im->mPlanetDesc->mDistanceMin, 0, 0);
-        glTranslatef(f, 0, 0);
-
-        im->Rotation(AutoRotate, Retrograd);
-        im->SaveMatrixes();
-
-        im->DrawDisplayList();
-        glPopMatrix();
-    }
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CPlanet
-// METHODE       : GetMondScreenKoor
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CPlanet::GetMondScreenKoor()
-{
-    CVector3<float> Origin;
-
-    Origin.Set(0, 0, 0);
-
-    for (vector<CMond>::iterator im = mMonde.begin();
-        im != mMonde.end();
-        im++)
-    {
-        im->GetScreenKoor(&Origin);
-    }
-}
-
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -1886,69 +1787,6 @@ void CGLApplication::DrawLabels(CG3DReslistInterface* gi)
     glLineWidth(1.0);
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CPlanet
-// METHODE       : DrawMondeNames
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CPlanet::DrawMondeNames(CG3DReslistInterface* gi, SG3DcomData* MondName, int Language)
-{
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    int m = 0;
-
-    for (vector<CMond>::iterator im = mMonde.begin();
-        im != mMonde.end();
-        im++)
-    {
-        if (im->mScreenKoor.z < 1.0)
-        {
-            if (Language == ELANG_GERMAN)
-            {
-                MondName->mChrParam = im->mPlanetDesc->mNameGer;
-            }
-            else
-            {
-                MondName->mChrParam = im->mPlanetDesc->mNameEng;
-            }
-
-
-            MondName->mPos.x = (int)im->mScreenKoor.x;
-            MondName->mPos.y = (int)im->mScreenKoor.y;
-
-            float cr = sMoonColorTable[m].mColor[0] * 1.5;
-            float cg = sMoonColorTable[m].mColor[1] * 1.5;
-            float cb = sMoonColorTable[m].mColor[2] * 1.5;
-            if (cr > 1.0)
-            {
-                cr = 1.0;
-            }
-            if (cg > 1.0)
-            {
-                cg = 1.0;
-            }
-            if (cb > 1.0)
-            {
-                cb = 1.0;
-            }
-
-            glColor3f(cr, cg, cb);
-            gi->SendCommand(EG3DcomDrawString, MondName);
-        }
-        m++;
-    }
-
-    glDisable(GL_TEXTURE_2D);
-    glDisable(GL_BLEND);
-}
-
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2070,7 +1908,7 @@ void CGLApplication::Draw3DObjects()
         glRotatef(sYrotAuto, 0.0, 1.0, 0.0);
         SaveMatrices();
 
-
+        glColor3f(0.2f, 0.2f, 0.2f);
         gErde->DrawDisplayList();
         GetLabelsScreenKoor();
 
@@ -2082,7 +1920,7 @@ void CGLApplication::Draw3DObjects()
     if (gErde != NULL)
     {
         gErde->GetMondScreenKoor();
-        gErde->DrawMonde(mAutoRotate, mShowOrbits, bRetrograd);
+        gErde->DrawMonde(mAutoRotate, mShowOrbits, bRetrograd, sMoonColorTable);
     }
 
 
@@ -2922,7 +2760,7 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
     {
         if (mShowInterface)
         {
-            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage);
+            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
             DrawLabels(gG3Dinterface);
 
             if (mShowInterface)
@@ -2933,7 +2771,7 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
         }
         else
         {
-            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage);
+            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
         }
     }
 }

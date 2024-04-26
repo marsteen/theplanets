@@ -26,7 +26,7 @@ using namespace std;
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGL_Ellipsoid
-// Methode:		CreateEllipsoid
+// Methode:	  CreateEllipsoid
 //
 // Parameter:
 //
