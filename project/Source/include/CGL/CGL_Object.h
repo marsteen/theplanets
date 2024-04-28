@@ -34,12 +34,12 @@ class CGL_Object : public CGL_Texture
 {
     public:
 
-        void Init(void);
-        void DeleteDisplayList(void);
-        virtual void MakeObject(void);
-        virtual void Draw(void);
+        void Init();
+        void DeleteDisplayList();
+        virtual void MakeObject();
+        virtual void Draw() const;
 
-        CGL_Object(void);
+        CGL_Object();
         ~CGL_Object();
 
     protected:

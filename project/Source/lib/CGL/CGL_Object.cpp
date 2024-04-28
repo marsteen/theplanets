@@ -35,7 +35,7 @@ using namespace std;
 //
 //---------------------------------------------------------------------------
 
-void CGL_Object::Draw()
+void CGL_Object::Draw() const
 {
     glCallList(mDisplayListHandle);
 }
