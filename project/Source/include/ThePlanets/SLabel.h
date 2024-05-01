@@ -15,6 +15,7 @@
 #ifndef SLABEL_H
 #define SLABEL_H
 
+#include <string>
 #include <Math/CVector3T.h>
 
 

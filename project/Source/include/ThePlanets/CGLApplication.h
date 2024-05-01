@@ -20,12 +20,14 @@
 #include <CGL_Disk.h>
 #include <CGL_StarField.h>
 #include <SPlanetDesc.h>
-#include <SLabel.h>
 
+#include <STransformContext.h>
 #include <EPlanet.h>
 #include <CMond.h>
 #include <CPlanet.h>
+#include <CLabels.h>
 #include <CSDL/CSDL_App.h>
+
 
 struct SPosition
 {
@@ -84,16 +86,7 @@ class CGLApplication : public CSDL_App
         void InterfaceSetString(const char* StringName, const char* NewContent);
         void InterfaceSetButton(const char* ButtonName, bool Status);
 
-        void ReadLabels(void);                                          // ALT
-        void InitLabels(std::string BodyName, float Radius, int sx);    // ALT
-
-        void ReadLabels(std::string Bodyname);
-        void InitLabels(float Radius, int sx);
-
         void LongLatiToSphere(CVector3<float>& vert, float Long, float Lati, float Radius);
-        void GetScreenKoor(SLabel& Label);
-        void GetLabelsScreenKoor();
-        void DrawLabels(CG3DReslistInterface* gi);
         void SetPlanetName();
         void SaveMatrices();
         void DrawCross(float xc, float yc);
@@ -105,10 +98,12 @@ class CGLApplication : public CSDL_App
         void ReadSettings(void);
         void WriteSettings(void);
 
-        //CSDL_App* mSdlApp;
-        CPlanet* gErde;
-        CPlanet* gSonne1;
-        //CGL_EllipsoidPatched* gErdeSmall;
+        CLabels* mLabels;
+
+        CPlanet* mErde;
+        CPlanet* mSonne;
+        STransformContext mTransformContext;
+
         CG3DGlobals* gResGlobals;
         CG3DReslistInterface* gG3Dinterface;
         std::list<SLabel> mLabelList;
@@ -130,20 +125,10 @@ class CGLApplication : public CSDL_App
         bool mAutoRotate;
         bool mShowOrbits;
 
-        float mSinXrot;
-        float mCosXrot;
-        float mSinYrot;
-        float mCosYrot;
         float mLongSegOffset;
-
-        double mModelMatrix[16];
-        double mProjectionMatrix[16];
-        int mViewport[4];
-
 
         SPosition mPositions[10];
         SG3DcomData mMondName;
-        SG3DcomData mLabelName;
 };
 
 #endif

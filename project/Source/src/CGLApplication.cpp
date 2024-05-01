@@ -26,7 +26,6 @@
 #include <vector>
 #include <list>
 
-
 #include <GLinclude.h>
 #include <Math/CVector3T.h>
 #include <CGL_GLU_Sphere.h>
@@ -43,11 +42,6 @@
 #include "CGLApplication.h"
 
 using namespace std;
-
-static float sYrot;
-static float sZrot;
-static float sXrot;
-static float sYrotAuto;
 
 #define NUMBER_OF_STARS 10000
 
@@ -67,20 +61,17 @@ static const SMoonColor sMoonColorTable[] =
     { 0.5, 0.4, 1.0 },
 };
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : CGLApplication
 //
-//
-//
 // ---------------------------------------------------------------------------
 
 CGLApplication::CGLApplication()
 {
-    gErde = NULL;
-    gSonne1 = NULL;
+    mErde = NULL;
+    mSonne = NULL;
     mActInfobox = "";
     mInitFlag = false;
     mAutoScale = false;
@@ -94,16 +85,14 @@ CGLApplication::CGLApplication()
 
     gG3Dinterface = new CG3DReslistInterface;
     gResGlobals = new CG3DGlobals;
+    mLabels = new CLabels(&mTransformContext);
     mCamera.mStandort.z = -80.0;
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InitGame
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -112,13 +101,10 @@ const char* CGLApplication::AppName() const
     return "the planets";
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InitGame
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -128,20 +114,15 @@ void CGLApplication::InitGame()
     SetResolution(mXres, mYres);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : CGLApplication
 //
-//
-//
 // ---------------------------------------------------------------------------
 
 void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
 {
-    //sOpenGL->mMouse.mButton = Button;
-    //sOpenGL->mMouse.mState[Button] = State;
     mMouse.x = xabs;
     mMouse.y = yabs;
 
@@ -155,13 +136,10 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : GameLoop
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -177,11 +155,10 @@ void CGLApplication::GameLoop()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, planetMaterialLight);
     SetupLighting();
 
-
     if (mAnaglyph)
     {
-#define S_XV	2
-#define V_XV	0.3
+        #define S_XV	2
+        #define V_XV	0.3
 
         float StandOrtX = mCamera.mStandort.x;
         float VispointX = mCamera.mVispoint.x;
@@ -229,7 +206,6 @@ void CGLApplication::GameLoop()
     }
     Animate();
 
-
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     StartProjectionView();
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
@@ -243,8 +219,6 @@ void CGLApplication::GameLoop()
 //
 // KLASSE        : CGLApplication
 // METHODE       : MouseWheel
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -260,187 +234,10 @@ void CGLApplication::MouseWheel(bool up)
     }
 }
 
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : ReadLabels
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::ReadLabels()
-{
-    CDatabase3 db3;
-    list<CRecord> Records;
-
-    string BasePath = "Resource/";
-    string Filename = "Labels.txt";
-
-    if (db3.Read(&Records, BasePath, Filename, '\t'))
-    {
-        for (list<CRecord>::iterator it = Records.begin();
-            it != Records.end();
-            ++it)
-        {
-            SLabel Label;
-            CStringTool st;
-            cout << "it->size()=" << it->size() << endl;
-
-            if (it->size() == 4)
-            {
-                Label.mLabel = (*it)[0];
-                Label.mTyp = ELABELTYPE_UNDEFINED;
-                Label.mLong = st.StringTo<float>((*it)[2]);
-                Label.mLati = st.StringTo<float>((*it)[3]);
-                string LabelType = (*it)[1];
-
-                if (LabelType == "ma")
-                {
-                    Label.mTyp = ELABELTYPE_MARE;
-                }
-                else
-                if (LabelType == "la")
-                {
-                    Label.mTyp = ELABELTYPE_APOLLO;
-                }
-                else
-                if (LabelType == "kr")
-                {
-                    Label.mTyp = ELABELTYPE_KRATER;
-                }
-                else
-                if (LabelType == "bg")
-                {
-                    Label.mTyp = ELABELTYPE_BERG;
-                }
-                //Label.mLong -= 1.0 / 6.0;
-                Label.mLong *= -DEG_TO_RAD(360.0);
-                Label.mLati = -DEG_TO_RAD((Label.mLati - 0.5) * 180.0);
-                mLabelList.push_back(Label);
-
-                cout << "Label:" << Label.mLabel  << endl;
-            }
-        }
-    }
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : ReadLabels
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::ReadLabels(string Bodyname)
-{
-    CDatabase3 db3;
-    list<CRecord> Records;
-
-    CFileIO fio;
-    string Filename = string("Resource/Label/") + Bodyname + "_krater.txt";
-    string Basepath = "./";
-    int Count = 0;
-
-    mLabelList.clear();
-
-    cout << "++++ READ LABELS:" << Filename << endl;
-
-    if (db3.Read(&Records, Basepath, Filename, '\t'))
-    {
-        cout << "Records=" << Records.size() << endl;
-
-        for (list<CRecord>::iterator it = Records.begin();
-            it != Records.end();
-            ++it)
-        {
-            SLabel Label;
-            CStringTool st;
-            cout << "it->size()=" << it->size() << endl;
-
-            if (it->size() == 3)
-            {
-                Label.mLabel = (*it)[0];
-                Label.mTyp = ELABELTYPE_KRATER;
-                Label.mLong = -st.StringTo<float>((*it)[2]) + 180.0;
-                Label.mLati = st.StringTo<float>((*it)[1]);
-                string LabelType = (*it)[1];
-
-                Label.mLong = DEG_TO_RAD(Label.mLong);
-                Label.mLati = DEG_TO_RAD(Label.mLati);
-                mLabelList.push_back(Label);
-
-                cout << "Label:" << Label.mLabel  << endl;
-            }
-        }
-    }
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : InitLabels
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::InitLabels(float Radius, int sx)
-{
-    mAktLabelList.clear();
-
-    for (list<SLabel>::iterator it = mLabelList.begin();
-        it != mLabelList.end();
-        ++it)
-    {
-        it->LongLatiToSphere(Radius, sx);
-        //LongLatiToSphere(it->mVec3D, it->mLong, it->mLati, Radius);
-        mAktLabelList.push_back(*it);
-        cout << "Label found:" << it->mLabel << endl;
-    }
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : InitLabels
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::InitLabels(string BodyName, float Radius, int sx)
-{
-    mAktLabelList.clear();
-
-    for (list<SLabel>::iterator it = mLabelList.begin();
-        it != mLabelList.end();
-        ++it)
-    {
-        if (it->mBody == BodyName)
-        {
-            it->LongLatiToSphere(Radius, sx);
-            //LongLatiToSphere(it->mVec3D, it->mLong, it->mLati, Radius);
-            mAktLabelList.push_back(*it);
-
-            cout << "Label found:" << it->mLabel << endl;
-        }
-    }
-}
-
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : LongLatiToSphere
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -461,13 +258,10 @@ void SLabel::LongLatiToSphere(float Radius, int sx)
     mVec3D.RotationXZ(&Origin, sin(LongOff), cos(LongOff));
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : ReadSettings
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -481,7 +275,6 @@ void CGLApplication::ReadSettings()
 
     gResGlobals->mLanguage = ELANG_GERMAN;
     mPlanet = EPLANET_ERDE;
-
 
     if (db3.Read(&Records, Basepath, Filename, '\t') > 0)
     {
@@ -514,13 +307,10 @@ void CGLApplication::ReadSettings()
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : WriteSettings
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -572,13 +362,10 @@ static bool FileExists(const char* f)
     return false;
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InitSonne
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -591,9 +378,9 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
     int sy = 6;
     float WasserMaterial[] = { 122.0 / 255, 219.0 / 255, 251.0 / 255, 1.0 };
 
-    if (gSonne1 == NULL)
+    if (mSonne == NULL)
     {
-        gSonne1 = new CPlanet;
+        mSonne = new CPlanet;
 
 
         mPlanet = EPLANET_SONNE;
@@ -602,22 +389,22 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
     }
     else
     {
-        gSonne1->Delete();
+        mSonne->Delete();
     }
 
 
-    gSonne1->CreateEllipsoid(sx * 10, 20.2 * PlanetDesc[0].mSize, sy * 10, 20.2 * PlanetDesc[0].mSize, WasserMaterial);
+    mSonne->CreateEllipsoid(sx * 10, 20.2 * PlanetDesc[0].mSize, sy * 10, 20.2 * PlanetDesc[0].mSize, WasserMaterial);
 
-#define SUN_PHASES		32
-#define SUN_SPEED		4
+    #define SUN_PHASES		32
+    #define SUN_SPEED		4
 
-    if (gSonne1->mSunTexHandles != NULL)
+    if (mSonne->mSunTexHandles != NULL)
     {
-        glDeleteTextures(SUN_PHASES, gSonne1->mSunTexHandles);
-        delete[] gSonne1->mSunTexHandles;
+        glDeleteTextures(SUN_PHASES, mSonne->mSunTexHandles);
+        delete[] mSonne->mSunTexHandles;
     }
 
-    gSonne1->mSunTexHandles = new unsigned int[SUN_PHASES];
+    mSonne->mSunTexHandles = new unsigned int[SUN_PHASES];
 
     for (int t = 0; t < SUN_PHASES; t++)
     {
@@ -629,20 +416,17 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
         //tx.LoadTextureTga("sonne/noise0-24.tga", false);
 
 
-        gSonne1->mSunTexHandles[t] = tx.mTexHandle;
+        mSonne->mSunTexHandles[t] = tx.mTexHandle;
     }
     // Die Sonne besteht aus 6x3 Patches,
     // Jeder Patch besteht aus 10x10 Vertices
 
-
-
-    gSonne1->SetMultiTextures(gSonne1->mSunTexHandles, sx, sy);
-    gSonne1->InitDisplayList();
+    mSonne->SetMultiTextures(mSonne->mSunTexHandles, sx, sy);
+    mSonne->InitDisplayList();
 
     mCamera.mStandort.z = -80.0;
 
-    gErde = gSonne1;
-#if 1
+    mErde = mSonne;
     for (int i = 1; PlanetDesc[i].mTextur != NULL; i++)
     {
         const char* TextureName = PlanetDesc[i].mTextur;
@@ -665,25 +449,21 @@ void CGLApplication::InitSonne(const SPlanetDesc* PlanetDesc)
         if (i > 0)
         {
             mond.mPlanetDesc = PlanetDesc + i;
-            gErde->mMonde.push_back(mond);
+            mErde->mMonde.push_back(mond);
         }
     }
-#endif
 
-    gSonne1->mPhase = 0;
-    gSonne1->mPhaseCount = SUN_PHASES;
-    gSonne1->mSpeedCount = SUN_SPEED;
+    mSonne->mPhase = 0;
+    mSonne->mPhaseCount = SUN_PHASES;
+    mSonne->mSpeedCount = SUN_SPEED;
 
     //cout << "InitSonne OK" << endl;
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InitPlanet
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -691,13 +471,11 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
 {
     cout << "InitPlanet START Name=" << PlanetDesc->mNameGer  << endl;
 
-
-
     CGL_Texture tx;
 
-    if (gErde == NULL)
+    if (mErde == NULL)
     {
-        gErde = new CPlanet;
+        mErde = new CPlanet;
 
         mPlanet = EPLANET_ERDE;
         mScale = 0.7;
@@ -705,12 +483,12 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
     }
     else
     {
-        gErde->Delete();
+        mErde->Delete();
     }
 
     float WasserMaterial[] = { 122.0 / 255, 219.0 / 255, 251.0 / 255, 1.0 };
 
-    gErde->mPhaseCount = 0;
+    mErde->mPhaseCount = 0;
 
     for (int i = 0; PlanetDesc[i].mTextur != NULL; i++)
     {
@@ -740,10 +518,10 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
 
         if (i == 0)
         {
-            thing = gErde;
+            thing = mErde;
 
-            ReadLabels(PlanetDesc->mNameGer);
-            InitLabels(20, xsegs);
+            mLabels->ReadLabels(PlanetDesc->mNameGer);
+            mLabels->InitLabels(gG3Dinterface, 20, xsegs);
 
             mLongSegOffset = 360.0 / xsegs;
         }
@@ -766,17 +544,16 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         if (i > 0)
         {
             mond.mPlanetDesc = PlanetDesc + i;
-            gErde->mMonde.push_back(mond);
+            mErde->mMonde.push_back(mond);
         }
     }
     cout << "InitPlanet OK" << endl;
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
-// METHODE       :
+// METHODE       : SetResolution
 //
 //
 //
@@ -803,98 +580,7 @@ void CGLApplication::SetResolution(int w, int h)
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
-// METHODE       : GetScreenKoor
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::GetScreenKoor(SLabel& Label)
-{
-    float Zval;
-    CVector3<float> Origin;
-    CVector3<float> TestVec = Label.mVec3D;
-
-    Origin.Set(0, 0, 0);
-
-
-
-    // ,,
-    TestVec.RotationXZ(&Origin, mSinYrot, mCosYrot);
-    TestVec.RotationYZ(&Origin, mSinXrot, mCosXrot);
-
-
-
-    gluProject(
-        Label.mVec3D.x, Label.mVec3D.y, Label.mVec3D.z,
-        mModelMatrix,
-        mProjectionMatrix,
-        mViewport,
-        &Label.mScreenKoor.x, &Label.mScreenKoor.y, &Label.mScreenKoor.z);
-
-    //glReadPixels((int) Label.mScreenKoor.x, (int) Label.mScreenKoor.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &Zval);
-
-/*
- *  cout << "sx=" << Label.mScreenKoor.x << " sy=" << Label.mScreenKoor.y;
- *  cout << " zv=" << Zval << " z="
- *     <<  Label.mScreenKoor.z
- *     << " s=" << mScale
- *     << " d=" << (Zval -  Label.mScreenKoor.z) <<  endl;
- */
-
-    //cout << "TestVec.z=" << TestVec.z << endl;
-
-    if (TestVec.z > -10.0)
-    {
-        Label.mScreenKoor.z = 2;
-    }
-
-    /*
-     * float p10 = pow(mScale, 4.0);
-     *
-     * if (Zval - Label.mScreenKoor.z < -0.00001 * p10)
-     * {
-     *  Label.mScreenKoor.z = 2;
-     * }
-     *
-     * Label.mScreenKoor.z  = 0;
-     */
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : GetLabelsScreenKoor
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::GetLabelsScreenKoor()
-{
-    glPushMatrix();
-    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
-    glRotatef(sYrot, 0.0, 1.0, 0.0);    
-
-    for (list<SLabel>::iterator it = mAktLabelList.begin();
-        it != mAktLabelList.end();
-        ++it)
-    {
-        GetScreenKoor(*it);
-        //cout << "GetLabelsScreenKoor:" << it->mLabel << endl;
-    }
-    glPopMatrix();
-
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
 // METHODE       : InitResources
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -904,24 +590,14 @@ void CGLApplication::InitResources()
 
     bool b = gG3Dinterface->Init("Resource/resource0.r3d", gResGlobals);
 
-    if (b)
-    {
-        //cout << "gG3Dinterface->Init OK" << endl;
-    }
-    else
+    if (!b)
     {
         cout << "***** gG3Dinterface->Init failed" << endl;
     }
 
-    //gResourceList->Read("Resource/GlobusResource.r3d");
-
     if (b)  //gResourceList->mErrCode == EPERR_NOERROR)
     {
         CFileIO fio;
-
-        //cout << "- NO Errors - " << endl;
-
-        //gResourceList->Show();
 
         const char* SaturnRingFile = "planeten/saturnring.tga";
         const char* SaturnRingMask = "planeten/A_saturnring.tga";
@@ -968,141 +644,10 @@ void CGLApplication::InitResources()
 
 
         ActivatePlanet(mPlanet);
-        //ReadLabels();
 
         mMondName.mName = "MondName";
         gG3Dinterface->SendCommand(EG3DcomSearchChild, &mMondName);
-
-        mLabelName.mName = "LabelName";
-        gG3Dinterface->SendCommand(EG3DcomSearchChild, &mLabelName);
-
-
-
-        //cout << "InitResources OK" << endl;
     }
-}
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : DrawCross
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::DrawCross(float xc, float yc)
-{
-    glLineWidth(1.6);
-    glBegin(GL_LINES);
-    glVertex2f(xc - 4, yc - 4);
-    glVertex2f(xc + 4, yc + 4);
-    glVertex2f(xc - 4, yc + 4);
-    glVertex2f(xc + 4, yc - 4);
-    glEnd();
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : DrawTriangle
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::DrawTriangle(float xc, float yc)
-{
-    glLineWidth(1.6);
-    glBegin(GL_LINE_LOOP);
-    glVertex2f(xc, yc + 4);
-    glVertex2f(xc + 4, yc - 4);
-    glVertex2f(xc - 4, yc - 4);
-    glEnd();
-}
-
-
-// ---------------------------------------------------------------------------
-//
-// KLASSE        : CGLApplication
-// METHODE       : DrawLabels
-//
-//
-//
-// ---------------------------------------------------------------------------
-
-void CGLApplication::DrawLabels(CG3DReslistInterface* gi)
-{
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    //SG3DcomData LabelCom;
-
-    for (list<SLabel>::iterator il = mAktLabelList.begin();
-        il != mAktLabelList.end();
-        ++il)
-    {
-        if (il->mScreenKoor.z < 1.0)
-        {
-            mLabelName.mChrParam = il->mLabel.c_str();
-
-
-            mLabelName.mPos.x = (int)il->mScreenKoor.x;
-            mLabelName.mPos.y = (int)il->mScreenKoor.y - 6;
-
-            //cout << LabelCom.mChrParam << " x=" << LabelCom.mPos.x << " y=" << LabelCom.mPos.y << endl;
-
-            if ((il->mTyp == ELABELTYPE_APOLLO) ||
-                (il->mTyp == ELABELTYPE_KRATER) ||
-                (il->mTyp == ELABELTYPE_BERG))
-            {
-                mLabelName.mPos.x += 6;
-            }
-
-
-            glColor4f(0.0, 0.0, 0.0, 1.0);
-            gi->SendCommand(EG3DcomDrawString, &mLabelName);
-
-            mLabelName.mPos.x++;
-            mLabelName.mPos.y++;
-
-            switch (il->mTyp)
-            {
-                case ELABELTYPE_APOLLO:
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.2, 0.8, 0.2, 1.0);
-                    DrawCross(il->mScreenKoor.x, il->mScreenKoor.y);
-                    glEnable(GL_TEXTURE_2D);
-                    break;
-
-                case ELABELTYPE_KRATER:
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.8, 0.8, 1.0, 1.0);
-                    DrawCross(il->mScreenKoor.x, il->mScreenKoor.y);
-                    glEnable(GL_TEXTURE_2D);
-                    break;
-
-                case ELABELTYPE_BERG:
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.4, 0.8, 0.2, 1.0);
-                    DrawTriangle(il->mScreenKoor.x, il->mScreenKoor.y);
-                    glEnable(GL_TEXTURE_2D);
-                    break;
-
-                default:
-
-                    glColor4f(0.8, 0.8, 0.8, 1.0);
-                    break;
-            }
-
-            gi->SendCommand(EG3DcomDrawString, &mLabelName);
-        }
-    }
-    glDisable(GL_TEXTURE_2D);
-    glDisable(GL_BLEND);
-    glLineWidth(1.0);
 }
 
 // ---------------------------------------------------------------------------
@@ -1110,41 +655,34 @@ void CGLApplication::DrawLabels(CG3DReslistInterface* gi)
 // KLASSE        : CGLApplication
 // METHODE       : Animate
 //
-//
-//
 // ---------------------------------------------------------------------------
 
 void CGLApplication::Animate()
 {
-    if (gSonne1 != NULL)
+    if (mSonne != NULL)
     {
-        gSonne1->Animate();
+        mSonne->Animate();
     }
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : SaveMatrices
 //
-//
-//
 // ---------------------------------------------------------------------------
 
 void CGLApplication::SaveMatrices()
 {
-    glGetDoublev(GL_MODELVIEW_MATRIX, mModelMatrix);
-    glGetDoublev(GL_PROJECTION_MATRIX, mProjectionMatrix);
-    glGetIntegerv(GL_VIEWPORT, mViewport);
+    glGetDoublev(GL_MODELVIEW_MATRIX, mTransformContext.mModelMatrix);
+    glGetDoublev(GL_PROJECTION_MATRIX, mTransformContext.mProjectionMatrix);
+    glGetIntegerv(GL_VIEWPORT, mTransformContext.mViewport);
 }
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
-// METHODE       : DrawGradnetz
-//
-//
+// METHODE       : drawLatitudeRing
 //
 // ---------------------------------------------------------------------------
 
@@ -1159,6 +697,13 @@ void CGLApplication::drawLatitudeRing(const CGL_Circle& latitudering, const floa
     latitudering.Draw();
     glPopMatrix();
 }
+
+// ---------------------------------------------------------------------------
+//
+// KLASSE        : CGLApplication
+// METHODE       : DrawGradnetz
+//
+// ---------------------------------------------------------------------------
 
 void CGLApplication::DrawGradnetz() const
 {    
@@ -1229,13 +774,10 @@ void CGLApplication::DrawGradnetz() const
 
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
-// METHODE       :
-//
-//
+// METHODE       : Draw3DObjects
 //
 // ---------------------------------------------------------------------------
 
@@ -1252,14 +794,14 @@ void CGLApplication::Draw3DObjects()
 
     glPushMatrix();
 
-    mSinXrot = sin(DEG_TO_RAD(sXrot));
-    mCosXrot = cos(DEG_TO_RAD(sXrot));
-    mSinYrot = sin(DEG_TO_RAD(-(sYrot + sYrotAuto)));
-    mCosYrot = cos(DEG_TO_RAD(-(sYrot + sYrotAuto)));
+    mTransformContext.mSinXrot = sin(DEG_TO_RAD(mTransformContext.mXrot));
+    mTransformContext.mCosXrot = cos(DEG_TO_RAD(mTransformContext.mXrot));
+    mTransformContext.mSinYrot = sin(DEG_TO_RAD(-(mTransformContext.mYrot + mTransformContext.mYrotAuto)));
+    mTransformContext.mCosYrot = cos(DEG_TO_RAD(-(mTransformContext.mYrot + mTransformContext.mYrotAuto)));
 
-    glRotatef(sXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
+    glRotatef(mTransformContext.mXrot, 1.0, 0.0, 0.0);    // Rotation um X-Achse
     //glRotatef(sZrot, 0.0, 0.0, 1.0); // Rotation um Z-Achse (entfaellt)
-    glRotatef(sYrot, 0.0, 1.0, 0.0);    // Rotation um Y-Achse
+    glRotatef(mTransformContext.mYrot, 0.0, 1.0, 0.0);    // Rotation um Y-Achse
 
 
     glDisable(GL_LIGHTING);
@@ -1277,15 +819,12 @@ void CGLApplication::Draw3DObjects()
     }
     glEnable(GL_CULL_FACE);
     glEnable(GL_LIGHTING);
-    //glCullFace(GL_BACK);
+    glCullFace(GL_BACK);
 
-
-
-#if 1
     if (mPlanet == EPLANET_SONNE)
     {
         // Sonne anzeigen
-        if (gSonne1 != NULL)
+        if (mSonne != NULL)
         {
             glDisable(GL_BLEND);
             glDisable(GL_LIGHTING);
@@ -1301,7 +840,7 @@ void CGLApplication::Draw3DObjects()
                 glColor3fv(SunMaterial);
             }
 
-            gSonne1->DrawDisplayList();
+            mSonne->DrawDisplayList();
             glEnable(GL_LIGHTING);
         }
     }
@@ -1313,23 +852,21 @@ void CGLApplication::Draw3DObjects()
 
         glPushMatrix();
 
-        glRotatef(sYrotAuto, 0.0, 1.0, 0.0);
+        glRotatef(mTransformContext.mYrotAuto, 0.0, 1.0, 0.0);
         SaveMatrices();
 
         glColor3f(0.2f, 0.2f, 0.2f);
-        gErde->DrawDisplayList();
-        GetLabelsScreenKoor();
+        mErde->DrawDisplayList();
+        mLabels->GetLabelsScreenKoor();
         DrawGradnetz();
 
         glPopMatrix();
     }
-#endif
 
-
-    if (gErde != NULL)
+    if (mErde != NULL)
     {
-        gErde->GetMondScreenKoor();
-        gErde->DrawMonde(mAutoRotate, mShowOrbits, bRetrograd, sMoonColorTable);
+        mErde->GetMondScreenKoor();
+        mErde->DrawMonde(mAutoRotate, mShowOrbits, bRetrograd, sMoonColorTable);
     }
 
 
@@ -1371,8 +908,6 @@ void CGLApplication::Draw3DObjects()
 
     glPopMatrix();
 
-
-#if 1
     // Halo der Sonne anzeigen
     if (mPlanet == EPLANET_SONNE)
     {
@@ -1401,7 +936,6 @@ void CGLApplication::Draw3DObjects()
 
         //glPolygonMode(GL_FRONT, GL_FILL);
     }
-#endif
 
     if (mAutoScale)
     {
@@ -1427,35 +961,30 @@ void CGLApplication::Draw3DObjects()
     {
         if (bRetrograd)
         {
-            sYrotAuto -= 0.025;
+            mTransformContext.mYrotAuto -= 0.025;
         }
         else
         {
-            sYrotAuto += 0.1;
+            mTransformContext.mYrotAuto += 0.025;
         }
 
-        if (sYrotAuto < 0)
+        if (mTransformContext.mYrotAuto < 0)
         {
-            sYrotAuto += 360;
+            mTransformContext.mYrotAuto += 360;
         }
 
-        if (sYrotAuto > 360)
+        if (mTransformContext.mYrotAuto > 360)
         {
-            sYrotAuto -= 360;
+            mTransformContext.mYrotAuto -= 360;
         }
     }
 
-
-    //cout << "Draw3DObjects OK" << endl;
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : MouseMotionLeft
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1463,32 +992,29 @@ void CGLApplication::MouseMotionLeft(int dx, int dy)
 {
     if (mScale >= 1.0)
     {
-        sXrot += (float)dy / (mScale * mScale * 3);
-        sYrot += (float)dx / (mScale * mScale * -3);
+        mTransformContext.mXrot += (float)dy / (mScale * mScale * 3);
+        mTransformContext.mYrot += (float)dx / (mScale * mScale * -3);
     }
     else
     {
-        sXrot += (float)dy / 3;
-        sYrot += (float)dx / -3;
+        mTransformContext.mXrot += (float)dy / 3;
+        mTransformContext.mYrot += (float)dx / -3;
     }
 
-    if (sXrot > 85)
+    if (mTransformContext.mXrot > 85)
     {
-        sXrot = 85;
+        mTransformContext.mXrot = 85;
     }
-    if (sXrot < -85)
+    if (mTransformContext.mXrot < -85)
     {
-        sXrot = -85;
+        mTransformContext.mXrot = -85;
     }
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : MouseMotionRight
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1497,13 +1023,10 @@ void CGLApplication::MouseMotionRight(int dx, int dy)
     Zoom((float)dy / 100);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InterfaceSetString
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1517,13 +1040,10 @@ void CGLApplication::InterfaceSetString(const char* StringName, const char* NewC
     gG3Dinterface->SendCommand(EG3DcomChangeString, &scom);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : InterfaceSetString
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1537,13 +1057,10 @@ void CGLApplication::InterfaceSetButton(const char* ButtonName, bool Status)
     gG3Dinterface->SendCommand(EG3DcomSetButton, &scom);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : SetPlanetName
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1608,8 +1125,6 @@ void CGLApplication::SetPlanetName()
 //
 // KLASSE        : CGLApplication
 // METHODE       : ActivateInfobox
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1750,21 +1265,14 @@ void CGLApplication::ActivatePlanet(EPlanet p)
         gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)"Infobox");
         gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)mActInfobox);
     }
-    //cout << "EG3DcomActivateKnot OK2" << endl;
-
     mPlanet = p;
     SetPlanetName();
-
-    //cout << "ActivatePlanet OK" << endl;
 }
-
 
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : Zoom
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1781,13 +1289,10 @@ void CGLApplication::Zoom(float f)
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : LoadSaturnRing
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1799,13 +1304,10 @@ void CGLApplication::LoadSaturnRing()
     mSaturnRing.LoadTextureTga2D(SaturnRingFile, SaturnRingMask, false, mAnaglyph);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : LoadUranusRing
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1817,13 +1319,10 @@ void CGLApplication::LoadUranusRing()
     mUranusRing.LoadTextureTga2D(UranusRingFile, UranusRingMask, false, mAnaglyph);
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : LeftMouseButtonAction
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -1836,13 +1335,10 @@ void CGLApplication::LeftMouseButtonAction(bool pressed)
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : LeftMouseButtonDown
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -2001,13 +1497,10 @@ void CGLApplication::LeftMouseButtonDown()
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : RightMouseButtonDown
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -2015,16 +1508,12 @@ void CGLApplication::RightMouseButtonDown()
 {
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : ParseKeys
 //
-//
-//
 // ---------------------------------------------------------------------------
-
 
 bool CGLApplication::ParseKeys(int key, bool down)
 {
@@ -2035,7 +1524,6 @@ bool CGLApplication::ParseKeys(int key, bool down)
     return true;
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
@@ -2045,11 +1533,10 @@ bool CGLApplication::ParseKeys(int key, bool down)
 
 void CGLApplication::PositionLoad(int pos)
 {
-    sXrot = mPositions[pos].mXrot;
-    sYrot = mPositions[pos].mYrot;
+    mTransformContext.mXrot = mPositions[pos].mXrot;
+    mTransformContext.mYrot = mPositions[pos].mYrot;
     mScale = mPositions[pos].mScale;
 }
-
 
 // ---------------------------------------------------------------------------
 //
@@ -2060,11 +1547,10 @@ void CGLApplication::PositionLoad(int pos)
 
 void CGLApplication::PositionSave(int pos)
 {
-    mPositions[pos].mXrot = sXrot;
-    mPositions[pos].mYrot = sYrot;
+    mPositions[pos].mXrot = mTransformContext.mXrot;
+    mPositions[pos].mYrot = mTransformContext.mYrot;
     mPositions[pos].mScale = mScale;
 }
-
 
 // ---------------------------------------------------------------------------
 //
@@ -2136,13 +1622,10 @@ void CGLApplication::KeyboardAction(unsigned char key)
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
-// METHODE       :
-//
-//
+// METHODE       : Draw2DObjects
 //
 // ---------------------------------------------------------------------------
 
@@ -2153,13 +1636,10 @@ void CGLApplication::Draw2DObjects()
     }
 }
 
-
 // ---------------------------------------------------------------------------
 //
 // KLASSE        : CGLApplication
 // METHODE       : ManageInterface
-//
-//
 //
 // ---------------------------------------------------------------------------
 
@@ -2169,8 +1649,8 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
     {
         if (mShowInterface)
         {
-            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
-            DrawLabels(gG3Dinterface);
+            mErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
+            mLabels->DrawLabels(gG3Dinterface);
 
             if (mShowInterface)
             {
@@ -2180,7 +1660,7 @@ void CGLApplication::ManageInterface(CGL_Mouse* Mouse)
         }
         else
         {
-            gErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
+            mErde->DrawMondeNames(gG3Dinterface, &mMondName, gResGlobals->mLanguage, sMoonColorTable);
         }
     }
 }

@@ -44,6 +44,7 @@ add_executable(theplanets
     ${SRCBASE}/COpenGLAction.cpp
     ${SRCBASE}/CMond.cpp
     ${SRCBASE}/CPlanet.cpp
+    ${SRCBASE}/CLabels.cpp
     ${SRCBASE}/NPlanets.cpp
     ${LIBBASE}/Resource/CG3DReslistInterface.cpp
     ${LIBBASE}/Resource/CG3DResource.cpp
