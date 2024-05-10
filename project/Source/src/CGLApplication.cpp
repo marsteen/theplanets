@@ -505,6 +505,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
         if (PlanetDesc[i].mDemFile != nullptr)
         {
             mv_graphics_png_read(PlanetDesc[i].mDemFile, (char**) &dem.mData, &dem.mWidth, &dem.mHeight, &dem.mBits, 0);
+            dem.swap16bit();
             cout << "dem: w=" << dem.mWidth << " h=" << dem.mHeight << " bits=" << dem.mBits << endl;
         }
 
