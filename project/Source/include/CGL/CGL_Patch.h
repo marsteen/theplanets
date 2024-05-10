@@ -33,9 +33,11 @@ class CGL_Patch : public CGL_Object, public CGL_MatObject
 
         void SetVertex(CVector3<float>* Origin, CVector3<float>* cf);
         void SetSphereVertex(CVector3<float>* Origin, CVector3<float>* cf);
+        float getDemValueAngles(float AngleS, float AngleT) const;
 
         float mSCircleRad;
         float mTCircleRad;
+        const CDataRect* mDEM;
 };
 
 #endif

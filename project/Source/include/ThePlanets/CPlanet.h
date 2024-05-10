@@ -24,9 +24,7 @@ class CPlanet : public CGL_EllipsoidPatched
         void GetMondScreenKoor();
 
         std::vector<CMond> mMonde;
-
-
-
+        uint16_t* mDEM;
         unsigned int* mSunTexHandles;
 
         //void GetScreenKoor(CVector3<float>* Vert, CVector3<double>* ScreenKoor);

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <CGL_EllipsoidPatched.h>
 
 
@@ -65,7 +66,8 @@ void CGL_EllipsoidPatched::InitDisplayList()
 
 void CGL_EllipsoidPatched::MakeObject()
 {
-    //cout << "CGL_EllipsoidPatched::MakeObject start" << endl;
+    std::cout << "CGL_EllipsoidPatched::MakeObject start" << std::endl;
+    std::cout << "mPhaseCount=" << mPhaseCount;
 
     int PsegS = mSCircleSegs / mPatchesX;
     int PsegT = mTCircleSegs / mPatchesY;
@@ -118,7 +120,7 @@ void CGL_EllipsoidPatched::MakeObject()
         StartT -= mHeightT;
     }
 
-    //cout << "CGL_EllipsoidPatched::MakeObject ok" << endl;
+    std::cout << "CGL_EllipsoidPatched::MakeObject ok" << std::endl;
 }
 
 

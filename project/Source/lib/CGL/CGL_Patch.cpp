@@ -46,7 +46,22 @@ void CGL_Patch::SetSphereVertex(CVector3<float>* Origin, CVector3<float>* cf)
 
 #if 1
 
-#define FTEX1    1.0 // 0.99999
+#define FTEX1 1.0f
+
+float CGL_Patch::getDemValueAngles(float AngleS, float AngleT) const
+{   
+    float xf = (RAD_TO_DEG(AngleS)) / 360.0;
+    float yf = (RAD_TO_DEG(AngleT) + 90.0) / 180.0;
+
+    const uint16_t* demData = (uint16_t*) mDEM->mData;
+    const int xko = mDEM->mWidth * xf - 1;
+    const int yko = mDEM->mHeight * yf - 1;
+    std::cout << "rf1=?" << " xko=" << xko << " yko=" << yko << " AngleS=" << AngleS << " AngleT=" << AngleT << std::endl;
+
+    float rf = ((xko >= 0) && (xko < mDEM->mWidth) && (yko >= 0) && (yko < mDEM->mHeight)) ? float(demData[mDEM->mWidth * yko + xko]) : 0;
+
+    return rf / 100000.0f;
+}
 
 //---------------------------------------------------------------------------
 //
@@ -83,21 +98,16 @@ void CGL_Patch::MakePatch(float StartS, float StartT, float StepS, float StepT, 
             vert.x = cos(AngleT) * mSCircleRad;
             vert.y = sin(AngleT) * mTCircleRad;
             vert.z = 0;
-
             vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
-
             glTexCoord2f(TexCoordS1, TexCoordT);
             SetSphereVertex(&Origin, &vert);
 
             vert.x = cos(AngleT) * mSCircleRad;
             vert.y = sin(AngleT) * mTCircleRad;
             vert.z = 0;
-
             vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
-
             glTexCoord2f(TexCoordS2, TexCoordT);
             SetSphereVertex(&Origin, &vert);
-
             AngleT -= StepT;
             TexCoordT -= TexCoordStepT;
         }
@@ -159,10 +169,11 @@ void CGL_Patch::MakePatchDrawElements(float StartS, float StartT, float StepS, f
         {
             CVector3<float> Vertex;
 
-            Vertex.x = cos(AngleT) * mSCircleRad;
-            Vertex.y = sin(AngleT) * mTCircleRad;
+            const float rf =  (mDEM == nullptr) ? 0.0f : getDemValueAngles(AngleS, AngleT);
+            //cout << "MakePatchDrawElements dem rf1=" << rf1 << std::endl;  
+            Vertex.x = cos(AngleT) * (mSCircleRad + rf);
+            Vertex.y = sin(AngleT) * (mTCircleRad + rf);
             Vertex.z = 0;
-
             Vertex.RotationXZ(&Origin, sin(AngleS), cos(AngleS));
 
             NormalVector.SubtractVector(&Vertex, &Origin);
@@ -269,8 +280,10 @@ void CGL_Patch::MakePatchDrawElementsST(float StartS, float StartT, float StepS,
         {
             CVector3<float> Vertex;
 
-            Vertex.x = cos(AngleT) * mSCircleRad;
-            Vertex.y = sin(AngleT) * mTCircleRad;
+            const float rf1 =  (mDEM == nullptr) ? 0.0f : getDemValueAngles(AngleS, AngleT);
+            cout << "dem rf1=" << rf1;    
+            Vertex.x = cos(AngleT) * (mSCircleRad + rf1);
+            Vertex.y = sin(AngleT) * (mTCircleRad + rf1);
             Vertex.z = 0;
 
             Vertex.RotationXZ(&Origin, sin(AngleS), cos(AngleS));

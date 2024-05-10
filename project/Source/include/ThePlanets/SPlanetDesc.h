@@ -18,8 +18,9 @@
 struct SPlanetDesc
 {
     const char* mTextur;        // Textur-Dateiname
+    const char* mDemFile;       // Name der PNG-DEM-Datei
     const char* mNameGer;       // Deutscher Name
-    const char* mNameEng;       // Englischer Name
+    const char* mNameEng;       // Englischer Name    
     float		mDistanceMin;   // Min. Abstand zu Planeten
     float		mDistanceMax;   // Max. Abstand zu Planeten
     float		mSize;          // Groesse relativ zum Planeten

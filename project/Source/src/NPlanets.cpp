@@ -14,6 +14,7 @@ namespace NPlanets
     {
         {
             "planeten/4k/merkur.jpg",
+            NULL,
             "Merkur",
             "Mercury",
             0.0, 0.0,
@@ -33,6 +34,7 @@ namespace NPlanets
     {
         {
             "planeten/venus.jpg",
+            NULL,
             "Venus",
             "Venus",
             0.0, 0.0,
@@ -52,12 +54,14 @@ namespace NPlanets
     {
         {
             "planeten/erde.jpg",
+            NULL,
             "Erde",
             "Earth",
             1.0, 1.0, 1.0, 1.0, 1.0
         },
         {
             "planeten/monde/mond.jpg",
+            NULL,
             "Mond",
             "Moon",
             (384400.0 / SIZE_ERDE) * 20,
@@ -79,6 +83,7 @@ namespace NPlanets
     {
         {
             "planeten/4k/mars.jpg",
+            NULL,
             "Mars",
             "Mars",
             0.0, 0.0,
@@ -98,6 +103,7 @@ namespace NPlanets
     {
         {
             "planeten/4k/jupiter.jpg",
+            NULL,
             "Jupiter",
             "Jupiter",
             0.0, 0.0,
@@ -106,6 +112,7 @@ namespace NPlanets
         {
             // IO
             "planeten/monde/io.jpg",
+            NULL,
             "Io",
             "Io",
             (420100.0 / SIZE_JUPITER) * 20,
@@ -117,6 +124,7 @@ namespace NPlanets
         {
             // Europa
             "planeten/monde/europa.jpg",
+            NULL,
             "Europa",
             "Europa",
             (664100.0 / SIZE_JUPITER) * 20,
@@ -128,6 +136,7 @@ namespace NPlanets
         {
             // Ganymed
             "planeten/monde/ganymed.jpg",
+            NULL,
             "Ganymed",
             "Ganymede",
             (1069000.0 / SIZE_JUPITER) * 20,
@@ -139,6 +148,7 @@ namespace NPlanets
         {
             // Kallisto
             "planeten/monde/kallisto.jpg",
+            NULL,
             "Kallisto",
             "Callisto",
             (1869500.0 / SIZE_JUPITER) * 20,
@@ -159,7 +169,8 @@ namespace NPlanets
     SPlanetDesc MondDesc[] =
     {
         {
-            "planeten/monde_gross/Moon5120x2560.jpg",
+            "planeten/monde_gross/moon_8k.jpg",
+            "planeten/monde_gross/moon_dem.png",
             "Mond",
             "Moon",
             0.0, 0.0,
@@ -178,6 +189,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/titan.jpg",
+            NULL,
             "Titan",
             "Titan",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -195,6 +207,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/rhea.jpg",
+            NULL,
             "Rhea",
             "Rhea",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -212,6 +225,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/triton.jpg",
+            NULL,
             "Triton",
             "Triton",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -230,6 +244,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/ganymed.jpg",
+            NULL,
             "Ganymed",
             "Ganymede",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -248,6 +263,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/europa.jpg",
+            NULL,
             "Europa",
             "Europa",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -266,6 +282,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/kallisto.jpg",
+            NULL,
             "Europa",
             "Europa",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -285,6 +302,7 @@ namespace NPlanets
     {
         {
             "planeten/monde_gross/io.jpg",
+            NULL,
             "Europa",
             "Europa",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -303,12 +321,14 @@ namespace NPlanets
     {
         {
             "planeten/4k/saturn.jpg",
+            NULL,
             "Saturn",
             "Saturn",
             1.0, 1.0, 1.0, 1.0, 1.0
         },
         {
             "planeten/monde/titan.jpg",
+            NULL,
             "Titan",
             "Titan",
             (1221830.0 / SIZE_SATURN) * 20,
@@ -318,6 +338,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/rhea.jpg",
+            NULL,
             "Rhea",
             "Rhea",
             (527040.0 / SIZE_SATURN) * 20,
@@ -327,6 +348,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dione.jpg",
+            NULL,
             "Dione",
             "Dione",
             (377420.0 / SIZE_SATURN) * 20,
@@ -336,6 +358,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/tethys.jpg",
+            NULL,
             "Tethys",
             "Tethys",
             (294670.0 / SIZE_SATURN) * 20,
@@ -345,6 +368,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/iapetus.jpg",
+            NULL,
             "Iapetus",
             "Iapetus",
             (3561300.0 / SIZE_SATURN) * 20,
@@ -367,6 +391,7 @@ namespace NPlanets
     {
         {
             "planeten/uranus.jpg",
+            NULL,
             "Uranus",
             "Uranus",
             0.0, 0.0, 1.0, 1.0, 1.0
@@ -374,6 +399,7 @@ namespace NPlanets
 #ifdef USE_MOONS
         {
             "planeten/monde/titan.jpg",
+            NULL,
             "Oberon",
             "Oberon",
             (583519.0 / SIZE_URANUS) * 20,
@@ -383,6 +409,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Titania",
             "Titania",
             (463300.0 / SIZE_URANUS) * 20,
@@ -392,6 +419,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Umbriel",
             "Umbriel",
             (266300.0 / SIZE_URANUS) * 20,
@@ -401,6 +429,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Ariel",
             "Ariel",
             (191020.0 / SIZE_URANUS) * 20,
@@ -410,6 +439,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Miranda",
             "Miranda",
             (129872.0 / SIZE_URANUS) * 20,
@@ -434,6 +464,7 @@ namespace NPlanets
     {
         {
             "planeten/neptun.jpg",
+            NULL,
             "Neptun",
             "Neptune",
             0.0, 1.0, 1.0, 1.0
@@ -441,6 +472,7 @@ namespace NPlanets
 #ifdef USE_MOONS
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Triton",
             "Triton",
             (354800.0 / SIZE_NEPTUN) * 20,
@@ -449,6 +481,7 @@ namespace NPlanets
         },
         {
             "planeten/monde/dummy.jpg",
+            NULL,
             "Nereid",
             "Nereid",
             (5513400.0 / SIZE_NEPTUN) * 20,
@@ -473,12 +506,14 @@ namespace NPlanets
     {
         {
             "planeten/sonnensystem/sonne1.jpg",
+            NULL,
             "Sonne",
             "Sun",
             1.0, 1.0, 1.0, 1.0, 1.0
         },
         {
             "planeten/sonnensystem/merkurk.jpg",
+            NULL,
             "Merkur",
             "Mercury",
             (57909175.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,   // Abstand zu Sonne  * 20
@@ -489,6 +524,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/venusk.jpg",
+            NULL,
             "Venus",
             "Venus",
             (108208930.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
@@ -499,6 +535,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/erdek.jpg",
+            NULL,
             "Erde",
             "Earth",
             (149597890.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
@@ -509,6 +546,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/marsk.jpg",
+            NULL,
             "Mars",
             "Mars",
             (227936640.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
@@ -519,6 +557,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/jupiterk.jpg",
+            NULL,
             "Jupiter",
             "Jupiter",
             (778412020.0 / SIZE_SONNE) * 20.0 / SUN_SCALE,  // Abstand zu Sonne  * 20
@@ -530,6 +569,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/saturnk.jpg",
+            NULL,
             "Saturn",
             "Saturn",
             (1426725400.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
@@ -541,6 +581,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/uranusk.jpg",
+            NULL,
             "Uranus",
             "Uranus",
             (2870972200.0 / SIZE_SONNE) * 20.0 / SUN_SCALE, // Abstand zu Sonne  * 20
@@ -552,6 +593,7 @@ namespace NPlanets
         },
         {
             "planeten/sonnensystem/neptunk.jpg",
+            NULL,
             "Neptun",
             "Neptune",
             //41.0,

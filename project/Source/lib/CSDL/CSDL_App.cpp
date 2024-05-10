@@ -775,13 +775,13 @@ void CSDL_App::EventLoop()
 
 void CSDL_App::SetupLighting()
 {
-    GLfloat Position1[] = { -3000.0, 0.0, 6000.0, 0, 0 };
+    GLfloat Position1[] = { -100.0, 0.0, 50.0, 0, 0 };
 
     GLfloat matSpecular[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat matShininess[] = { 30.0 };
 
     GLfloat WhiteLight[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat LightAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
+    GLfloat LightAmbient[] = { 0.0, 0.0, 0.0, 1.0 };
 
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_SMOOTH);

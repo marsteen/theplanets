@@ -34,12 +34,13 @@ using namespace std;
 //
 //---------------------------------------------------------------------------
 
-void CGL_Ellipsoid::CreateEllipsoid(int Sseg, float Srad, int Tseg, float Trad, float* DiffuseMaterial)
+void CGL_Ellipsoid::CreateEllipsoid(int Sseg, float Srad, int Tseg, float Trad, const float* DiffuseMaterial, const CDataRect* dem)
 {
     mTCircleSegs = Tseg;
     mTCircleRad = Trad;
     mSCircleSegs = Sseg;
     mSCircleRad = Srad;
+    mDEM = dem;
 
     for (int i = 0; i < 4; i++)
     {
@@ -123,6 +124,15 @@ void CGL_Ellipsoid::DrawWireFrame()
 }
 
 
+float CGL_Ellipsoid::getDemValue(float s, float t) const
+{   
+    const uint16_t* demData = (uint16_t*) mDEM->mData;
+    const int xko = mDEM->mWidth * s;
+    const int yko = mDEM->mHeight * t;
+    return float(demData[mDEM->mWidth * yko + xko]) / 1000.0f;
+}
+
+
 //---------------------------------------------------------------------------
 //
 // Klasse:    CGL_Ellipsoid
@@ -160,24 +170,21 @@ void CGL_Ellipsoid::MakeObject()
         {
             CVector3<float> vert;
 
-            vert.x = cos(AngleT) * mSCircleRad;
-            vert.y = sin(AngleT) * mTCircleRad;
+            const float rf1 =  (mDEM == nullptr) ? 0.0f : getDemValue(TexCoordS1, TexCoordT);
+            vert.x = cos(AngleT) * (mSCircleRad + rf1);
+            vert.y = sin(AngleT) * (mTCircleRad + rf1);
             vert.z = 0;
-
             vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
-
             glTexCoord2f(TexCoordS1, TexCoordT);
-
             SetSphereVertex(&Origin, &vert);
+            cout << "rf1=" << rf1 << endl;
 
-            vert.x = cos(AngleT) * mSCircleRad;
-            vert.y = sin(AngleT) * mTCircleRad;
+            const float rf2 =  (mDEM == nullptr) ? 1.0f : getDemValue(TexCoordS2, TexCoordT);
+            vert.x = cos(AngleT) * (mSCircleRad + rf2);
+            vert.y = sin(AngleT) * (mTCircleRad + rf2);
             vert.z = 0;
-
             vert.RotationXZ(&Origin, sin(AngleS2), cos(AngleS2));
-
             glTexCoord2f(TexCoordS2, TexCoordT);
-
             SetSphereVertex(&Origin, &vert);
 
             AngleT -= AngleStepT;

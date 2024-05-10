@@ -35,6 +35,7 @@
 #include <CDatabase3.h>
 #include <CStringTool.h>
 #include <CGraflibJpeg.h>
+#include <mvlib/png/mv_graphics_png.h>
 #include <NPlanets.h>
 #include "CGL_Ellipsoid.h"
 #include "CG3DGlobals.h"
@@ -145,7 +146,8 @@ void CGLApplication::MouseMotion(int xabs, int yabs, int xrel, int yrel)
 
 void CGLApplication::GameLoop()
 {
-    GLfloat planetMaterialLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+    //GLfloat planetMaterialLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+    GLfloat planetMaterialLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
     glClearColor(0, 0, 0, 0);
@@ -493,19 +495,28 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
     for (int i = 0; PlanetDesc[i].mTextur != NULL; i++)
     {
         const char* TextureName = PlanetDesc[i].mTextur;
+        CDataRect dem;     
         CMond mond;
         int xsegs, ysegs;
         CGL_EllipsoidPatched* thing;
-        CGraflibJpeg jpeg;
+        CGraflibJpeg jpegTexture;
+        
+
+        if (PlanetDesc[i].mDemFile != nullptr)
+        {
+            mv_graphics_png_read(PlanetDesc[i].mDemFile, (char**) &dem.mData, &dem.mWidth, &dem.mHeight, &dem.mBits, 0);
+            cout << "dem: w=" << dem.mWidth << " h=" << dem.mHeight << " bits=" << dem.mBits << endl;
+        }
+
 
         cout << "GetJpegSize START=" << TextureName << " i=" << i << endl;
 
-        if (jpeg.GetJpegSize(TextureName))
+        if (jpegTexture.GetJpegSize(TextureName))
         {
-            xsegs = jpeg.mWidth  * 4 / 256;
-            ysegs = jpeg.mHeight * 4 / 256;
-            cout << "Texture w=" << jpeg.mWidth << " h=" << jpeg.mHeight << endl;
-            cout << "xsegs=" << xsegs << " ysegs=" << ysegs << " bits=" << jpeg.mBits << endl;
+            xsegs = jpegTexture.mWidth  * 4 / 256;
+            ysegs = jpegTexture.mHeight * 4 / 256;
+            cout << "Texture w=" << jpegTexture.mWidth << " h=" << jpegTexture.mHeight << endl;
+            cout << "xsegs=" << xsegs << " ysegs=" << ysegs << " bits=" << jpegTexture.mBits << endl;
         }
         else
         {
@@ -530,7 +541,7 @@ void CGLApplication::InitPlanet(const SPlanetDesc* PlanetDesc)
             thing = &mond;
         }
 
-        thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial);
+        thing->CreateEllipsoid(xsegs * 10, 20.0 * PlanetDesc[i].mSize, ysegs * 10, 20.0 * PlanetDesc[i].mSize, WasserMaterial, &dem);
         unsigned int* ErdeTexHandles = tx.CreateSplitTextures(TextureName, xsegs, ysegs, mAnaglyph);
 
         if (i > 0)
@@ -856,6 +867,7 @@ void CGLApplication::Draw3DObjects()
         SaveMatrices();
 
         glColor3f(0.2f, 0.2f, 0.2f);
+        glEnable(GL_LIGHTING);
         mErde->DrawDisplayList();
         mLabels->GetLabelsScreenKoor();
         DrawGradnetz();
@@ -1146,11 +1158,8 @@ void CGLApplication::ActivatePlanet(EPlanet p)
 
             InitSonne(NPlanets::SonneDesc);
             pd = NPlanets::SonneDesc;
-            gG3Dinterface->SendCommand(EG3DcomDeactivateKnot, (void*)"Infobox");
-            gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)"InfoboxS");
-
-            gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)"InfoboxS");
-
+            gG3Dinterface->SendCommand(EG3DcomDeactivateKnot, (void*) "Infobox");
+            gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*) "InfoboxS");
             mActInfobox = NULL;
 
             //cout << "SendCommand OK" << endl;
@@ -1159,7 +1168,6 @@ void CGLApplication::ActivatePlanet(EPlanet p)
         case EPLANET_MERKUR:
 
             mActInfobox = "MerkurInfoBox";
-
             pd = NPlanets::MerkurDesc;
             break;
 
@@ -1261,9 +1269,9 @@ void CGLApplication::ActivatePlanet(EPlanet p)
     }
     if (mActInfobox != NULL)
     {
-        gG3Dinterface->SendCommand(EG3DcomDeactivateKnot, (void*)"InfoboxS");
-        gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)"Infobox");
-        gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*)mActInfobox);
+        gG3Dinterface->SendCommand(EG3DcomDeactivateKnot, (void*) "InfoboxS");
+        gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*) "Infobox");
+        gG3Dinterface->SendCommand(EG3DcomActivateKnot, (void*) mActInfobox);
     }
     mPlanet = p;
     SetPlanetName();
