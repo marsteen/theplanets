@@ -781,8 +781,6 @@ void CGLApplication::DrawGradnetz() const
     drawLatitudeRing(latitudering, -85.0f);
     drawLatitudeRing(latitudering,  85.0f);
     first = false;
-
-
 }
 
 // ---------------------------------------------------------------------------

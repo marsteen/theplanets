@@ -177,7 +177,7 @@ void CGL_Ellipsoid::MakeObject()
             vert.RotationXZ(&Origin, sin(AngleS1), cos(AngleS1));
             glTexCoord2f(TexCoordS1, TexCoordT);
             SetSphereVertex(&Origin, &vert);
-            cout << "rf1=" << rf1 << endl;
+            //cout << "rf1=" << rf1 << endl;
 
             const float rf2 =  (mDEM == nullptr) ? 1.0f : getDemValue(TexCoordS2, TexCoordT);
             vert.x = cos(AngleT) * (mSCircleRad + rf2);

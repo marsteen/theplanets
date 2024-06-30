@@ -39,7 +39,7 @@ class CDatabase3 : public std::list<CRecord>
 {
     public:
 
-        int Read(std::list<CRecord>* db, std::string& BasePath, std::string& Filename, char SplitChar);
+        int Read(std::list<CRecord>* db, const std::string& BasePath, const std::string& Filename, char SplitChar);
 
     protected:
 

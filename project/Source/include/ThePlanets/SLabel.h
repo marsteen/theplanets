@@ -37,6 +37,7 @@ struct SLabel
     ELabelType					mTyp;
     float						mLong;
     float						mLati;
+    float                       mDiameter;
     float						mRot;
 
     void LongLatiToSphere(float Radius, int sx);

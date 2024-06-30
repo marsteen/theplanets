@@ -56,7 +56,7 @@ float CGL_Patch::getDemValueAngles(float AngleS, float AngleT) const
     const uint16_t* demData = (uint16_t*) mDEM->mData;
     const int xko = mDEM->mWidth * xf - 1;
     const int yko = mDEM->mHeight * yf - 1;
-    std::cout << "rf1=?" << " xko=" << xko << " yko=" << yko << " AngleS=" << AngleS << " AngleT=" << AngleT << std::endl;
+    //std::cout << "rf1=?" << " xko=" << xko << " yko=" << yko << " AngleS=" << AngleS << " AngleT=" << AngleT << std::endl;
 
     float rf = ((xko >= 0) && (xko < mDEM->mWidth) && (yko >= 0) && (yko < mDEM->mHeight)) ? float(demData[mDEM->mWidth * yko + xko]) : 0;
 

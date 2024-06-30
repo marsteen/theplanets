@@ -93,7 +93,7 @@ static inline bool LineEnd(char c)
 //
 //---------------------------------------------------------------------------
 
-int CDatabase3::Read(list<CRecord>* db, string& BasePath, string& Filename, char SplitChar)
+int CDatabase3::Read(list<CRecord>* db, const string& BasePath, const string& Filename, char SplitChar)
 {
     if (db == NULL)
     {
