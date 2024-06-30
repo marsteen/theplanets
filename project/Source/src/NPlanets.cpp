@@ -169,8 +169,9 @@ namespace NPlanets
     SPlanetDesc MondDesc[] =
     {
         {
-            "planeten/monde_gross/moon_8k.jpg",
-            "planeten/monde_gross/moon_dem.png",
+            "planeten/monde_gross/moonmap4k.jpg",
+             nullptr,
+//            "planeten/monde_gross/moon_dem.png",
             "Mond",
             "Moon",
             0.0, 0.0,
