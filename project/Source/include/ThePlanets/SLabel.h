@@ -37,6 +37,8 @@ struct SLabel
     ELabelType					mTyp;
     float						mLong;
     float						mLati;
+    float						mLongDeg;
+    float						mLatiDeg;
     float                       mDiameter;
     float						mRot;
 

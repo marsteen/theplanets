@@ -156,6 +156,9 @@ void CLabels::ReadLabels(const std::string& Bodyname)
                     Label.mLong = -st.StringTo<float>(record[labelRows.centerLongitude]) + 180.0;
                     Label.mLati = st.StringTo<float>(record[labelRows.centerLatitude]);
                     Label.mDiameter = st.StringTo<float>(record[labelRows.diameter]);
+
+                    Label.mLongDeg = st.StringTo<float>(record[labelRows.centerLongitude]);
+                    Label.mLatiDeg = st.StringTo<float>(record[labelRows.centerLatitude]);
                     
                     Label.mLong = DEG_TO_RAD(Label.mLong);
                     Label.mLati = DEG_TO_RAD(Label.mLati);

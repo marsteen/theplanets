@@ -17,9 +17,9 @@ class CLabels
 
         void ReadLabels(const std::string& Bodyname);
         void InitLabels(CG3DReslistInterface* gi, float Radius, int sx);
-//        void InitLabels(const std::string& BodyName, float Radius, int sx);
         void GetLabelsScreenKoor();
         void DrawLabels(CG3DReslistInterface* gi);
+        const std::list<SLabel>& getLabelList() const { return mAktLabelList; }
 
     protected:
     

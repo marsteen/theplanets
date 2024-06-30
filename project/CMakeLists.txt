@@ -41,6 +41,8 @@ include_directories(
 add_executable(theplanets
     ${SRCBASE}/mainSdl.cpp 
     ${SRCBASE}/CGLApplication.cpp
+    ${SRCBASE}/CGL_Gradnetz.cpp
+    ${SRCBASE}/CGL_KraterCircle.cpp
     ${SRCBASE}/COpenGLAction.cpp
     ${SRCBASE}/CMond.cpp
     ${SRCBASE}/CPlanet.cpp

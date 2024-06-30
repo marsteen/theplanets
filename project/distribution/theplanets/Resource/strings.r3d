@@ -237,7 +237,8 @@ TEXT	DE	MondName
 TEXT	EN	MondName
 #
 NAME	STRING	LabelName
-REF	arialbd_64
+REF	Verdana12
+#REF	arialbd_64
 TEXT	DE	Label
 TEXT	EN	Label
 #
