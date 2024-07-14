@@ -121,6 +121,10 @@ void CLabels::ReadLabels(const std::string& Bodyname)
 
     mLabelList.clear();
 
+    static float colorCrater[]  = { 1.0, 0.3, 0.3, 1.0 };
+    static float colorMare[]    = { 0.3, 0.3, 1.0, 1.0 };
+    static float colorMission[] = { 1.0, 0.5, 0.0, 1.0 };
+
     std::cout << "++++ READ LABELS:" << Filename << std::endl;
 
     if (db3.Read(&Records, Basepath, Filename, '\t'))
@@ -159,6 +163,29 @@ void CLabels::ReadLabels(const std::string& Bodyname)
 
                     Label.mLongDeg = st.StringTo<float>(record[labelRows.centerLongitude]);
                     Label.mLatiDeg = st.StringTo<float>(record[labelRows.centerLatitude]);
+                    const std::string& featureType = record[labelRows.featureType];
+                    if (featureType == "Crater, craters")
+                    {
+                        Label.mTyp = ELABELTYPE_KRATER;
+                        Label.mColor = colorCrater;
+                    }
+                    else
+                    if (featureType == "Mare, maria")
+                    {
+                        Label.mTyp = ELABELTYPE_MARE;                        
+                        Label.mColor = colorMare;
+                    }
+                    else
+                    if (featureType == "Mission")
+                    {
+                        Label.mTyp = ELABELTYPE_MISSION;                        
+                        Label.mColor = colorMission;
+                    }
+                    else
+                    {
+                        Label.mTyp = ELABELTYPE_UNDEFINED;
+                    }
+
                     
                     Label.mLong = DEG_TO_RAD(Label.mLong);
                     Label.mLati = DEG_TO_RAD(Label.mLati);
@@ -279,9 +306,9 @@ void CLabels::DrawLabels(CG3DReslistInterface* gi)
             mLabelName.mPos.x = (int) il->mScreenKoor.x;
             mLabelName.mPos.y = (int) il->mScreenKoor.y - 6;
 
-            if ((il->mTyp == ELABELTYPE_APOLLO) ||
+            if ((il->mTyp == ELABELTYPE_MISSION) ||
                 (il->mTyp == ELABELTYPE_KRATER) ||
-                (il->mTyp == ELABELTYPE_BERG))
+                (il->mTyp == ELABELTYPE_MARE))
             {
                 mLabelName.mPos.x += 6;
             }
@@ -294,24 +321,12 @@ void CLabels::DrawLabels(CG3DReslistInterface* gi)
 
             switch (il->mTyp)
             {
-                case ELABELTYPE_APOLLO:
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.2, 0.8, 0.2, 1.0);
-                    DrawCross(il->mScreenKoor.x, il->mScreenKoor.y);
-                    glEnable(GL_TEXTURE_2D);
-                    break;
-
                 case ELABELTYPE_KRATER:
+                case ELABELTYPE_MARE:
+                case ELABELTYPE_MISSION:
                     glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.8, 0.8, 1.0, 1.0);
+                    glColor4fv(il->mColor);
                     DrawCross(il->mScreenKoor.x, il->mScreenKoor.y);
-                    glEnable(GL_TEXTURE_2D);
-                    break;
-
-                case ELABELTYPE_BERG:
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f(0.4, 0.8, 0.2, 1.0);
-                    DrawTriangle(il->mScreenKoor.x, il->mScreenKoor.y);
                     glEnable(GL_TEXTURE_2D);
                     break;
 

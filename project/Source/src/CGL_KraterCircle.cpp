@@ -38,8 +38,17 @@ void CGL_KraterCircle::draw(const SLabel& label)
         kraterCircle.Init();
         isInit = true;
     }
+
     glDisable(GL_LIGHTING);
-    glColor4f(1.0f, 0.0f, 0.0f, 1.0f); 
+    if (label.mLabel == "Tycho")
+    {
+        glColor4f(0.0f, 1.0f, 0.0f, 1.0f); 
+    }
+    else
+    {
+        glColor4fv(label.mColor); 
+    }
+
     const float sf = label.mDiameter * 0.053f; 
 
     glPushMatrix();

@@ -5,3 +5,9 @@ https://planetarynames.wr.usgs.gov/SearchResults?Target=16_Moon&Feature%20Type=9
 
 Mond-Textur:
 https://upload.wikimedia.org/wikipedia/commons/d/d1/Solarsystemscope_texture_8k_moon.jpg
+
+Apollo Landing Sites:
+https://www.nasa.gov/history/alsj/alsjcoords.html
+
+Python Text input:
+Tkinter

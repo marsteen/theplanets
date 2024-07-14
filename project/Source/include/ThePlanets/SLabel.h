@@ -23,7 +23,7 @@ enum ELabelType
 {
     ELABELTYPE_UNDEFINED,   // undefiniert
     ELABELTYPE_MARE,        // Mondmeer (Mare)
-    ELABELTYPE_APOLLO,      // Apollo-Landestelle (la)
+    ELABELTYPE_MISSION,     // Mond-Mission
     ELABELTYPE_KRATER,      // Krater (kr)
     ELABELTYPE_BERG,        // Berg (bg)
     ELABELTYPE_MEER,        // Meer (me)
@@ -32,6 +32,12 @@ enum ELabelType
 
 struct SLabel
 {
+    SLabel()
+    {
+        mColor = nullptr;
+        mTyp = ELABELTYPE_UNDEFINED;
+
+    }
     std::string					mBody;
     std::string					mLabel;
     ELabelType					mTyp;
@@ -41,6 +47,7 @@ struct SLabel
     float						mLatiDeg;
     float                       mDiameter;
     float						mRot;
+    float*                      mColor;
 
     void LongLatiToSphere(float Radius, int sx);
 
